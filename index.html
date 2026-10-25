@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Тахо">
 <meta name="theme-color" content="#090d24">
-<title>Тахо — Автовикторина</title>
+<title>Тахо — Автовикторина и Экзамен ПДД (А и В)</title>
 <style>
 :root{
   --deep:#070a1e;
@@ -163,7 +163,7 @@ button{
   animation:up 0.5s 0.15s both;
 }
 
-/* Фильтры и тематические паки */
+/* Фильтры и тематические паки авто */
 .pack-strip{
   display:flex;
   gap:6px;
@@ -365,7 +365,7 @@ button{
   pointer-events:none;
 }
 
-/* Фото автомобиля */
+/* Фото автомобиля в викторине */
 .shot{
   position:relative;
   margin:0 -16px;
@@ -598,9 +598,7 @@ button{
 .dcard.ok .fill{background:var(--green);box-shadow:0 0 12px var(--green-glow)}
 .dcard.bad .fill{background:var(--red);box-shadow:0 0 12px var(--red-glow)}
 
-/* ==========================================================================
-   ИНТЕРАКТИВНЫЙ РЕЖИМ «ДРАГ-РЕЙСИНГ 0-100 КМ/Ч»
-   ========================================================================== */
+/* Интерактивный режим Драг-рейсинга */
 .drag-arena{
   position:relative;
   background:#090d22;
@@ -775,13 +773,11 @@ button{
 }
 .next:active{transform:scale(0.98)}
 
-/* ==========================================================================
-   МОДАЛЬНЫЕ ОКНА (ГАРАЖ, ДОСТИЖЕНИЯ, НАСТРОЙКИ)
-   ========================================================================== */
+/* Модальные окна */
 .modal-overlay{
   position:fixed;
   inset:0;
-  background:rgba(5,7,22,0.85);
+  background:rgba(5,7,22,0.88);
   backdrop-filter:blur(10px);
   z-index:200;
   display:flex;
@@ -794,7 +790,7 @@ button{
   background:linear-gradient(180deg, #141b44 0%, #0a0e28 100%);
   width:100%;
   max-width:540px;
-  max-height:88dvh;
+  max-height:90dvh;
   border-radius:24px 24px 0 0;
   border-top:1.5px solid rgba(255,255,255,0.2);
   display:flex;
@@ -840,7 +836,7 @@ button{
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.1);
   border-radius:12px;
-  padding:10px;
+  padding:12px;
   text-align:left;
   cursor:pointer;
   transition:all 0.2s;
@@ -853,31 +849,16 @@ button{
   cursor:default;
   background:rgba(0,0,0,0.3);
 }
-.car-card .c-img-thumb{
-  width:100%;
-  height:76px;
-  border-radius:8px;
-  background:#070a1a;
-  object-fit:cover;
-}
 .car-card .c-name{
-  font:italic 800 15px/1.1 var(--display);
+  font:italic 800 16px/1.15 var(--display);
   color:#fff;
 }
 .car-card .c-meta{
-  font-size:11.5px;
+  font-size:12px;
   color:var(--yellow);
   font-weight:600;
 }
 
-/* Карточка деталей машины в гараже */
-.inspect-hero{
-  width:100%;
-  height:180px;
-  border-radius:14px;
-  object-fit:cover;
-  background:#000;
-}
 .specs-table{
   width:100%;
   border-collapse:collapse;
@@ -923,7 +904,6 @@ button{
 .achieve-item.done strong{color:var(--yellow)}
 .achieve-info small{font-size:12.5px;color:rgba(255,255,255,0.7);display:block;margin-top:2px}
 
-/* Всплывающий тост достижения / уровня */
 .toast-notice{
   position:fixed;
   top:calc(env(safe-area-inset-top, 0px) + 16px);
@@ -948,7 +928,6 @@ button{
   100%{opacity:0;transform:translate(-50%, -20px) scale(0.9)}
 }
 
-/* Экран завершения игры */
 .over{
   position:relative;
   text-align:center;
@@ -988,7 +967,6 @@ button{
 }
 .ghost:active{transform:scale(0.98)}
 
-/* Копирование для Ежедневного заезда */
 .copy-share-btn{
   background:linear-gradient(135deg, var(--cyan), #00a2ff);
   color:var(--deep);
@@ -996,6 +974,258 @@ button{
   padding:14px;
   border-radius:10px;
   margin-top:6px;
+}
+
+/* ==========================================================================
+   НОВЫЙ РАЗДЕЛ ПДД: РАЗДЕЛЬНЫЕ КАТЕГОРИИ А И В + РЕАЛЬНЫЕ ФОТО
+   ========================================================================== */
+.main-nav-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:4px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:14px;
+  margin:4px 0 8px;
+}
+.main-tab-btn{
+  padding:10px 8px;
+  border-radius:10px;
+  font:italic 800 15px/1 var(--display);
+  color:rgba(255,255,255,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:all 0.2s;
+}
+.main-tab-btn.active{
+  background:linear-gradient(135deg, var(--yellow), #ff9100);
+  color:var(--deep);
+  box-shadow:0 4px 14px var(--yellow-glow);
+}
+.main-tab-btn.active.pdd-tab{
+  background:linear-gradient(135deg, #00e5ff, #0088ff);
+  color:var(--deep);
+  box-shadow:0 4px 14px var(--cyan-glow);
+}
+
+/* Переключатель категорий А / В */
+.pdd-cat-switcher{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:4px 0 10px;
+}
+.pdd-cat-tab{
+  padding:12px 8px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  border:1.5px solid rgba(255,255,255,0.12);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.pdd-cat-tab strong{
+  font:italic 900 17px/1 var(--display);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.pdd-cat-tab small{
+  font-size:11px;
+  color:rgba(255,255,255,0.6);
+  font-weight:600;
+}
+.pdd-cat-tab.active-a{
+  background:linear-gradient(135deg, rgba(255,183,0,0.22), rgba(255,183,0,0.06));
+  border-color:var(--yellow);
+  box-shadow:0 0 16px rgba(255,183,0,0.3);
+}
+.pdd-cat-tab.active-a strong{color:var(--yellow)}
+.pdd-cat-tab.active-b{
+  background:linear-gradient(135deg, rgba(0,229,255,0.22), rgba(0,229,255,0.06));
+  border-color:var(--cyan);
+  box-shadow:0 0 16px rgba(0,229,255,0.3);
+}
+.pdd-cat-tab.active-b strong{color:var(--cyan)}
+
+/* Карточка реального фото в ПДД */
+.pdd-photo-container{
+  position:relative;
+  width:100%;
+  height:clamp(200px, 34dvh, 260px);
+  background:#050818;
+  border-radius:14px;
+  overflow:hidden;
+  border:1.5px solid rgba(255,255,255,0.18);
+  box-shadow:0 8px 24px rgba(0,0,0,0.55);
+  cursor:pointer;
+  margin-bottom:6px;
+}
+.pdd-photo-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.3s;
+}
+.pdd-photo-container:hover img{transform:scale(1.03)}
+.pdd-zoom-tip{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:rgba(7,10,30,0.8);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+  font:600 11px var(--text);
+  padding:5px 9px;
+  border-radius:20px;
+  backdrop-filter:blur(6px);
+  display:flex;
+  align-items:center;
+  gap:4px;
+  z-index:5;
+}
+.pdd-cat-tag{
+  position:absolute;
+  left:10px;
+  top:10px;
+  z-index:5;
+  font:italic 900 12px/1 var(--display);
+  padding:5px 10px;
+  border-radius:8px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+.pdd-cat-tag.cat-a{background:var(--yellow);color:var(--deep)}
+.pdd-cat-tag.cat-b{background:var(--cyan);color:var(--deep)}
+
+/* Оверлей траекторий А и Б поверх реального фото */
+.trajectory-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:14px 12px;
+  background:linear-gradient(180deg, transparent 40%, rgba(7,10,30,0.85) 100%);
+  gap:8px;
+  z-index:4;
+}
+.traj-badge{
+  font:italic 900 13px/1.2 var(--display);
+  padding:7px 12px;
+  border-radius:8px;
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  gap:6px;
+  backdrop-filter:blur(8px);
+}
+.traj-badge.t-a{background:rgba(16,185,129,0.9);border:1.5px solid #10b981}
+.traj-badge.t-b{background:rgba(244,63,94,0.9);border:1.5px solid #f43f5e}
+.traj-badge.t-blue{background:rgba(0,229,255,0.9);color:var(--deep);border:1.5px solid #00e5ff}
+
+/* Матрица номеров вопросов */
+.pdd-timer{
+  font:italic 900 22px/1 var(--display);
+  color:var(--yellow);
+  background:rgba(0,0,0,0.4);
+  padding:6px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.15);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.pdd-matrix{
+  display:flex;
+  gap:4px;
+  overflow-x:auto;
+  padding:6px 0;
+  scrollbar-width:none;
+}
+.pdd-matrix::-webkit-scrollbar{display:none}
+.pdd-num{
+  flex-shrink:0;
+  width:26px;
+  height:28px;
+  border-radius:6px;
+  background:rgba(255,255,255,0.1);
+  display:grid;
+  place-items:center;
+  font:italic 800 12px/1 var(--display);
+  color:rgba(255,255,255,0.8);
+  border:1px solid rgba(255,255,255,0.15);
+}
+.pdd-num.cur{border-color:var(--cyan);background:rgba(0,229,255,0.2);color:#fff;box-shadow:0 0 8px var(--cyan-glow)}
+.pdd-num.ok{background:var(--green);border-color:transparent;color:#fff}
+.pdd-num.bad{background:var(--red);border-color:transparent;color:#fff}
+
+.pdd-explain-box{
+  background:rgba(0,229,255,0.08);
+  border-left:4px solid var(--cyan);
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:13.5px;
+  line-height:1.45;
+  color:rgba(255,255,255,0.92);
+  margin-top:10px;
+  animation:up 0.35s both;
+}
+.pdd-explain-box strong{color:var(--cyan);display:block;margin-bottom:3px}
+
+/* Полноэкранный просмотр фото */
+.photo-lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(3,5,15,0.95);
+  z-index:300;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  backdrop-filter:blur(12px);
+  animation:fadeIn 0.2s both;
+}
+.photo-lightbox img{
+  max-width:100%;
+  max-height:80dvh;
+  object-fit:contain;
+  border-radius:12px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.8);
+  border:1.5px solid rgba(255,255,255,0.2);
+}
+.photo-lightbox .lb-caption{
+  margin-top:14px;
+  font-size:14px;
+  text-align:center;
+  color:rgba(255,255,255,0.9);
+  max-width:500px;
+}
+.photo-lightbox .lb-close{
+  position:absolute;
+  top:calc(env(safe-area-inset-top, 0px) + 16px);
+  right:16px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+  font-size:22px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,0.3);
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1016,9 +1246,7 @@ button{
 "use strict";
 
 /* ==========================================================================
-   БАЗА АВТОМОБИЛЕЙ С ТТХ, ТЭГАМИ КАТЕГОРИЙ И ФАКТАМИ
-   [0:Марка, 1:Модель, 2:л.с., 3:версия, 4:вики-поиск, 5:цена $, 6:regex_искл,
-    7:разгон 0-100 с, 8:привод, 9:двигатель, 10:тэги, 11:факт]
+   БАЗА АВТОМОБИЛЕЙ С ТТХ, ТЭГАМИ КАТЕГОРИЙ И ФАКТАМИ ДЛЯ ВИКТОРИНЫ
    ========================================================================== */
 const RAW = [
   /* JDM & Япония */
@@ -1067,13 +1295,7 @@ const RAW = [
   ["Ferrari","F40",478,"1987","f40",400000,"lm|competizione",3.8,"Задний (RWD)","2.9L Twin-Turbo Tipo F120 V8",["hyper","retro"],"Последняя модель, созданная при жизни Энцо Феррари: для снижения веса салон был лишен дверных ручек и шумоизоляции."],
   ["Ferrari","Enzo",660,"2002","enzo ferrari",650000,"19[4-9]\\d|portrait",3.3,"Задний (RWD)","6.0L Атмо Tipo F140B V12",["hyper"],"Назван в честь основателя компании и вобрал в себя углепластиковый монокок и аэродинамику Формулы-1."],
   ["Rimac","Nevera",1914,"2021","rimac nevera",2400000,"",1.81,"Полный (AWD)","4 Электромотора (по одному на колесо)",["hyper"],"Абсолютный мировой рекордсмен в разгоне: 4 электромотора выдают немыслимый крутящий момент 2360 Нм."],
-  ["Tesla","Model S",1034,"Plaid, 2021","models plaid|2021|2022|2023",130000,"",2.1,"Полный (AWD)","3 Электромотора Tri-Motor",["hyper"],"Роторы моторов Plaid обмотаны углеродным волокном, чтобы не разрушаться от центробежных сил на 20 000 об/мин."],
-
-  /* Ретро 80-90-х */
-  ["Lamborghini","Countach",455,"5000 QV, 1985","countach qv",100000,"lpi|800",4.8,"Задний (RWD)","5.2L Атмо V12",["retro","hyper"],"Из-за практически нулевого обзора назад водителям приходилось открывать дверь вверх и садиться на порог при парковке."],
-  ["Lamborghini","Diablo",492,"1990","diablo",239000,"diablogt|diablosv|diablovt|roadster",4.1,"Задний (RWD)","5.7L Атмо V12",["retro","hyper"],"Первый в истории суперкар Lamborghini, сумевший преодолеть барьер максимальной скорости в 325 км/ч."],
-  ["Ferrari","Testarossa",390,"1984","testarossa",90000,"512",5.3,"Задний (RWD)","4.9L Оппозитный 12-цил.",["retro"],"Знаменитые боковые ребра-«сыротерки» были спроектированы для подачи воздуха в боковые радиаторы."],
-  ["Jaguar","XJ220",542,"1992","xj220",580000,"",3.6,"Задний (RWD)","3.5L Twin-Turbo V6",["retro","hyper"],"Обладал титулом быстрейшего серийного автомобиля в мире до выхода McLaren F1 в 1993 году."]
+  ["Tesla","Model S",1034,"Plaid, 2021","models plaid|2021|2022|2023",130000,"",2.1,"Полный (AWD)","3 Электромотора Tri-Motor",["hyper"],"Роторы моторов Plaid обмотаны углеродным волокном, чтобы не разрушаться от центробежных сил на 20 000 об/мин."]
 ];
 
 const CARS = RAW.map(([b,m,hp,v,k,p,x,acc,drive,eng,tags,fact], id) => ({
@@ -1124,8 +1346,450 @@ const ACHIEVEMENTS = {
   streak_5:    {t:"Красная зона x5", d:"Набери серию из 5 правильных ответов", icon:"🔥"},
   streak_10:   {t:"Неудержимый x10", d:"Безошибочная серия из 10 побед", icon:"💥"},
   garage_10:   {t:"Свой автопарк", d:"Собери 10 машин в гараже", icon:"🚗"},
-  daily_done:  {t:"Гонщик дня", d:"Заверши ежедневный заезд", icon:"📅"}
+  daily_done:  {t:"Гонщик дня", d:"Заверши ежедневный заезд", icon:"📅"},
+  pdd_a_pass:  {t:"Мото-Мастер", d:"Успешно сдай официальный экзамен Категории А", icon:"🏍️"},
+  pdd_b_pass:  {t:"Авто-Профи", d:"Успешно сдай официальный экзамен Категории В", icon:"🚗"}
 };
+
+/* ==========================================================================
+   ОФИЦИАЛЬНАЯ БАЗА ВОПРОСОВ ПДД С РЕАЛЬНЫМИ ВЫСОКОКАЧЕСТВЕННЫМИ ФОТОГРАФИЯМИ
+   ПОЛНОЕ РАЗДЕЛЕНИЕ: КАТЕГОРИЯ «А» (МОТО) И КАТЕГОРИЯ «В» (АВТО)
+   ========================================================================== */
+let PDD_BANK = {
+  A: [
+    {
+      cat: "A",
+      ticket: 1,
+      topic: "Экипировка и безопасность",
+      q: "Водитель и пассажир мотоцикла при движении на данном транспортном средстве обязаны:",
+      opts: [
+        "Быть в застёгнутом мотошлеме",
+        "Быть в мотошлеме (застёгивать шлем необязательно при скорости до 50 км/ч)",
+        "Быть в мотошлеме только вне населённых пунктов"
+      ],
+      ans: 0,
+      rule: "Пункт 2.1.2 ПДД РФ: При движении на транспортном средстве, оборудованном ремнями безопасности, быть пристёгнутыми ими, а при управлении мотоциклом — быть в застёгнутом мотошлеме и не перевозить пассажиров без застёгнутого мотошлема.",
+      img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80",
+      caption: "Мотоциклист на дорожной трассе в застёгнутом защитном мотошлеме"
+    },
+    {
+      cat: "A",
+      ticket: 1,
+      topic: "Перевозка пассажиров",
+      q: "С каким стажем управления транспортным средством водителю разрешается перевозка пассажиров на мотоцикле?",
+      opts: [
+        "Только при наличии водительского удостоверения категории «А» или «А1» в течение 2 и более лет",
+        "Сразу после получения водительского удостоверения",
+        "При стаже вождения не менее 1 года любой категории"
+      ],
+      ans: 0,
+      rule: "Пункт 22.2(1) ПДД РФ: Перевозка людей на мотоцикле должна осуществляться водителем, имеющим водительское удостоверение на право управления транспортными средствами категории «А» или подкатегории «А1» в течение 2 и более лет.",
+      img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1000&q=80",
+      caption: "Мотоцикл с пассажиром на заднем сиденье на загородной автодороге"
+    },
+    {
+      cat: "A",
+      ticket: 1,
+      topic: "Расположение на проезжей части",
+      q: "Разрешается ли мотоциклам без бокового прицепа двигаться по одной полосе проезжей части в два ряда?",
+      opts: [
+        "Разрешается, если с учётом габаритов обеспечивается безопасный боковой интервал",
+        "Запрещается во всех случаях",
+        "Разрешается только на дорогах с односторонним движением"
+      ],
+      ans: 0,
+      rule: "Пункт 9.10 ПДД РФ: Водитель должен соблюдать дистанцию до движущегося впереди транспортного средства, а также необходимый боковой интервал, обеспечивающий безопасность движения. Движение двухколёсных мотоциклов в два ряда в пределах одной полосы допускается.",
+      img: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1000&q=80",
+      caption: "Два мотоциклиста двигаются по асфальтированной полосе с соблюдением бокового интервала"
+    },
+    {
+      cat: "A",
+      ticket: 2,
+      topic: "Полосы для маршрутных ТС",
+      q: "Разрешён ли мотоциклам выезд на полосу для маршрутных транспортных средств (знак 5.14 и разметка «А»)?",
+      opts: [
+        "Запрещён во всех случаях",
+        "Разрешён, если масса мотоцикла менее 400 кг",
+        "Разрешён только в выходные и праздничные дни при отсутствии знака «Въезд запрещён»"
+      ],
+      ans: 0,
+      rule: "Пункт 18.2 ПДД РФ: На дорогах с полосой для маршрутных ТС запрещаются движение и остановка других ТС на этой полосе (кроме школьных автобусов, легковых такси и велосипедистов). Мотоциклам въезд на выделенную автобусную полосу категорически запрещён!",
+      img: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1000&q=80",
+      caption: "Городская улица со специальной выделенной полосой для автобусов и знаком 5.14"
+    },
+    {
+      cat: "A",
+      ticket: 2,
+      topic: "Буксировка транспортных средств",
+      q: "Разрешена ли буксировка двухколёсного мотоцикла без бокового прицепа?",
+      opts: [
+        "Буксировка запрещается как такого мотоцикла, так и самим мотоциклом",
+        "Разрешена только на жёсткой сцепке",
+        "Разрешена со скоростью не более 30 км/ч на гибкой сцепке"
+      ],
+      ans: 0,
+      rule: "Пункт 20.4 ПДД РФ: Буксировка запрещается: двухколёсными мотоциклами без бокового прицепа, а также таких мотоциклов; буксировка в гололедицу на гибкой сцепке.",
+      img: "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=1000&q=80",
+      caption: "Одиночный двухколёсный мотоцикл на шоссе — буксировка запрещена ПДД"
+    },
+    {
+      cat: "A",
+      ticket: 3,
+      topic: "Скорость движения",
+      q: "С какой максимальной скоростью разрешено движение мотоциклам на автомагистралях?",
+      opts: [
+        "110 км/ч",
+        "90 км/ч",
+        "130 км/ч во всех случаях"
+      ],
+      ans: 0,
+      rule: "Пункт 10.3 ПДД РФ: Вне населённых пунктов мотоциклам на автомагистралях разрешается движение со скоростью не более 110 км/ч (согласно поправкам, скоростной лимит приравнен к легковым автомобилям).",
+      img: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1000&q=80",
+      caption: "Скоростная загородная автомагистраль с качественным асфальтовым покрытием"
+    },
+    {
+      cat: "A",
+      ticket: 3,
+      topic: "Перевозка детей",
+      q: "Разрешается ли перевозка детей в возрасте до 12 лет на заднем сиденье мотоцикла?",
+      opts: [
+        "Запрещается в любых случаях",
+        "Разрешается в застёгнутом мотошлеме и спецэкипировке",
+        "Разрешается в присутствии совершеннолетнего сопровождающего"
+      ],
+      ans: 0,
+      rule: "Пункт 22.9 ПДД РФ: Запрещается перевозить детей в возрасте младше 12 лет на заднем сиденье мотоцикла.",
+      img: "https://images.unsplash.com/photo-1519750157634-b6d493a0f77c?auto=format&fit=crop&w=1000&q=80",
+      caption: "Мотоцикл у обочины — пассажирское заднее сиденье"
+    },
+    {
+      cat: "A",
+      ticket: 4,
+      topic: "Техническое состояние (Шины)",
+      q: "Какова минимально допустимая остаточная глубина рисунка протектора шин для мотоциклов (категория L)?",
+      opts: [
+        "0.8 мм",
+        "1.6 мм",
+        "1.0 мм",
+        "2.0 мм"
+      ],
+      ans: 0,
+      rule: "Перечень неисправностей (п. 5.1): Остаточная глубина рисунка протектора шин составляет не более: для транспортных средств категорий L (мотоциклы, мопеды, мотороллеры) — 0.8 мм.",
+      img: "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&w=1000&q=80",
+      caption: "Протектор шины мотоцикла крупным планом — норма износа 0.8 мм"
+    },
+    {
+      cat: "A",
+      ticket: 4,
+      topic: "Основы безопасности",
+      q: "Какая техника экстренного торможения на сухом чистом асфальте обеспечивает минимальный тормозной путь мотоцикла?",
+      opts: [
+        "Одновременное использование обоих тормозов с основным дозируемым усилием на передний тормоз",
+        "Торможение только задним тормозом во избежание падения",
+        "Резкая полная блокировка обоих колёс"
+      ],
+      ans: 0,
+      rule: "Основы безопасного управления мотоциклом: При торможении вес перераспределяется вперёд, нагружая переднее колесо. До 70–80% тормозного усилия обеспечивает передний тормоз в сочетании с задним без блокировки колёс.",
+      img: "https://images.unsplash.com/photo-1558980394-4c7c9299fe96?auto=format&fit=crop&w=1000&q=80",
+      caption: "Переднее дисковое тормозное колесо и гидравлический суппорт мотоцикла"
+    },
+    {
+      cat: "A",
+      ticket: 5,
+      topic: "Маневрирование",
+      q: "По какой траектории мотоциклисту разрешён поворот направо на данном перекрёстке?",
+      opts: [
+        "Только по траектории А (в крайнюю правую полосу)",
+        "Только по траектории Б",
+        "По любой из указанных траекторий"
+      ],
+      ans: 0,
+      rule: "Пункт 8.6 ПДД РФ: При повороте направо транспортное средство должно двигаться по возможности ближе к правому краю проезжей части. Поворот во вторую полосу (траектория Б) при свободной правой запрещён.",
+      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1000&q=80",
+      caption: "Городской асфальтированный перекрёсток с правым поворотом",
+      trajectories: [
+        {name: "Траектория А", class: "t-a", desc: "В крайнюю правую"},
+        {name: "Траектория Б", class: "t-b", desc: "Во второй ряд"}
+      ]
+    }
+  ],
+
+  B: [
+    {
+      cat: "B",
+      ticket: 1,
+      topic: "Траектории поворота",
+      q: "По какой траектории водителю легкового автомобиля разрешено выполнить поворот направо?",
+      opts: [
+        "Только по траектории А (в крайнюю правую полосу)",
+        "Только по траектории Б",
+        "По любой из указанных траекторий"
+      ],
+      ans: 0,
+      rule: "Пункт 8.6 ПДД РФ: Поворот должен осуществляться таким образом, чтобы при выезде с пересечения проезжих частей ТС не оказалось на стороне встречного движения. При повороте направо транспортное средство должно двигаться по возможности ближе к правому краю проезжей части (траектория А).",
+      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1000&q=80",
+      caption: "Многополосный городской перекрёсток со светофорным регулированием",
+      trajectories: [
+        {name: "Траектория А", class: "t-a", desc: "Правый ряд"},
+        {name: "Траектория Б", class: "t-b", desc: "Второй ряд"}
+      ]
+    },
+    {
+      cat: "B",
+      ticket: 1,
+      topic: "Светофорное регулирование",
+      q: "Разрешено ли водителю повернуть направо при включённой стрелке в дополнительной секции одновременно с красным сигналом светофора?",
+      opts: [
+        "Разрешено, уступив дорогу транспортным средствам с других направлений",
+        "Разрешено с преимуществом в движении",
+        "Запрещено до включения основного зелёного сигнала"
+      ],
+      ans: 0,
+      rule: "Пункт 13.5 ПДД РФ: При движении в направлении стрелки, включённой в дополнительной секции одновременно с жёлтым или красным сигналом светофора, водитель обязан уступить дорогу ТС, движущимся с других направлений.",
+      img: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1000&q=80",
+      caption: "Реальный перекрёсток с многосекционным городским светофором"
+    },
+    {
+      cat: "B",
+      ticket: 2,
+      topic: "Круговое движение",
+      q: "По какой траектории водителю разрешено въехать на перекрёсток с круговым движением?",
+      opts: [
+        "По любой из указанных траекторий (с любой полосы данного направления)",
+        "Только по траектории А (из крайнего правого ряда)",
+        "Только по траектории Б (из левого ряда)"
+      ],
+      ans: 0,
+      rule: "Пункт 8.5 ПДД РФ: Перед поворотом направо, налево или разворотом водитель обязан заблаговременно занять соответствующее крайнее положение на проезжей части, КРОМЕ случаев въезда на перекрёсток, где организовано круговое движение.",
+      img: "https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=1000&q=80",
+      caption: "Круговая дорожная развязка (знак 4.3 «Круговое движение»)",
+      trajectories: [
+        {name: "Траектория А", class: "t-blue", desc: "Правая полоса"},
+        {name: "Траектория Б", class: "t-blue", desc: "Левая полоса"}
+      ]
+    },
+    {
+      cat: "B",
+      ticket: 2,
+      topic: "Буксировка прицепа (Категория В)",
+      q: "Разрешено ли водителю с водительским удостоверением категории «В» управлять легковым автомобилем с прицепом массой более 750 кг?",
+      opts: [
+        "Разрешено, если масса автопоезда не превышает 3500 кг, а масса прицепа не превышает массы автомобиля без нагрузки",
+        "Запрещено, с категорией «В» можно буксировать прицеп только до 750 кг",
+        "Разрешено без всяких ограничений"
+      ],
+      ans: 0,
+      rule: "Федеральный закон № 196-ФЗ: Водители с категорией «В» могут управлять составом ТС с прицепом, разрешённая максимальная масса которого превышает 750 кг, при условии, что она не превышает массу автомобиля без нагрузки, а общая масса автопоезда не превышает 3.5 тонны.",
+      img: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=80",
+      caption: "Легковой автомобиль с прицепом на загородной автодороге"
+    },
+    {
+      cat: "B",
+      ticket: 3,
+      topic: "Обгон (Знак 3.20)",
+      q: "Разрешён ли обгон тихоходного транспортного средства в зоне действия знака 3.20 «Обгон запрещён» через сплошную линию разметки?",
+      opts: [
+        "Запрещён во всех случаях при наличии сплошной линии разметки 1.1",
+        "Разрешён, если на ТС установлен опознавательный знак тихохода",
+        "Разрешён, если скорость тихохода менее 30 км/ч"
+      ],
+      ans: 0,
+      rule: "Постановление Пленума ВС РФ № 20: Если на дороге нанесена сплошная линия разметки 1.1, пересекать её для обгона запрещено в любом случае, даже если обгоняемое ТС является тихоходным со специальным знаком.",
+      img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1000&q=80",
+      caption: "Двухполосная автодорога со сплошной линией дорожной разметки 1.1"
+    },
+    {
+      cat: "B",
+      ticket: 3,
+      topic: "Остановка и стоянка",
+      q: "Разрешена ли стоянка легкового автомобиля на обочине автомагистрали вне населённого пункта с целью отдыха?",
+      opts: [
+        "Запрещена (стоянка разрешена только на специальных площадках со знаками 6.4 или 7.11)",
+        "Разрешена в светлое время суток с включёнными габаритами",
+        "Разрешена не более 15 минут"
+      ],
+      ans: 0,
+      rule: "Пункт 16.1 ПДД РФ: На автомагистралях запрещается остановка вне специальных площадок для стоянки, обозначенных знаком 6.4 «Парковка» или 7.11 «Место отдыха».",
+      img: "https://images.unsplash.com/photo-1516216628859-9bcceabb84ca?auto=format&fit=crop&w=1000&q=80",
+      caption: "Скоростная автомагистраль с широкой технической обочиной"
+    },
+    {
+      cat: "B",
+      ticket: 4,
+      topic: "Перевозка детей",
+      q: "С какого возраста разрешено перевозить ребёнка на переднем сиденье легкового автомобиля без детского автокресла (ДУУ)?",
+      opts: [
+        "С 12 лет (с пристёгиванием штатным ремнём безопасности)",
+        "С 7 лет",
+        "С 14 лет"
+      ],
+      ans: 0,
+      rule: "Пункт 22.9 ПДД РФ: Перевозка детей в возрасте от 7 до 11 лет (включительно) на переднем сиденье легкового автомобиля должна осуществляться ТОЛЬКО с использованием детских удерживающих систем (устройств). Без кресла на переднем сиденье можно только с 12 лет.",
+      img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=1000&q=80",
+      caption: "Салон автомобиля с детским креслом и штатным трёхточечным ремнём"
+    },
+    {
+      cat: "B",
+      ticket: 4,
+      topic: "Техническое состояние шин",
+      q: "Какова минимально допустимая остаточная глубина рисунка протектора летних шин легкового автомобиля (категория М1)?",
+      opts: [
+        "1.6 мм",
+        "0.8 мм",
+        "2.0 мм",
+        "4.0 мм"
+      ],
+      ans: 0,
+      rule: "Перечень неисправностей (п. 5.1): Остаточная глубина рисунка протектора шин легковых автомобилей категории M1 составляет не менее 1.6 мм (для зимних шин с маркировкой M+S на скользком покрытии — не менее 4.0 мм).",
+      img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1000&q=80",
+      caption: "Протектор шины легкового автомобиля — минимальный порог 1.6 мм"
+    },
+    {
+      cat: "B",
+      ticket: 5,
+      topic: "Скорость в жилых зонах",
+      q: "С какой максимальной скоростью разрешено движение легковых автомобилей в жилых зонах и на дворовых территориях?",
+      opts: [
+        "Не более 20 км/ч",
+        "Не более 30 км/ч",
+        "Не более 40 км/ч"
+      ],
+      ans: 0,
+      rule: "Пункт 10.2 ПДД РФ: В жилых зонах, велосипедных зонах и на дворовых территориях скорость движения транспортных средств не должна превышать 20 км/ч.",
+      img: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=1000&q=80",
+      caption: "Жилая дворовая территория с пешеходами и припаркованными авто"
+    },
+    {
+      cat: "B",
+      ticket: 5,
+      topic: "Проезд равнозначных перекрёстков",
+      q: "Вы намерены повернуть налево на нерегулируемом равнозначном перекрёстке. Кому Вы обязаны уступить дорогу?",
+      opts: [
+        "Транспортным средствам, приближающимся справа, а также встречным, движущимся прямо или направо",
+        "Только транспортным средствам справа",
+        "Никому, у Вас преимущество"
+      ],
+      ans: 0,
+      rule: "Пункты 13.11 и 13.12 ПДД РФ: На перекрёстке равнозначных дорог водитель обязан уступить дорогу ТС, приближающимся справа. При повороте налево водитель также обязан уступить дорогу ТС, движущимся по равнозначной дороге со встречного направления прямо или направо.",
+      img: "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1000&q=80",
+      caption: "Нерегулируемый городской перекрёсток равнозначных дорог"
+    }
+  ]
+};
+
+// Загрузка полного банка билетов ПДД из открытого репозитория GitHub.
+// Данные и изображения загружаются при первом открытии раздела ПДД; сам HTML остаётся лёгким.
+let pddBankLoaded = false;
+let pddBankLoading = null;
+let pddBankLoadError = "";
+const PDD_DATA_REPO = "https://github.com/etspring/pdd_russia";
+const PDD_RAW_BASE = "https://raw.githubusercontent.com/etspring/pdd_russia/master/";
+
+function pddExtractQuestions(value, out = []) {
+  if (!value) return out;
+  if (Array.isArray(value)) {
+    for (const item of value) pddExtractQuestions(item, out);
+  } else if (typeof value === "object") {
+    if (typeof value.question === "string" && Array.isArray(value.answers)) out.push(value);
+    else for (const v of Object.values(value)) {
+      if (v && (Array.isArray(v) || typeof v === "object")) pddExtractQuestions(v, out);
+    }
+  }
+  return out;
+}
+
+function pddNormalizeQuestion(raw, path) {
+  const answers = Array.isArray(raw.answers) ? raw.answers : [];
+  const ans = answers.findIndex(a => a && (a.is_correct === true || a.is_correct === 1 || a.is_correct === "true"));
+  const rawImage = typeof raw.image === "string" ? raw.image : "";
+  let img = "";
+  if (rawImage && !/^https?:\/\//i.test(rawImage)) {
+    const clean = rawImage.replace(/^\.\//, "").replace(/^\//, "");
+    img = PDD_RAW_BASE + clean;
+  } else if (rawImage) img = rawImage;
+  const ticketMatch = String(raw.ticket_number || path || "").match(/(?:билет|ticket|b)[^0-9]*(\d+)/i) || String(path || "").match(/(?:^|\D)(\d+)(?:\D|$)/);
+  return {
+    cat: "B",
+    ticket: ticketMatch ? Number(ticketMatch[1]) : 0,
+    topic: Array.isArray(raw.topic) ? raw.topic.join(" · ") : (raw.topic || "ПДД"),
+    q: raw.question,
+    opts: answers.map(a => String(a.answer_text ?? a.text ?? "")),
+    ans,
+    rule: String(raw.answer_tip || raw.correct_answer || "Правильный ответ отмечен в билете."),
+    img,
+    caption: raw.question,
+    _id: `${raw.ticket_number || ""}:${raw.title || ""}:${raw.id || raw.question}`
+  };
+}
+
+async function loadPddBank() {
+  if (pddBankLoaded) return true;
+  if (pddBankLoading) return pddBankLoading;
+  pddBankLoading = (async () => {
+    try {
+      // GitHub API сообщает точные пути файлов, чтобы не зависеть от названий отдельных билетов.
+      const treeResponse = await fetch("https://api.github.com/repos/etspring/pdd_russia/git/trees/master?recursive=1", { cache: "no-cache" });
+      if (!treeResponse.ok) throw new Error("GitHub API ответил " + treeResponse.status);
+      const treeData = await treeResponse.json();
+      if (!Array.isArray(treeData.tree)) throw new Error("Не удалось получить список файлов с билетами");
+      let paths = treeData.tree
+        .filter(x => x.type === "blob" && /^questions\//i.test(x.path) && /\.json$/i.test(x.path) && /tickets/i.test(x.path))
+        .map(x => x.path);
+      if (!paths.length) {
+        paths = treeData.tree
+          .filter(x => x.type === "blob" && /^questions\//i.test(x.path) && /\.json$/i.test(x.path) && /A[_-]?B/i.test(x.path))
+          .map(x => x.path);
+      }
+      if (!paths.length) throw new Error("В репозитории не найдены JSON-файлы экзаменационных билетов");
+
+      const allRaw = [];
+      // Небольшими партиями, чтобы не создавать десятки одновременных запросов.
+      for (let i = 0; i < paths.length; i += 8) {
+        const batch = await Promise.all(paths.slice(i, i + 8).map(async path => {
+          const response = await fetch(PDD_RAW_BASE + path, { cache: "no-cache" });
+          if (!response.ok) return [];
+          try { return pddExtractQuestions(await response.json()); } catch (_) { return []; }
+        }));
+        for (const group of batch) allRaw.push(...group);
+      }
+
+      const unique = new Map();
+      for (const raw of allRaw) {
+        const category = String(raw.ticket_category || "").toUpperCase().replace(/\s/g, "");
+        // Для теории легкового автомобиля используем комплект A/B, не C/D.
+        if (category && !/(^|[,;/])A?[,;/]?B($|[,;/])/.test(category) && category !== "A,B" && category !== "B,A" && category !== "A,B,M") continue;
+        if (!raw.ticket_number || !Array.isArray(raw.answers) || !raw.answers.length) continue;
+        const normalized = pddNormalizeQuestion(raw, "");
+        if (normalized.ans < 0 || !normalized.opts.length || !normalized.q) continue;
+        unique.set(normalized._id, normalized);
+      }
+      const bank = Array.from(unique.values());
+      if (bank.length < 800) throw new Error(`Загружено только ${bank.length} вопросов — ожидалось 800. Проверь подключение или доступность источника.`);
+      PDD_BANK = { A: bank.map(q => ({...q, cat:"A"})), B: bank.map(q => ({...q, cat:"B"})) };
+      pddBankLoaded = true;
+      pddBankLoadError = "";
+      return true;
+    } catch (err) {
+      console.error("Не удалось загрузить билеты ПДД:", err);
+      pddBankLoadError = err && err.message ? err.message : "Неизвестная ошибка загрузки";
+      return false;
+    } finally {
+      pddBankLoading = null;
+    }
+  })();
+  return pddBankLoading;
+}
+
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+const best = m => store.get("tacho_best:" + m, 0);
+const setBest = (m, val) => store.set("tacho_best:" + m, val);
+
+let appSection = store.get("tacho_section", "quiz"); // 'quiz' | 'pdd'
+let pddCategory = store.get("tacho_pdd_category", "B"); // 'A' | 'B'
+let pddState = null;
 
 const MIXK = ["drag","model","drag","brand","power","rich","gp","gc"];
 const G = {
@@ -1151,12 +1815,6 @@ const pos = (g, v) => (g.log
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const cssu = u => u.replace(/['"\\()]/g, c => "%" + c.charCodeAt(0).toString(16));
-const store = {
-  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
-  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
-};
-const best = m => store.get("tacho_best:" + m, 0);
-const setBest = (m, val) => store.set("tacho_best:" + m, val);
 const rnd = n => Math.floor(Math.random() * n);
 function shuffle(a){
   a = a.slice();
@@ -1169,7 +1827,6 @@ function shuffle(a){
 const sample = (pool, n, ex) => shuffle(pool.filter(x => !ex.includes(x))).slice(0, n);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-/* Тактильная отдача */
 function vibrate(pat){
   if("vibrate" in navigator){
     try{ navigator.vibrate(pat); }catch(e){}
@@ -1264,7 +1921,6 @@ const Sound = (() => {
       if(muted) return;
       const c = getCtx(); if(!c) return;
       const t = c.currentTime;
-      // Визг шин (модулированный шум)
       const osc = c.createOscillator();
       const g = c.createGain();
       osc.type = "sawtooth";
@@ -1325,7 +1981,7 @@ const Sound = (() => {
 })();
 
 /* ==========================================================================
-   НЕОНОВЫЙ ФОН И СИСТЕМА ЧАСТИЦ
+   ФОН И ЧАСТИЦЫ
    ========================================================================== */
 const bgCanvas = $("bg-canvas");
 const bgCtx = bgCanvas.getContext("2d");
@@ -1420,7 +2076,7 @@ function renderFx(){
 requestAnimationFrame(renderFx);
 
 /* ==========================================================================
-   ПОИСК И ПРЕДЗАГРУЗКА ФОТО С WIKIMEDIA
+   ПОИСК И ЗАГРУЗКА ФОТО АВТОМОБИЛЕЙ
    ========================================================================== */
 const N = s => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 const BAD = /logo|badge|emblem|icon|interior|dashboard|cockpit|engine|wheel|seat|steering|gauge|speedo|diagram|drawing|blueprint|map|chassis|cutaway|schematic|light|detail|console|trunk|boot|crash|wreck|poster|portrait|toy|lego|scale|miniature|screenshot|render|sketch/i;
@@ -1530,17 +2186,7 @@ const Meta = {
       g.add(carId);
       store.set("tacho_garage", [...g]);
       Meta.checkAchieve("garage_10", g.size >= 10);
-      const c = CARS[carId];
-      if(c.tags.includes("jdm")) Meta.checkCountAchieve("jdm_fan", "jdm", 5);
-      if(c.tags.includes("muscle")) Meta.checkCountAchieve("muscle_fan", "muscle", 5);
-      if(c.tags.includes("hyper")) Meta.checkCountAchieve("hyper_fan", "hyper", 5);
     }
-  },
-  checkCountAchieve: (achId, tag, req) => {
-    const g = Meta.getGarage();
-    let count = 0;
-    g.forEach(id => { if(CARS[id] && CARS[id].tags.includes(tag)) count++; });
-    if(count >= req) Meta.checkAchieve(achId, true);
   },
   getAchieves: () => new Set(store.get("tacho_achieves", [])),
   checkAchieve: (id, condition) => {
@@ -1572,7 +2218,7 @@ const Meta = {
 /* ==========================================================================
    СКИНОПОСТРОИТЕЛЬ ТАХОМЕТРА
    ========================================================================== */
-let activeSkin = store.get("tacho_skin", "classic"); // classic | lcd80 | motec
+let activeSkin = store.get("tacho_skin", "classic");
 
 function renderTachometer(skin){
   if(skin === "lcd80"){
@@ -1591,7 +2237,6 @@ function renderTachometer(skin){
     return `
       <svg class="gauge" viewBox="0 0 200 115" role="img" aria-label="MoTeC Racing">
         <rect x="15" y="15" width="170" height="90" fill="#111" stroke="#444" stroke-width="2" rx="8"/>
-        <!-- Shift Lights -->
         <g id="motec-leds">
           <circle cx="45" cy="34" r="6" fill="#00e5ff"/>
           <circle cx="65" cy="34" r="6" fill="#00e5ff"/>
@@ -1605,7 +2250,6 @@ function renderTachometer(skin){
       </svg>
     `;
   }
-  // Classic
   return `
     <svg class="gauge" viewBox="0 0 200 124" role="img" aria-label="Классический тахометр">
       <defs>
@@ -1626,7 +2270,7 @@ function renderTachometer(skin){
 }
 
 /* ==========================================================================
-   ГЕНЕРАТОР ВОПРОСОВ
+   ГЕНЕРАТОР ВОПРОСОВ АВТОВИКТОРИНЫ
    ========================================================================== */
 let activePack = store.get("tacho_pack", "all");
 
@@ -1657,7 +2301,6 @@ async function duel(s, kind){
     const ph = await Promise.all([photoFor(s, a), photoFor(s, b)]);
     if(!ph[0] || !ph[1]) continue;
 
-    // В драге побеждает тот, у кого разгон МЕНЬШЕ секунд
     const ans = kind === "drag" ? (a.acc < b.acc ? 0 : 1) : (a[f] > b[f] ? 0 : 1);
     return {kind, f, items: [a, b], ph, ans};
   }
@@ -1692,7 +2335,7 @@ async function makeQ(s){
 }
 
 /* ==========================================================================
-   ЕЖЕДНЕВНЫЙ ЧЕЛЛЕНДЖ (АВТОМОБИЛЬ ДНЯ)
+   ЕЖЕДНЕВНЫЙ ЧЕЛЛЕНДЖ
    ========================================================================== */
 function getTodayDateStr(){
   const d = new Date();
@@ -1719,19 +2362,109 @@ function getDailyCars(){
 }
 
 /* ==========================================================================
-   ИНТЕРФЕЙС И СОСТОЯНИЕ
+   ГЛАВНЫЙ ИНТЕРФЕЙС И МЕНЮ
    ========================================================================== */
 const app = $("app");
 let S = null, token = 0;
 
 function menu(){
   token++; S = null;
-  const isMuted = Sound.isMuted();
   const xp = Meta.getXP();
   const rank = Meta.getRank(xp);
   const garage = Meta.getGarage();
   const todayStr = getTodayDateStr();
   const dailyDone = store.get("tacho_daily_done:" + todayStr, false);
+
+  const navTabs = `
+    <div class="main-nav-tabs">
+      <button class="main-tab-btn ${appSection === "quiz" ? "active" : ""}" data-switch-section="quiz">
+        🏎️ Автовикторина
+      </button>
+      <button class="main-tab-btn pdd-tab ${appSection === "pdd" ? "active" : ""}" data-switch-section="pdd">
+        🚦 Экзамен ПДД
+      </button>
+    </div>
+  `;
+
+  if(appSection === "pdd"){
+    const passedKey = pddCategory === "A" ? "tacho_pdd_passed_a" : "tacho_pdd_passed_b";
+    const totalKey = pddCategory === "A" ? "tacho_pdd_total_a" : "tacho_pdd_total_b";
+    const passedCount = store.get(passedKey, 0);
+    const totalCount = store.get(totalKey, 0);
+    const isCatA = pddCategory === "A";
+
+    app.innerHTML = `
+      <div class="user-panel">
+        <div class="rank-badge" data-modal="rank">
+          <span class="rank-icon">${isCatA ? "🏍️" : "🚗"}</span>
+          <span class="rank-txt">Категория ${pddCategory}<small>${passedCount} из ${totalCount} сдано</small></span>
+        </div>
+        <div class="user-actions">
+          <button class="btn-icon" data-modal="achieve" title="Достижения">🏆</button>
+          <button class="btn-icon" data-modal="settings" title="Настройки">⚙️</button>
+        </div>
+      </div>
+
+      ${navTabs}
+
+      <!-- Переключатель категорий А и В -->
+      <div class="pdd-cat-switcher">
+        <button class="pdd-cat-tab ${isCatA ? "active-a" : ""}" data-set-pdd-cat="A">
+          <strong>🏍️ Категория А</strong>
+          <small>Мотоциклы, мопеды, трициклы</small>
+        </button>
+        <button class="pdd-cat-tab ${!isCatA ? "active-b" : ""}" data-set-pdd-cat="B">
+          <strong>🚗 Категория В</strong>
+          <small>Легковые автомобили и прицепы</small>
+        </button>
+      </div>
+
+      <div class="hero" style="padding-top:2px">
+        <h1 class="word" style="font-size:52px;color:${isCatA ? "var(--yellow)" : "var(--cyan)"}">
+          ПДД 2026 [${pddCategory}]
+        </h1>
+        <p class="sub">${isCatA ? "Билеты А/В · вопросы и иллюстрации загружаются из интернета" : "800 вопросов · 40 билетов · иллюстрации из базы экзаменационных билетов"}</p>
+      </div>
+
+      <!-- Главная карточка экзамена -->
+      <div class="daily-card" style="border-color:${isCatA ? "var(--yellow)" : "var(--cyan)"};box-shadow:0 0 20px ${isCatA ? "rgba(255,183,0,0.3)" : "rgba(0,229,255,0.3)"};margin-top:2px" data-act="start-pdd-exam">
+        <div>
+          <div class="d-tit" style="color:${isCatA ? "var(--yellow)" : "var(--cyan)"}">
+            🎯 Экзамен ГИБДД (${pddCategory})
+          </div>
+          <div class="d-sub">20 вопросов · Таймер 20 минут · Не более 2 ошибок</div>
+        </div>
+        <span class="daily-pill" style="background:${isCatA ? "var(--yellow)" : "var(--cyan)"}">Сдать</span>
+      </div>
+
+      <!-- Режимы ПДД -->
+      <div class="modes" style="margin-top:6px">
+        <button class="mode" data-act="start-pdd-ticket-1" style="--i:0;border-left-color:${isCatA ? "var(--yellow)" : "var(--cyan)"}">
+          <span>
+            <strong>Билет №1 (${isCatA ? "Мотоциклы" : "Легковые"})</strong>
+            <small>Оригинальные схемы и иллюстрации из билетов</small>
+          </span>
+          <span class="rec">20<small>вопросов</small></span>
+        </button>
+
+        <button class="mode" data-act="start-pdd-marathon" style="--i:1;border-left-color:var(--green)">
+          <span>
+            <strong>Марафон без ошибок</strong>
+            <small>Все 800 вопросов категории B подряд</small>
+          </span>
+          <span class="rec">800<small>вопросов</small></span>
+        </button>
+      </div>
+
+      <div class="fact-card" style="margin-top:10px;border-left-color:${isCatA ? "var(--yellow)" : "var(--cyan)"}">
+        <b style="color:${isCatA ? "var(--yellow)" : "var(--cyan)"}">
+          📸 Реальные фотографии дорожных ситуаций
+        </b>
+        Вместо абстрактных схем в разделе теперь используются высокодетализированные дорожные фотографии. Нажимайте на любое фото для увеличения в полный экран.
+      </div>
+    `;
+    return;
+  }
 
   const packChips = Object.keys(PACKS).map(k => `
     <button class="pack-chip ${k === activePack ? "active" : ""}" data-pack="${k}">
@@ -1761,6 +2494,8 @@ function menu(){
       </div>
     </div>
 
+    ${navTabs}
+
     <div class="hero">
       <div class="gauge-box" id="hero-gauge" title="Газануть!">
         ${renderTachometer(activeSkin)}
@@ -1770,7 +2505,6 @@ function menu(){
       <p class="sub">Коллекция: <b>${garage.size}</b> / ${CARS.length} авто · Паки и Драг</p>
     </div>
 
-    <!-- Автомобиль Дня -->
     <div class="daily-card" data-act="start-daily">
       <div>
         <div class="d-tit">📅 Автомобиль Дня ${dailyDone ? "✓" : ""}</div>
@@ -1779,13 +2513,10 @@ function menu(){
       <span class="daily-pill">${dailyDone ? "Счет" : "Старт"}</span>
     </div>
 
-    <!-- Полоса фильтров -->
     <div class="pack-strip">${packChips}</div>
-
     <div class="modes">${modeRows}</div>
   `;
 
-  // Интерактивная перегазовка
   const hg = $("hero-gauge"), nd = $("hero-needle");
   if(hg){
     hg.addEventListener("click", () => {
@@ -1799,9 +2530,10 @@ function menu(){
   }
 }
 
+/* ==========================================================================
+   ИГРОВАЯ МЕХАНИКА ВИКТОРИНЫ
+   ========================================================================== */
 function start(mode){
-  Sound.click();
-  vibrate(30);
   token++;
   S = {
     mode,
@@ -1813,25 +2545,14 @@ function start(mode){
     recent: [],
     used: new Set(),
     locked: false,
-    dragRunning: false,
-    isDaily: false,
-    dailyStep: 0,
-    dailyAnswers: []
+    newBest: false
   };
   next();
 }
 
 function startDaily(){
-  Sound.click();
-  vibrate(30);
   token++;
-  const todayStr = getTodayDateStr();
-  const saved = store.get("tacho_daily_res:" + todayStr, null);
-  if(saved){
-    showDailyResult(saved.score, saved.ans);
-    return;
-  }
-  const dCars = getDailyCars();
+  const dailyCars = getDailyCars();
   S = {
     mode: "daily",
     score: 0,
@@ -1842,44 +2563,56 @@ function startDaily(){
     recent: [],
     used: new Set(),
     locked: false,
-    isDaily: true,
     dailyStep: 0,
-    dailyCars: dCars,
-    dailyAnswers: []
+    dailyCars,
+    dailyResults: []
   };
-  nextDaily();
+  next();
 }
 
-const barH = () => `
-  <button class="back" data-act="menu" aria-label="В меню">‹</button>
-  <div class="mt">
-    ${S.isDaily ? `Автомобиль дня (${S.dailyStep+1}/5)` : MODES[S.mode].t}
-    <small>${S.isDaily ? "5 раундов" : `рекорд ${Math.max(best(S.mode), S.score)}`}</small>
-  </div>
-  <button class="back" data-act="toggle-sound" style="font-size:18px">
-    ${Sound.isMuted() ? "🔇" : "🔊"}
-  </button>
-  <div class="lives" role="img" aria-label="Жизней: ${S.lives}">
-    ${Array.from({length: S.isDaily ? 5 : 3}, (_, i) => `<i class="${i < S.lives ? "" : "lost"}"></i>`).join("")}
-  </div>
-`;
+async function makeDailyQ(s){
+  if(!s || s.dailyStep >= s.dailyCars.length) return null;
+  const car = s.dailyCars[s.dailyStep];
+  const ph = await photoFor(s, car);
+  if(!ph) return null;
+  const basePool = CARS;
+  const o = shuffle([car, ...sample(basePool, 3, [car])]);
+  const labels = o.map(c => c.name);
+  const ans = o.indexOf(car);
+  return {kind: "model", car, ph, labels, ans};
+}
+
+const barH = () => {
+  const modeTitle = S.mode === "daily" ? "Автомобиль Дня" : (MODES[S.mode]?.t || "Гонка");
+  const recordTxt = S.mode === "daily" ? `Этап ${S.dailyStep + 1} из 5` : `рекорд ${Math.max(best(S.mode), S.score)}`;
+  const livesCount = S.mode === "daily" ? 5 : 3;
+  const livesHtml = Array.from({length: livesCount}, (_, i) => `<i class="${i < S.lives ? "" : "lost"}"></i>`).join("");
+  return `
+    <button class="back" data-act="menu" aria-label="В меню">‹</button>
+    <div class="mt">${modeTitle}<small>${recordTxt}</small></div>
+    <div class="lives" role="img" aria-label="Жизней: ${S.lives}">${livesHtml}</div>
+  `;
+};
 
 const meterH = () => {
   const lit = S.streak ? ((S.streak - 1) % 10) + 1 : 0;
   let g = "";
   for(let i = 0; i < 10; i++){
-    g += `<i class="${i < lit ? "on" : ""}${i >= 7 ? " hot" : ""}${i === lit - 1 && S.streak >= 4 ? " fire" : ""}"></i>`;
+    g += `<i class="${i < lit ? "on" : ""}${i >= 8 ? " hot" : ""}${i === lit - 1 ? " fire" : ""}"></i>`;
   }
-  return `<b>${S.score}</b><div class="tach" aria-hidden="true">${g}</div>`;
+  return `
+    <b>${S.score}</b>
+    <div class="tach" aria-hidden="true">${g}</div>
+    ${S.streak >= 3 ? `<div class="combo-badge">🔥 x${S.streak}</div>` : ""}
+  `;
 };
 
 async function go(){
   if(!S) return;
   app.classList.add("leave");
-  await sleep(180);
+  await sleep(170);
   app.classList.remove("leave");
-  if(S.isDaily) nextDaily();
-  else next();
+  next();
 }
 
 async function next(){
@@ -1888,55 +2621,42 @@ async function next(){
     <div class="shot sk">
       <div class="bar" id="bar">${barH()}</div>
       <div class="meter" id="meter">${meterH()}</div>
-    </div>`;
-
+    </div>
+  `;
   let q = s.pre ? await s.pre : null;
   s.pre = null;
-  if(!q) q = await makeQ(s);
+  if(!q){
+    q = s.mode === "daily" ? await makeDailyQ(s) : await makeQ(s);
+  }
   if(t !== token) return;
-
   if(!q){
     app.innerHTML = `
       <div class="bar flow" id="bar">${barH()}</div>
-      <div class="err">Не удалось загрузить авто. Попробуйте еще раз.</div>
-      <div class="nextbar"><button class="next" data-act="retry">Повторить</button></div>
+      <div class="err" style="background:rgba(255,255,255,0.06);padding:18px;border-radius:12px;margin-top:14px">
+        Не удалось загрузить фотографии с серверов Wikimedia. Проверьте подключение к интернету.
+      </div>
+      <div class="nextbar">
+        <button class="next" data-act="retry">Повторить</button>
+      </div>
     `;
     return;
   }
-
   s.q = q;
   s.locked = false;
   renderQ();
-  s.pre = makeQ(s);
-}
-
-async function nextDaily(){
-  const s = S;
-  if(s.dailyStep >= 5){
-    finishDaily();
-    return;
+  if(s.mode !== "daily"){
+    s.pre = makeQ(s);
   }
-  const car = s.dailyCars[s.dailyStep];
-  app.innerHTML = `
-    <div class="shot sk">
-      <div class="bar" id="bar">${barH()}</div>
-      <div class="meter" id="meter">${meterH()}</div>
-    </div>`;
-  const ph = await photoFor(s, car);
-  const o = shuffle([car, ...sample(CARS, 3, [car])]);
-  s.q = {kind:"model", car, ph, labels:o.map(c=>c.name), ans:o.indexOf(car)};
-  s.locked = false;
-  renderQ();
 }
 
 const shotHTML = p => {
-  const contain = p && p.w / p.h < 1.35;
+  const contain = p.w / p.h < 1.35;
   return `
     <div class="shot" id="shot">
       ${contain ? `<div class="bgb" style="background-image:url('${cssu(p.src)}')"></div>` : ""}
-      ${p ? `<img class="${contain ? "contain" : ""}" src="${esc(p.src)}" alt="Автомобиль">` : ""}
-      <div class="fx-flash"></div>
-      <div id="cap"></div>
+      <img class="${contain ? "contain" : ""}" src="${esc(p.src)}" alt="Автомобиль">
+      <i class="fx-flash"></i>
+      <div id="cap" class="cap"></div>
       <div class="bar" id="bar">${barH()}</div>
       <div class="meter" id="meter">${meterH()}</div>
     </div>
@@ -1945,65 +2665,59 @@ const shotHTML = p => {
 
 function renderQ(){
   const s = S, q = s.q;
-  const comboHTML = s.streak >= 3 ? `<div class="combo-badge">🔥 СЕРИЯ ×${s.streak}</div>` : "";
-
-  // 1. РЕЖИМ «ДРАГ-РЕЙСИНГ 0-100 КМ/Ч»
   if(q.kind === "drag"){
+    const [c1, c2] = q.items;
     app.innerHTML = `
       <div class="bar flow" id="bar">${barH()}</div>
       <div class="meter flow" id="meter">${meterH()}</div>
-      ${comboHTML}
-      <p class="q">Кто быстрее до 100 км/ч?
-        <small>Выбери победителя на 402 метрах</small>
-      </p>
+      <p class="q">🏁 Драг 0–100 км/ч: Кто быстрее?<small>Выбери болид и смотри заезд на стрипе</small></p>
+
       <div class="drag-arena">
         <div class="drag-tree">
-          <div class="tree-light stage on"></div>
-          <div class="tree-light yellow" id="dl-y1"></div>
-          <div class="tree-light yellow" id="dl-y2"></div>
-          <div class="tree-light green" id="dl-gr"></div>
+          <div class="tree-light stage" id="tl-stage"></div>
+          <div class="tree-light yellow" id="tl-y1"></div>
+          <div class="tree-light yellow" id="tl-y2"></div>
+          <div class="tree-light green" id="tl-green"></div>
         </div>
+
         <div class="drag-strip">
           <div class="finish-line"></div>
           <div class="drag-lane">
-            <div class="drag-car-sprite c1" id="dcar-0">🏎️ ${esc(q.items[0].name)}</div>
+            <div class="drag-car-sprite c1" id="car-sprite-0">
+              🏎️ ${esc(c1.name)} <span id="time-c1"></span>
+            </div>
           </div>
           <div class="drag-lane">
-            <div class="drag-car-sprite c2" id="dcar-1">🏎️ ${esc(q.items[1].name)}</div>
+            <div class="drag-car-sprite c2" id="car-sprite-1">
+              🏎️ ${esc(c2.name)} <span id="time-c2"></span>
+            </div>
           </div>
         </div>
-        <div id="drag-win-banner"></div>
+
+        <div id="drag-winner" class="winner-banner" style="display:none"></div>
       </div>
-      <div class="duel-wrap" style="margin-top:10px">
-        ${q.items.map((c, i) => `
-          <button class="dcard" data-drag-i="${i}" style="--i:${i}">
-            ${q.ph[i] ? `<img src="${esc(q.ph[i].src)}" alt="${esc(c.name)}">` : ""}
-            <i class="edge"></i>
-            <span class="info">
-              <span>
-                <span class="nm">${esc(c.name)}</span>
-                <span class="vr">${esc(c.v)} · ${esc(c.drive)}</span>
-              </span>
-              <span class="hp"><b id="d-acc-${i}">?</b><small>сек</small></span>
-            </span>
-            <i class="fill"></i>
-          </button>
-        `).join("")}
+
+      <div class="opts" style="margin-top:12px">
+        <button class="opt" data-drag-i="0" style="--i:0">
+          🥇 1. ${esc(c1.name)} (${esc(c1.v)})
+        </button>
+        <button class="opt" data-drag-i="1" style="--i:1">
+          🥈 2. ${esc(c2.name)} (${esc(c2.v)})
+        </button>
       </div>
+
       <div id="after"></div>
     `;
     return;
   }
 
-  // 2. ДУЭЛЬ (МОЩНОСТЬ / ЦЕНА)
   if(q.kind === "power" || q.kind === "rich"){
     const pr = q.f === "p";
     app.innerHTML = `
       <div class="bar flow" id="bar">${barH()}</div>
       <div class="meter flow" id="meter">${meterH()}</div>
-      ${comboHTML}
       <p class="q">${pr ? "Какой автомобиль дороже?" : "Какой автомобиль мощнее?"}
-        <small>${pr ? "Цена новой машины на старте продаж" : "Заводская мощность"}</small>
+        <small>${pr ? "Ориентировочная цена новой машины" : "Сравнение мощности двигателей"}</small>
       </p>
       <div class="duel-wrap">
         <div class="vs-divider">VS</div>
@@ -2027,26 +2741,26 @@ function renderQ(){
     return;
   }
 
-  // 3. ПОЛЗУНОК (МОЩНОСТЬ / ЦЕНА)
   if(q.kind === "gp" || q.kind === "gc"){
     const g = G[q.kind], t0 = q.kind === "gp" ? 450 : 500;
-    app.innerHTML = shotHTML(q.ph) + comboHTML + `
+    app.innerHTML = shotHTML(q.ph) + `
       <p class="q">${g.ask}<small>${esc(q.car.name)} · ${esc(q.car.v)}</small></p>
       <div class="guess">
         <div class="read" id="read">${g.fmt(val(g, t0))}</div>
         <div class="rw" id="rw">
-          <input class="rng" id="rng" type="range" min="0" max="1000" step="1" value="${t0}" style="--p:${t0/10}%" aria-label="Оценка">
+          <input class="rng" id="rng" type="range" min="0" max="1000" step="1" value="${t0}" style="--p:${t0/10}%" aria-label="Твоя оценка">
         </div>
         <div class="lh"><span>${g.fmt(g.min)}</span><span>${g.fmt(g.max)}</span></div>
       </div>
-      <div id="after"><div class="nextbar"><button class="next" data-act="check">Проверить</button></div></div>
+      <div id="after">
+        <div class="nextbar"><button class="next" data-act="check">Проверить</button></div>
+      </div>
     `;
     return;
   }
 
-  // 4. ТЕКСТОВЫЕ ВАРИАНТЫ (МОДЕЛЬ / МАРКА)
-  app.innerHTML = shotHTML(q.ph) + comboHTML + `
-    <p class="q">${q.kind === "brand" ? "Какая это марка авто?" : "Что это за модель?"}</p>
+  app.innerHTML = shotHTML(q.ph) + `
+    <p class="q">${q.kind === "brand" ? "Какая это марка?" : "Что это за модель?"}</p>
     <div class="opts">
       ${q.labels.map((l, i) => `<button class="opt" data-i="${i}" style="--i:${i}">${esc(l)}</button>`).join("")}
     </div>
@@ -2055,169 +2769,90 @@ function renderQ(){
 }
 
 function countUp(el, to, fmt){
+  if(!el) return;
   fmt = fmt || (v => v);
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ el.textContent = fmt(to); return; }
   const t0 = performance.now();
   (function f(t){
-    const p = Math.min(1, (t - t0) / 950);
+    const p = Math.min(1, (t - t0) / 900);
     el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - p, 3))));
     if(p < 1) requestAnimationFrame(f);
   })(t0);
 }
 
-function settle(ok, evtPos){
+function settle(ok){
   const s = S;
   if(ok){
     s.score++;
     s.streak++;
-    Meta.addXP(s.isDaily ? 25 : 15);
-    Meta.checkAchieve("first_win", true);
+    Meta.addXP(20 + Math.min(s.streak * 5, 50));
+    Sound.correct();
+    vibrate([40, 20]);
+    addSparks(window.innerWidth / 2, 220, 25);
+    if(s.mode !== "daily" && s.score > best(s.mode)){
+      setBest(s.mode, s.score);
+      s.newBest = true;
+    }
     if(s.streak >= 5) Meta.checkAchieve("streak_5", true);
     if(s.streak >= 10) Meta.checkAchieve("streak_10", true);
-
-    if(!s.isDaily && s.score > best(s.mode)){
-      setBest(s.mode, s.score);
-    }
-    Sound.correct();
-    vibrate([40, 30, 40]);
-    const cx = evtPos ? evtPos.x : window.innerWidth / 2;
-    const cy = evtPos ? evtPos.y : window.innerHeight / 2;
-    addSparks(cx, cy, 26);
+    Meta.checkAchieve("first_win", true);
+    if(s.q && s.q.car) Meta.unlockCar(s.q.car.id);
   } else {
     s.lives--;
     s.streak = 0;
     Sound.wrong();
-    vibrate([120, 60, 100]);
+    vibrate([80, 40, 80]);
     app.classList.add("shake");
-    setTimeout(() => app.classList.remove("shake"), 400);
+    setTimeout(() => app.classList.remove("shake"), 380);
   }
-
-  // Разблокировка в гараже
-  if(s.q && s.q.car) Meta.unlockCar(s.q.car.id);
-  if(s.q && s.q.items) {
-    Meta.unlockCar(s.q.items[0].id);
-    Meta.unlockCar(s.q.items[1].id);
-  }
-
-  const bEl = $("bar"), mEl = $("meter");
-  if(bEl) bEl.innerHTML = barH();
-  if(mEl){
-    mEl.innerHTML = meterH();
-    if(ok) {
-      const bTag = mEl.querySelector("b");
-      if(bTag) bTag.classList.add("pop");
-    }
-  }
-  return ok && s.streak >= 3 ? `серия ×${s.streak} 🔥` : "";
+  const barEl = $("bar"); if(barEl) barEl.innerHTML = barH();
+  const metEl = $("meter"); if(metEl) metEl.innerHTML = meterH();
+  const meterB = document.querySelector("#meter b");
+  if(ok && meterB) meterB.classList.add("pop");
+  return ok && s.streak % 5 === 0 ? "🔥 Серия ×" + s.streak : "";
 }
 
-function finish(fb, factCar){
-  const after = $("after");
-  const factHTML = factCar && factCar.fact ? `
-    <div class="fact-card">
-      <b>💡 Знал ли ты? (${esc(factCar.name)})</b>
-      ${esc(factCar.fact)}
-    </div>` : "";
-
-  if(after){
-    const nextBtnText = S.isDaily ? (S.dailyStep < 4 ? "Следующий вопрос" : "Результаты дня") : (S.lives > 0 ? "Дальше" : "Завершить заезд");
-    const nextAct = S.isDaily ? "next-daily" : (S.lives > 0 ? "next" : "over");
-    after.innerHTML = fb + factHTML + `
-      <div class="nextbar">
-        <button class="next" data-act="${nextAct}">${nextBtnText}</button>
-      </div>
+function reveal(ok, q, st, extra){
+  const shotEl = $("shot");
+  if(shotEl) shotEl.classList.add(ok ? "win" : "lose");
+  const credit = q.ph && q.ph.page ? `<a href="${esc(q.ph.page)}" target="_blank" rel="noopener">Фото: Wikimedia</a>` : "";
+  const capEl = $("cap");
+  if(capEl && q.car){
+    capEl.innerHTML = `
+      ${ok ? "✓ Верно!" : "✕ Ошибка!"} ${esc(q.car.name)}
+      <small>${[q.car.v, extra, st, credit].filter(Boolean).join(" · ")}</small>
     `;
   }
 }
 
-/* ОБРАБОТКА ДРАГ-РЕЙСИНГА */
-async function startDragRace(chosenIdx){
+function finish(fb, fact){
+  const s = S;
+  const after = $("after");
+  if(!after) return;
+  const factHtml = fact ? `
+    <div class="fact-card">
+      <b>💡 Интересный факт</b>
+      ${esc(fact)}
+    </div>
+  ` : "";
+  const nextAct = s.mode === "daily" ? (s.dailyStep < 4 ? "next-daily" : "finish-daily") : (s.lives > 0 ? "next" : "over");
+  const nextTxt = s.mode === "daily" ? (s.dailyStep < 4 ? "Следующее авто" : "Результаты дня") : (s.lives > 0 ? "Следующий заезд" : "Финиш гонки");
+
+  after.innerHTML = `
+    ${fb ? `<div class="fb">${fb}</div>` : ""}
+    ${factHtml}
+    <div class="nextbar">
+      <button class="next" data-act="${nextAct}">${nextTxt}</button>
+    </div>
+  `;
+}
+
+function answer(i, e){
   const s = S;
   if(!s || s.locked || !s.q) return;
   s.locked = true;
   const q = s.q;
-  const c0 = q.items[0], c1 = q.items[1];
-  const ok = chosenIdx === q.ans;
-  const curToken = token;
-
-  document.querySelectorAll("[data-drag-i]").forEach(b => {
-    b.setAttribute("aria-disabled", "true");
-    if(+b.dataset.dragI !== chosenIdx) b.classList.add("dim");
-  });
-
-  // 1. Анимация светофора драг-ёлки
-  await sleep(400);
-  if(curToken !== token) return;
-  Sound.beepYellow(); $("dl-y1")?.classList.add("on"); vibrate(30);
-  await sleep(450);
-  if(curToken !== token) return;
-  Sound.beepYellow(); $("dl-y2")?.classList.add("on"); vibrate(30);
-  await sleep(450);
-  if(curToken !== token) return;
-  Sound.beepGreen(); $("dl-gr")?.classList.add("on");
-  Sound.screech();
-  vibrate([80, 40, 100]);
-
-  // 2. Разгон машинок по полосам
-  const car0El = $("dcar-0"), car1El = $("dcar-1");
-  if(!car0El || !car1El) return;
-  const winner = q.ans; // 0 или 1
-  const tWinner = Math.min(c0.acc, c1.acc);
-  const tLoser = Math.max(c0.acc, c1.acc);
-  const stripWidth = car0El.parentElement.clientWidth - 95;
-
-  const startTime = performance.now();
-  const raceDuration = 1800; // длительность анимации победителя в мс
-
-  function animateRace(now){
-    if(curToken !== token) return;
-    const elapsed = now - startTime;
-    const pWin = Math.min(1, elapsed / raceDuration);
-    // Проигравший движется пропорционально разнице времен разгона
-    const pLose = Math.min(1, (elapsed / raceDuration) * (tWinner / tLoser));
-
-    const p0 = winner === 0 ? pWin : pLose;
-    const p1 = winner === 1 ? pWin : pLose;
-
-    car0El.style.transform = `translateX(${p0 * stripWidth}px)`;
-    car1El.style.transform = `translateX(${p1 * stripWidth}px)`;
-
-    if(elapsed < raceDuration * (tLoser / tWinner)){
-      requestAnimationFrame(animateRace);
-    } else {
-      // Гонка завершена
-      const acc0 = $("d-acc-0"), acc1 = $("d-acc-1");
-      if(acc0) acc0.textContent = c0.acc.toFixed(1);
-      if(acc1) acc1.textContent = c1.acc.toFixed(1);
-      document.querySelectorAll("[data-drag-i]").forEach((b, k) => {
-        b.classList.remove("dim");
-        b.classList.add(k === winner ? "ok" : "bad");
-      });
-      const winCar = q.items[winner];
-      const winBanner = $("drag-win-banner");
-      if(winBanner){
-        winBanner.innerHTML = `
-          <div class="winner-banner">🏁 Победил: ${esc(winCar.name)} (${winCar.acc}с)!</div>
-        `;
-      }
-      addSparks(window.innerWidth/2, 220, 35);
-      if(ok) Meta.checkAchieve("drag_king", true);
-      const st = settle(ok);
-      finish(`<p class="fb">${ok ? "Блестящая интуиция!" : "Соперник оказался быстрее!"}${st ? " · " + st : ""}</p>`, winCar);
-    }
-  }
-  requestAnimationFrame(animateRace);
-}
-
-function answer(i, evt){
-  const s = S;
-  if(!s || s.locked || !s.q) return;
-  s.locked = true;
-  const q = s.q, ok = i === q.ans;
-  const rect = evt && evt.target ? evt.target.getBoundingClientRect() : null;
-  const clickPos = rect ? {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2} : null;
-
-  if(s.isDaily) s.dailyAnswers.push(ok);
+  const ok = i === q.ans;
+  if(s.mode === "daily") s.dailyResults.push(ok);
 
   document.querySelectorAll("[data-i]").forEach(b => {
     const k = +b.dataset.i;
@@ -2225,75 +2860,171 @@ function answer(i, evt){
     b.setAttribute("aria-disabled", "true");
   });
 
-  const st = settle(ok, clickPos);
+  const st = settle(ok);
+
   if(q.items){
     const mx = Math.max(q.items[0][q.f], q.items[1][q.f]);
     document.querySelectorAll(".dcard").forEach((b, k) => {
-      countUp(b.querySelector(".hp b"), q.items[k][q.f], q.f === "p" ? grp : null);
+      const valToShow = q.items[k][q.f];
+      countUp(b.querySelector(".hp b"), valToShow, q.f === "p" ? grp : null);
       requestAnimationFrame(() => {
-        b.querySelector(".fill").style.width = (q.items[k][q.f] / mx * 100) + "%";
+        const fill = b.querySelector(".fill");
+        if(fill) fill.style.width = (valToShow / mx * 100) + "%";
       });
+      if(k === q.ans) b.classList.add("ok");
+      else if(k === i) b.classList.add("bad");
+      else b.classList.add("dim");
     });
-    finish(`<p class="fb">${ok ? "Верно!" : "Мимо."}${st ? " · " + st : ""}</p>`, q.items[q.ans]);
+    const winnerCar = q.items[q.ans];
+    if(ok) Meta.unlockCar(winnerCar.id);
+    finish(ok ? "✓ Точно в цель!" : "✕ Не угадал!", winnerCar.fact);
   } else {
-    const shot = $("shot");
-    if(shot) shot.classList.add(ok ? "win" : "lose");
-    $("cap").innerHTML = `${ok ? "Верно!" : "Не то."} ${esc(q.car.name)}`;
-    finish("", q.car);
+    reveal(ok, q, st, "");
+    finish("", q.car?.fact);
   }
 }
 
-function check(evt){
+function check(e){
   const s = S;
   if(!s || s.locked || !s.q) return;
   s.locked = true;
-  const q = s.q, g = G[q.kind], rng = $("rng"), guess = val(g, +rng.value), real = q.car[g.f];
+  const q = s.q, g = G[q.kind], rng = $("rng");
+  const guess = val(g, +rng.value);
+  const real = q.car[g.f];
   const ok = Math.abs(guess - real) / real <= g.tol;
   rng.disabled = true;
+  const rd = $("read");
+  if(rd) rd.classList.add(ok ? "ok" : "bad");
+  const st = settle(ok);
+  const rw = $("rw");
+  if(rw){
+    rw.insertAdjacentHTML("afterbegin", `
+      <i class="mark" style="--m:${Math.min(1, Math.max(0, pos(g, real) / 1000))}">
+        <span>${g.fmt(real)}</span>
+      </i>
+    `);
+  }
+  const d = Math.round((guess - real) / real * 100);
+  reveal(ok, q, st, "");
+  const diffTxt = d === 0 ? "точь-в-точь!" : (d > 0 ? `перелёт на +${d}%` : `недолёт на ${d}%`);
+  finish(
+    `${ok ? "✓ Отличная оценка!" : "✕ Мимо!"} На самом деле: <b>${g.fmt(real)}</b> (${diffTxt}). Допуск: ±${Math.round(g.tol * 100)}%.`,
+    q.car.fact
+  );
+}
 
-  const rect = evt && evt.target ? evt.target.getBoundingClientRect() : null;
-  const clickPos = rect ? {x: rect.left + rect.width / 2, y: rect.top} : null;
+async function startDragRace(choice){
+  const s = S;
+  if(!s || s.locked || !s.q) return;
+  s.locked = true;
+  const q = s.q;
+  const [c1, c2] = q.items;
+  const ok = choice === q.ans;
+  const curToken = token;
 
-  $("read").classList.add(ok ? "ok" : "bad");
-  const st = settle(ok, clickPos);
+  document.querySelectorAll("[data-drag-i]").forEach(b => {
+    b.setAttribute("aria-disabled", "true");
+    const idx = +b.dataset.dragI;
+    if(idx === choice) b.style.outline = "2px solid var(--cyan)";
+  });
 
-  $("rw").insertAdjacentHTML("afterbegin", `
-    <i class="mark" style="--m:${Math.min(1, Math.max(0, pos(g, real) / 1000))}">
-      <span>${g.fmt(real)}</span>
-    </i>
-  `);
-  const shot = $("shot");
-  if(shot) shot.classList.add(ok ? "win" : "lose");
-  $("cap").innerHTML = `${ok ? "Верно!" : "Мимо."} ${esc(q.car.name)}`;
-  finish(`
-    <p class="fb">
-      ${ok ? "Точно!" : "Неточно."} Точный показатель: <b>${g.fmt(real)}</b>.
-      Допуск викторины: ±${Math.round(g.tol * 100)}%.
-    </p>
-  `, q.car);
+  const stageLight = $("tl-stage");
+  const y1Light = $("tl-y1");
+  const y2Light = $("tl-y2");
+  const grLight = $("tl-green");
+
+  if(stageLight) stageLight.classList.add("on");
+  Sound.beepYellow();
+  await sleep(400);
+  if(curToken !== token) return;
+
+  if(y1Light) y1Light.classList.add("on");
+  Sound.beepYellow();
+  await sleep(400);
+  if(curToken !== token) return;
+
+  if(y2Light) y2Light.classList.add("on");
+  Sound.beepYellow();
+  await sleep(400);
+  if(curToken !== token) return;
+
+  if(grLight) grLight.classList.add("on");
+  Sound.beepGreen();
+  Sound.screech();
+  Sound.rev();
+  vibrate([60, 40, 150]);
+
+  const sprite0 = $("car-sprite-0");
+  const sprite1 = $("car-sprite-1");
+  const stripWidth = sprite0?.parentElement?.clientWidth || 300;
+  const dist = Math.max(stripWidth - 140, 120);
+
+  const minAcc = Math.min(c1.acc, c2.acc);
+  const dur0 = 1.0 + (c1.acc / minAcc - 1) * 1.5;
+  const dur1 = 1.0 + (c2.acc / minAcc - 1) * 1.5;
+
+  if(sprite0){
+    sprite0.style.transition = `transform ${dur0}s cubic-bezier(0.2, 0.8, 0.25, 1)`;
+    sprite0.style.transform = `translateX(${dist}px)`;
+  }
+  if(sprite1){
+    sprite1.style.transition = `transform ${dur1}s cubic-bezier(0.2, 0.8, 0.25, 1)`;
+    sprite1.style.transform = `translateX(${dist}px)`;
+  }
+
+  await sleep(Math.max(dur0, dur1) * 1000 + 150);
+  if(curToken !== token) return;
+
+  const t1 = $("time-c1"); if(t1) t1.textContent = `⚡ ${c1.acc}c`;
+  const t2 = $("time-c2"); if(t2) t2.textContent = `⚡ ${c2.acc}c`;
+
+  const banner = $("drag-winner");
+  const winner = q.ans === 0 ? c1 : c2;
+  if(banner){
+    banner.style.display = "block";
+    banner.textContent = `🏆 Победитель: ${winner.name} (${winner.acc} с 0–100)`;
+  }
+
+  document.querySelectorAll("[data-drag-i]").forEach(b => {
+    const idx = +b.dataset.dragI;
+    if(idx === q.ans) b.classList.add("ok");
+    else if(idx === choice) b.classList.add("bad");
+    else b.classList.add("dim");
+  });
+
+  const st = settle(ok);
+  if(ok) Meta.checkAchieve("drag_king", true);
+  Meta.unlockCar(winner.id);
+
+  finish(
+    ok ? `🔥 Верно! ${winner.name} быстрее на ${Math.abs(c1.acc - c2.acc).toFixed(2)} с!` : `✕ Не угадал! ${winner.name} вырвался вперёд.`,
+    winner.fact
+  );
 }
 
 function finishDaily(){
   const s = S;
   const todayStr = getTodayDateStr();
   store.set("tacho_daily_done:" + todayStr, true);
-  store.set("tacho_daily_res:" + todayStr, {score: s.score, ans: s.dailyAnswers});
   Meta.checkAchieve("daily_done", true);
-  Meta.addXP(50);
-  showDailyResult(s.score, s.dailyAnswers);
-}
 
-function showDailyResult(score, ans){
-  const grid = (ans || []).map(ok => ok ? "🟩" : "🟥").join("");
-  const shareText = `Тахо 🏎️ День #${getDailySeed() % 999}\nСчет: ${score}/5\n${grid}\nАвтовикторина "Тахо"!`;
+  const correctCount = s.dailyResults.filter(Boolean).length;
+  const emojiStr = s.dailyResults.map(r => r ? "🟩" : "🟥").join("");
+  const shareText = `Тахо 🏎️ Заезд дня (${todayStr})\nРезультат: ${correctCount}/5 ${emojiStr}\nСможешь лучше?`;
+
+  Sound.fanfare();
+  addSparks(window.innerWidth / 2, 160, 45);
+
   app.innerHTML = `
     <div class="over">
-      <h2>Автомобиль Дня</h2>
-      <div class="over-rank">Результаты заезда</div>
-      <div class="big">${score}/5</div>
-      <p style="font-size:24px;letter-spacing:4px">${grid}</p>
-      <button class="copy-share-btn" data-copy="${esc(shareText)}">📋 Скопировать результат</button>
-      <div class="nextbar" style="position:static">
+      <h2>АВТОМОБИЛЬ ДНЯ</h2>
+      <div class="over-rank">Челлендж завершён</div>
+      <div class="big" style="font-size:78px;letter-spacing:4px">${emojiStr}</div>
+      <p>Правильных ответов: <b>${correctCount}</b> из 5</p>
+      <button class="copy-share-btn" data-copy="${esc(shareText)}">
+        📋 Скопировать результат для соцсетей
+      </button>
+      <div class="nextbar" style="position:static;margin-top:10px">
         <button class="next" data-act="menu">В главное меню</button>
       </div>
     </div>
@@ -2322,6 +3053,242 @@ function over(){
 }
 
 /* ==========================================================================
+   НОВАЯ ЛОГИКА ЭКЗАМЕНА И ТРЕНИРОВКИ ПДД (РАЗДЕЛЬНО А И В)
+   ========================================================================== */
+async function startPddSession(isExam = true, fixedTicket = null){
+  Sound.click();
+  vibrate(30);
+  token++;
+
+  if (!pddBankLoaded) {
+    app.innerHTML = `<div class="user-panel"><button class="back" data-act="pdd-menu">‹</button><h2>Загружаю билеты ПДД…</h2><p class="sub">Получаю вопросы и официальные иллюстрации из открытой базы. Это может занять несколько секунд.</p><div class="loader" style="margin:24px auto"></div></div>`;
+    const loaded = await loadPddBank();
+    if (!loaded) {
+      app.innerHTML = `<div class="user-panel"><button class="back" data-act="pdd-menu">‹</button><h2>Не удалось загрузить билеты</h2><p class="sub">${esc(pddBankLoadError || "Проверь подключение к интернету и попробуй ещё раз.")}</p><button class="mode" data-act="start-pdd-exam">Повторить загрузку</button></div>`;
+      return;
+    }
+  }
+
+  // Выбираем полный банк вопросов для активной категории (А или В)
+  const categoryBank = PDD_BANK[pddCategory] || PDD_BANK.B;
+  let pool = categoryBank.slice();
+
+  if(fixedTicket !== null){
+    const filtered = pool.filter(q => q.ticket === fixedTicket);
+    if(filtered.length > 0) pool = filtered;
+  }
+
+  pool = shuffle(pool);
+
+  const targetCount = isExam ? 20 : pool.length;
+  const examQuestions = [];
+  let poolCursor = 0;
+
+  while(examQuestions.length < targetCount){
+    if(poolCursor >= pool.length){
+      pool = shuffle(categoryBank.slice());
+      poolCursor = 0;
+    }
+    examQuestions.push(pool[poolCursor++]);
+  }
+
+  pddState = {
+    isExam,
+    category: pddCategory,
+    questions: examQuestions,
+    curIdx: 0,
+    answers: new Array(examQuestions.length).fill(null),
+    errors: 0,
+    timeLeft: 20 * 60,
+    timerId: null,
+    locked: false
+  };
+
+  if(isExam){
+    pddState.timerId = setInterval(() => {
+      if(!pddState) return;
+      pddState.timeLeft--;
+      const tEl = $("pdd-timer-val");
+      if(tEl){
+        const m = Math.floor(Math.max(0, pddState.timeLeft) / 60);
+        const s = Math.max(0, pddState.timeLeft) % 60;
+        tEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      }
+      if(pddState.timeLeft <= 0){
+        clearInterval(pddState.timerId);
+        finishPddExam();
+      }
+    }, 1000);
+  }
+  renderPddQuestion();
+}
+
+function renderPddQuestion(){
+  const s = pddState;
+  if(!s || s.curIdx >= s.questions.length){
+    finishPddExam();
+    return;
+  }
+  const q = s.questions[s.curIdx];
+
+  const matrix = s.questions.map((_, i) => {
+    let cls = "pdd-num";
+    if(i === s.curIdx) cls += " cur";
+    if(s.answers[i] === true) cls += " ok";
+    if(s.answers[i] === false) cls += " bad";
+    return `<div class="${cls}">${i+1}</div>`;
+  }).join("");
+
+  const m = Math.floor(s.timeLeft / 60);
+  const sec = s.timeLeft % 60;
+  const isCatA = s.category === "A";
+
+  const trajHtml = q.trajectories ? `
+    <div class="trajectory-overlay">
+      ${q.trajectories.map(t => `
+        <div class="traj-badge ${t.class}">
+          ${esc(t.name)} <span>➔ ${esc(t.desc)}</span>
+        </div>
+      `).join("")}
+    </div>
+  ` : "";
+
+  app.innerHTML = `
+    <div class="user-panel" style="padding-bottom:2px">
+      <button class="back" data-act="pdd-menu">‹</button>
+      <div class="mt" style="font-size:18px">
+        ${s.isExam ? `Экзамен ГИБДД (Кат. ${s.category})` : `Тренировка ПДД (Кат. ${s.category})`}
+        <small>${q.topic} · Вопрос ${s.curIdx + 1} из ${s.questions.length}</small>
+      </div>
+      ${s.isExam ? `<div class="pdd-timer"><span id="pdd-timer-val">${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}</span></div>` : ""}
+    </div>
+
+    <div class="pdd-matrix">${matrix}</div>
+
+    <!-- Реальная фотография ситуации с возможностью зума -->
+    <div class="pdd-photo-container" data-zoom-photo="${esc(q.img)}" data-caption="${esc(q.caption || q.q)}" style="${q.img ? "" : "display:none"}">
+      <span class="pdd-cat-tag ${isCatA ? "cat-a" : "cat-b"}">
+        ${isCatA ? "🏍️ Категория А" : "🚗 Категория В"}
+      </span>
+      <span class="pdd-zoom-tip">🔍 Нажмите для фото</span>
+      <img src="${esc(q.img)}" alt="Иллюстрация из билета ПДД" onerror="this.closest('.pdd-photo-container').style.display='none'">
+      ${trajHtml}
+    </div>
+
+    <p class="q" style="font-size:19.5px;line-height:1.25;margin:4px 0 8px">${esc(q.q)}</p>
+
+    <div class="opts">
+      ${q.opts.map((optText, i) => `
+        <button class="opt" data-pdd-ans="${i}" style="font-size:15px;padding:12px 14px">
+          ${esc(optText)}
+        </button>
+      `).join("")}
+    </div>
+
+    <div id="pdd-after"></div>
+  `;
+}
+
+function answerPdd(idx){
+  const s = pddState;
+  if(!s || s.locked) return;
+  s.locked = true;
+  const q = s.questions[s.curIdx];
+  const isOk = idx === q.ans;
+  s.answers[s.curIdx] = isOk;
+  if(!isOk) s.errors++;
+
+  document.querySelectorAll("[data-pdd-ans]").forEach((b, k) => {
+    b.setAttribute("aria-disabled", "true");
+    if(k === q.ans) b.classList.add("ok");
+    else if(k === idx) b.classList.add("bad");
+    else b.classList.add("dim");
+  });
+
+  if(isOk){
+    Sound.correct();
+    vibrate([40, 20]);
+    addSparks(window.innerWidth/2, 260, 20);
+    Meta.addXP(15);
+  } else {
+    Sound.wrong();
+    vibrate([100, 50, 100]);
+    app.classList.add("shake");
+    setTimeout(() => app.classList.remove("shake"), 350);
+  }
+
+  const after = $("pdd-after");
+  if(after){
+    after.innerHTML = `
+      <div class="pdd-explain-box">
+        <strong>${isOk ? "✓ Верно!" : "✕ Ошибка!"} Пояснение Правил Дорожного Движения:</strong>
+        ${esc(q.rule)}
+      </div>
+      <div class="nextbar">
+        <button class="next" data-act="pdd-next">
+          ${s.curIdx < s.questions.length - 1 ? "Следующий вопрос" : "Итоги экзамена"}
+        </button>
+      </div>
+    `;
+  }
+}
+
+function finishPddExam(){
+  if(pddState && pddState.timerId){
+    clearInterval(pddState.timerId);
+  }
+  const s = pddState;
+  const total = s.questions.length;
+  const errors = s.errors;
+  const isPassed = errors <= 2;
+  const isCatA = s.category === "A";
+
+  const passedKey = isCatA ? "tacho_pdd_passed_a" : "tacho_pdd_passed_b";
+  const totalKey = isCatA ? "tacho_pdd_total_a" : "tacho_pdd_total_b";
+
+  if(isPassed){
+    Sound.fanfare();
+    vibrate([80, 40, 120]);
+    Meta.addXP(120);
+    Meta.checkAchieve(isCatA ? "pdd_a_pass" : "pdd_b_pass", true);
+    store.set(passedKey, store.get(passedKey, 0) + 1);
+  } else {
+    Sound.wrong();
+  }
+  store.set(totalKey, store.get(totalKey, 0) + 1);
+
+  app.innerHTML = `
+    <div class="over">
+      <h2>${isPassed ? "ЭКЗАМЕН СДАН!" : "НЕ СДАНО"}</h2>
+      <div class="over-rank" style="color:${isPassed ? "var(--green)" : "var(--red)"}">
+        ${isPassed ? `Поздравляем! Категория ${s.category} подтверждена` : "Превышен лимит ошибок (максимум 2)"}
+      </div>
+      <div class="big" style="color:${isPassed ? "var(--green)" : "var(--red)"}">
+        ${total - errors}/${total}
+      </div>
+      <p>Ошибок: <b>${errors}</b> из ${total}</p>
+      <div class="nextbar" style="position:static">
+        <button class="next" data-act="start-pdd-exam">Повторить экзамен</button>
+      </div>
+      <button class="ghost" data-act="pdd-menu">В меню ПДД</button>
+    </div>
+  `;
+}
+
+function openPhotoLightbox(url, caption){
+  Sound.click();
+  const lb = document.createElement("div");
+  lb.className = "photo-lightbox";
+  lb.id = "active-lightbox";
+  lb.innerHTML = `
+    <button class="lb-close" data-close-lightbox="1">✕</button>
+    <img src="${esc(url)}" alt="Детальный вид">
+    <div class="lb-caption">${esc(caption)}</div>
+  `;
+  document.body.appendChild(lb);
+}
+
+/* ==========================================================================
    МОДАЛЬНЫЕ ОКНА (ГАРАЖ, ДОСТИЖЕНИЯ, РАНГ, НАСТРОЙКИ)
    ========================================================================== */
 function openModal(type, data){
@@ -2347,7 +3314,7 @@ function openModal(type, data){
     }).join("");
     bodyHTML = `
       <p style="font-size:13.5px;color:rgba(255,255,255,0.7);margin-bottom:6px">
-        Открыто авто: <b>${g.size}</b> из ${CARS.length}. Кликай на открытые машины для ТТХ и фактов.
+        Открыто авто: <b>${g.size}</b> из ${CARS.length}. Кликайте для детальных характеристик.
       </p>
       <div class="garage-grid">${cards}</div>
     `;
@@ -2407,7 +3374,7 @@ function openModal(type, data){
     bodyHTML = `
       <div style="display:flex;flex-direction:column;gap:14px">
         <div>
-          <label style="display:block;font:italic 800 18px var(--display);color:var(--yellow);margin-bottom:8px">Стиль приборной панели</label>
+          <label style="display:block;font:italic 800 18px var(--display);color:var(--yellow);margin-bottom:8px">Стиль тахометра</label>
           <div style="display:flex;flex-direction:column;gap:6px">
             <button class="opt ${activeSkin==="classic"?"ok":""}" data-set-skin="classic">🏎️ Классический стрелочный</button>
             <button class="opt ${activeSkin==="lcd80"?"ok":""}" data-set-skin="lcd80">📟 Ретро LCD 80-х (зеленый дисплей)</button>
@@ -2445,10 +3412,53 @@ app.addEventListener("input", e => {
 });
 
 document.body.addEventListener("click", e => {
+  // Закрытие Lightbox полноэкранного фото
+  if(e.target.closest("[data-close-lightbox]") || e.target.classList.contains("photo-lightbox")){
+    const lb = $("active-lightbox");
+    if(lb) lb.remove();
+    return;
+  }
+
+  // Клик по фото вопроса для зума
+  const zoomEl = e.target.closest("[data-zoom-photo]");
+  if(zoomEl && !e.target.closest("[data-pdd-ans]")){
+    openPhotoLightbox(zoomEl.dataset.zoomPhoto, zoomEl.dataset.caption);
+    return;
+  }
+
   // Закрытие модального окна
   if(e.target.closest("[data-close-modal]") || e.target.classList.contains("modal-overlay")){
     const m = $("active-modal");
     if(m) m.remove();
+    return;
+  }
+
+  // Переключение главной вкладки (Викторина / ПДД)
+  const tabBtn = e.target.closest("[data-switch-section]");
+  if(tabBtn){
+    appSection = tabBtn.dataset.switchSection;
+    store.set("tacho_section", appSection);
+    Sound.click();
+    vibrate(25);
+    menu();
+    return;
+  }
+
+  // Переключение категории ПДД (Категория А / Категория В)
+  const catBtn = e.target.closest("[data-set-pdd-cat]");
+  if(catBtn){
+    pddCategory = catBtn.dataset.setPddCat;
+    store.set("tacho_pdd_category", pddCategory);
+    Sound.click();
+    vibrate(25);
+    menu();
+    return;
+  }
+
+  // Ответ на вопрос ПДД
+  const pddAns = e.target.closest("[data-pdd-ans]");
+  if(pddAns){
+    answerPdd(+pddAns.dataset.pddAns);
     return;
   }
 
@@ -2503,6 +3513,21 @@ document.body.addEventListener("click", e => {
   if(el.dataset.act){
     const a = el.dataset.act;
     if(a === "menu"){ Sound.click(); menu(); }
+    else if(a === "pdd-menu"){
+      if(pddState && pddState.timerId) clearInterval(pddState.timerId);
+      Sound.click();
+      menu();
+    }
+    else if(a === "start-pdd-exam"){ startPddSession(true, null); }
+    else if(a === "start-pdd-ticket-1"){ startPddSession(true, 1); }
+    else if(a === "start-pdd-marathon"){ startPddSession(false, null); }
+    else if(a === "pdd-next"){
+      if(pddState){
+        pddState.curIdx++;
+        pddState.locked = false;
+        renderPddQuestion();
+      }
+    }
     else if(a === "next"){ Sound.click(); go(); }
     else if(a === "next-daily"){
       Sound.click();
@@ -2514,9 +3539,10 @@ document.body.addEventListener("click", e => {
     else if(a === "over"){ over(); }
     else if(a === "again"){ start(S.mode); }
     else if(a === "start-daily"){ startDaily(); }
+    else if(a === "finish-daily"){ finishDaily(); }
     else if(a === "toggle-sound"){
       const isMuted = Sound.toggle();
-      el.textContent = isMuted ? "🔇" : "🔊";
+      el.textContent = isMuted ? "🔇 Включить звук" : "🔊 Выключить звук";
     }
   } else if(el.dataset.mode){
     start(el.dataset.mode);
@@ -2527,7 +3553,6 @@ document.body.addEventListener("click", e => {
   }
 });
 
-// Запуск
 menu();
 </script>
 </body>
