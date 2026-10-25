@@ -11,9 +11,9 @@
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEmklEQVR4nO3dP08UQRzG8cGoUd4C1BaQUICxIfHl2EDjK7GRhpdjSYydjTXhJaDBAos153J3zzq7tzvzzMz3UxFO43D75Tezxx/3Do4uArDNs9wLgC/igEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckJ7nXkA2t9dX8X/48MPFciuxtXdw1MSHPSqFGC3kUnkcszexqeJK6owjQROb6qukqjiyNLGpmkoqicMki74KEik+DsMs+opOpOA4zLPoKzSRIuMoKIu+4hIp7xXSQssIBa68pMlR3JOrlDJCipkc1ZQRyvlYypgcCz2bkZ/Bef/1jNzjmPfCzHI9DJe0EOs4ZrkMiz77u67w/DGEcHh8Oc9q5uYbx+5lJPukjFnq/enD/reXT951/rh607MP0zh2KSPjoFbLvj996N7410evjI5hH45xTC7DZP9eW/+qjM7fPjbiCH592N3Kll5G+N9K7k8ftpYRQrj9/nmZFU3kNTmmleGTxZrb66u1sbGy//qF+ls+88NoclRWRtjYUJ489PO3eshnfrh8g/GEMpyzCCH8+Ppp4NGByXF3dnLzKrz79X6BRY1jNDlGqbiMBZYzkUUcY8eGeRmT9cu4efUl40o6+eOor4xpY2NzZmTvI3McrZXx5u3Hre9Xu0nePvJPjnh1lLF2p3p3dmJ1zujLGUdlP5AYPzNWfcRkkXF4ZIujsjLGOjy+jB8YufooYFspoowJRw2HVzKG5YkjfmzUWkYnvo8sw6OAyWFuchn+MsRR09jYvQzn4eE7OfzLmIvt4SN1HKV8V36M9BtK4uFhOjn8x8a8ZXgOj6RxRI6N1sroRPaRcniYTg5nFd+erLGLw3xsDJexI7fNJV0cNR1FlTRjI9nOYjc5nLWzoXS84nDeU9KUYbWzJIqj9D3FbWak2VmMJoft2Ehchs/wMIoDblLEUfSe4rahrCTYWZgcQ2zLSMMlDsMDR8YyTI4dLj8OmdfWje8+yDiqnxmd1uMYOA91v0hj4Iehq+eyrWQRc1Je/11NzYyNkCAO21uV+IX1+7AqY+kbFovJkf40OjbZro+UZTicSS3iSGzaMNvcX6rXYhyI1Fwcu5yBbM9PC2kuDsQjDkjEAWnxV0gNv2hSiux3s0wOSMQBqbk4dtnmWtsim4sD8VqMY9oAaG1shDbjCOOvdINlhGbjCGOud5tlhJbjCHFXvdkygtt/xpPL1q+otZxFhzggNb2tYBhxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQPoDkV9Omn60ZOgAAAAASUVORK5CYII=">
 <title>Тахо — автовикторина</title>
 <style>
-:root{--blue:#1b2a6b;--deep:#0f1745;--yellow:#ffc400;--paper:#f5f6fa;--green:#22a559;--red:#e5322d;
+:root{--deep:#0f1745;--yellow:#ffc400;--paper:#f5f6fa;--green:#22a559;--red:#e5322d;
 --display:"Avenir Next Condensed","Helvetica Neue","Arial Narrow",sans-serif;
---text:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;--snap:cubic-bezier(.2,.9,.25,1.15)}
+--text:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;--snap:cubic-bezier(.2,.9,.25,1.1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--deep)}
 body{margin:0;min-height:100dvh;color:var(--paper);font-family:var(--text);touch-action:manipulation;
@@ -21,30 +21,32 @@ background:radial-gradient(120% 55% at 50% 0,#2e45b9 0,rgba(46,69,185,0) 70%),re
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-select:none;-webkit-user-select:none}
 :focus-visible{outline:3px solid var(--yellow);outline-offset:-3px}
 .app{max-width:520px;margin:0 auto;min-height:100dvh;padding:0 16px calc(env(safe-area-inset-bottom,0px) + 18px);display:flex;flex-direction:column;gap:12px;overflow-x:hidden}
-.app.shake{animation:shake .4s}
-@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
-@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-@keyframes pulse{40%{transform:scale(1.035)}}
+.app.leave{animation:leave .18s ease-in both}
+@keyframes leave{to{opacity:0;transform:translateX(-26px)}}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pulse{40%{transform:scale(1.03)}}
 
 /* меню */
-.hero{text-align:center;padding-top:calc(env(safe-area-inset-top,0px) + 14px)}
-.gauge{width:240px;max-width:68%;display:block;margin:0 auto}
-.needle{transform-origin:100px 110px;transform:rotate(40deg);animation:rev 1.3s var(--snap) both}
-@keyframes rev{from{transform:rotate(-92deg)}55%{transform:rotate(60deg)}to{transform:rotate(40deg)}}
-.word{font:italic 800 92px/.95 var(--display);color:var(--yellow);margin:0;text-shadow:0 6px 0 rgba(0,0,0,.25);animation:up .6s .15s both}
-.sub{margin:8px 0 0;font-size:15px;opacity:.8;animation:up .6s .25s both}
-.modes{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.mode{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:var(--paper);color:var(--deep);padding:15px 18px;border-left:8px solid var(--yellow);clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%);animation:up .55s var(--snap) both;animation-delay:calc(.3s + var(--i)*.08s);transition:transform .15s}
+.hero{text-align:center;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+.gauge{width:220px;max-width:62%;display:block;margin:0 auto}
+.needle{transform-origin:100px 110px;transform:rotate(40deg);animation:rev 1.2s var(--snap) both}
+@keyframes rev{from{transform:rotate(-92deg)}60%{transform:rotate(55deg)}to{transform:rotate(40deg)}}
+.word{font:italic 800 88px/.95 var(--display);color:var(--yellow);margin:0;text-shadow:0 6px 0 rgba(0,0,0,.25);animation:up .5s .1s both}
+.sub{margin:8px 0 0;font-size:15px;opacity:.8;animation:up .5s .2s both}
+.modes{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.mode{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:var(--paper);color:var(--deep);padding:13px 18px;border-left:8px solid var(--yellow);clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);animation:up .45s var(--snap) both;animation-delay:calc(.25s + var(--i)*.06s)}
 .mode:active{transform:scale(.97)}
-.mode.mix{background:var(--yellow);border-left-color:var(--deep);padding:20px 18px}
-.mode strong{display:block;font:italic 800 28px/1.05 var(--display)}
-.mode.mix strong{font-size:34px}
-.mode small{display:block;font-size:14px;opacity:.7;margin-top:3px}
-.rec{font:italic 800 22px var(--display);text-align:right}
+.mode.mix{background:var(--yellow);border-left-color:var(--deep);padding:19px 18px}
+.mode strong{display:block;font:italic 800 25px/1.05 var(--display)}
+.mode.mix strong{font-size:33px}
+.mode small{display:block;font-size:13.5px;opacity:.7;margin-top:2px}
+.rec{font:italic 800 21px var(--display);text-align:right}
 .rec small{font:500 12px var(--text);margin:0}
-.note{font-size:12.5px;line-height:1.45;opacity:.6;margin:8px 4px 0;animation:up .6s .7s both}
+.note{font-size:12.5px;line-height:1.45;opacity:.6;margin:6px 4px 0}
 
-/* игра: шапка и счёт */
+/* шапка и счёт */
 .bar{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 0}
 .meter{position:absolute;left:16px;right:64px;bottom:36px;z-index:2;display:flex;align-items:flex-end;gap:14px}
 .flow{position:static;margin:0 -16px;padding-left:16px;padding-right:16px}
@@ -57,56 +59,71 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-s
 .lives i.gone{background:rgba(255,255,255,.25);transform:skewX(-20deg) scale(.6)}
 .meter b{font:italic 800 66px/.85 var(--display);text-shadow:0 3px 10px rgba(0,0,0,.5)}
 .meter b.pop{animation:pop .45s var(--snap)}
-@keyframes pop{40%{transform:scale(1.35);color:var(--yellow)}}
+@keyframes pop{40%{transform:scale(1.3);color:var(--yellow)}}
 .tach{flex:1;display:flex;gap:4px;padding-bottom:4px}
 .tach i{flex:1;height:10px;background:rgba(255,255,255,.22);transform:skewX(-20deg);transition:background .3s}
 .tach i.on{background:var(--yellow)}.tach i.on.hot{background:var(--red)}
 .tach i.last{animation:pulse .5s}
 
 /* фото */
-.shot{position:relative;margin:0 -16px;height:calc(env(safe-area-inset-top,0px) + min(68vw,350px));background:var(--deep);overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 26px),calc(100% - 46px) 100%,0 100%)}
+.shot{position:relative;margin:0 -16px;height:calc(env(safe-area-inset-top,0px) + min(66vw,340px));background:var(--deep);overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 26px),calc(100% - 46px) 100%,0 100%)}
 .shot.sk{background:linear-gradient(100deg,#0f1745 30%,#2a3ea8 50%,#0f1745 70%) 0 0/250% 100%;animation:sh 1.3s linear infinite}
 @keyframes sh{to{background-position:-250% 0}}
-.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;animation:reveal .8s cubic-bezier(.2,.8,.2,1) both}
+.shot img,.dcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;animation:imgin .7s ease-out both}
+@keyframes imgin{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
 .shot img.contain{object-fit:contain}
 .bgb{position:absolute;inset:-24px;background-size:cover;background-position:center;filter:blur(24px) brightness(.65)}
 .shot::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(8,12,40,.6),transparent 30%,transparent 50%,rgba(8,12,40,.9))}
-@keyframes reveal{from{clip-path:inset(0 100% 0 0);transform:scale(1.14)}to{clip-path:inset(0);transform:scale(1)}}
 .fx{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none}
-.shot.gl .fx{background:var(--green);animation:flash .7s}
-.shot.rd .fx{background:var(--red);animation:flash .7s}
-@keyframes flash{from{opacity:.7}to{opacity:0}}
-.cap{position:absolute;left:16px;right:16px;bottom:92px;z-index:2;font:italic 800 30px/1.05 var(--display);text-shadow:0 2px 12px rgba(0,0,0,.7);animation:up .45s var(--snap) both}
-.cap small{display:block;font:500 13px var(--text);margin-top:4px;opacity:.85}
+.shot.gl .fx{background:var(--green);animation:flash .6s ease-out}
+.shot.rd .fx{background:var(--red);animation:flash .6s ease-out}
+@keyframes flash{from{opacity:.6}to{opacity:0}}
+.cap{position:absolute;left:16px;right:16px;bottom:92px;z-index:2;font:italic 800 29px/1.05 var(--display);text-shadow:0 2px 12px rgba(0,0,0,.7);animation:up .4s ease-out both}
+.cap small{display:block;font:500 13px var(--text);margin-top:4px;opacity:.9}
 .cap a{color:inherit}
-.q{font:italic 800 28px/1.1 var(--display);margin:2px 0 0;animation:up .5s .1s both}
+.q{font:italic 800 27px/1.1 var(--display);margin:2px 0 0;animation:up .45s .08s ease-out both}
+.q small{display:block;font:500 13px var(--text);opacity:.7;margin-top:4px}
 
 /* ответы */
 .opts{display:flex;flex-direction:column;gap:8px}
-.opt{background:var(--paper);color:var(--deep);text-align:left;padding:14px 16px;font-size:17px;font-weight:600;border-left:6px solid var(--yellow);clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);animation:up .45s var(--snap) both;animation-delay:calc(.15s + var(--i)*.07s);transition:transform .12s,opacity .3s,background .25s}
+.opt{background:var(--paper);color:var(--deep);text-align:left;padding:14px 16px;font-size:17px;font-weight:600;border-left:6px solid var(--yellow);clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);animation:up .4s ease-out both;animation-delay:calc(.12s + var(--i)*.06s);transition:transform .12s,opacity .3s,background .25s}
 .opt:active{transform:scale(.98)}
-.opt.ok{background:var(--green);color:#fff;border-left-color:#fff;animation:pulse .5s}
+.opt.ok{background:var(--green);color:#fff;border-left-color:#fff;animation:pulse .45s}
 .opt.bad{background:var(--red);color:#fff;border-left-color:#fff;animation:shake .4s}
 .opt.dim{opacity:.45}
 
 /* дуэль */
 .duel{display:flex;flex-direction:column;gap:10px}
-.dcard{position:relative;display:block;width:100%;height:clamp(150px,26dvh,230px);overflow:hidden;background:var(--deep);text-align:left;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%);animation:up .55s var(--snap) both;animation-delay:calc(.12s + var(--i)*.1s);transition:transform .12s,opacity .3s}
+.dcard{position:relative;display:block;width:100%;height:clamp(150px,26dvh,225px);overflow:hidden;background:linear-gradient(120deg,#1a2680,#0f1745);text-align:left;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%);animation:up .45s ease-out both;animation-delay:calc(.1s + var(--i)*.09s);transition:transform .12s,opacity .3s}
 .dcard:active{transform:scale(.985)}
-.dcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;animation:reveal .8s cubic-bezier(.2,.8,.2,1) both}
 .dcard::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(8,12,40,.1) 25%,rgba(8,12,40,.92))}
 .dcard .edge{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--yellow);z-index:2;transition:background .3s}
 .dcard.ok .edge{background:var(--green)}.dcard.bad .edge{background:var(--red)}.dcard.dim{opacity:.55}
+.dcard.bad{animation:shake .4s}
 .dcard .info{position:absolute;left:20px;right:16px;bottom:14px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-.dcard .nm{font:italic 800 27px/1.02 var(--display);text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.dcard .nm{font:italic 800 25px/1.02 var(--display);text-shadow:0 2px 10px rgba(0,0,0,.6)}
 .dcard .vr{display:block;font:500 13px var(--text);opacity:.8;margin-top:3px}
-.dcard .hp{font:italic 800 38px/1 var(--display);white-space:nowrap}
+.dcard .hp{font:italic 800 34px/1 var(--display);white-space:nowrap}
 .dcard .hp small{font:600 13px var(--text);opacity:.8;margin-left:3px}
 .dcard .fill{position:absolute;left:0;bottom:0;height:6px;width:0;background:var(--yellow);z-index:3;transition:width .9s cubic-bezier(.2,.8,.2,1)}
 .dcard.ok .fill{background:var(--green)}.dcard.bad .fill{background:var(--red)}
 
+/* ползунок */
+.guess{display:flex;flex-direction:column;gap:2px;animation:up .45s .1s ease-out both}
+.read{font:italic 800 54px/1 var(--display);color:var(--yellow);text-align:center;transition:color .3s}
+.read.ok{color:#5fe08f}.read.bad{color:#ff6b66}
+.rw{position:relative;padding:34px 0 8px}
+.rng{-webkit-appearance:none;appearance:none;display:block;width:100%;height:14px;margin:0;border-radius:0;background:linear-gradient(90deg,var(--yellow) var(--p,50%),rgba(255,255,255,.22) var(--p,50%));transform:skewX(-20deg)}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:42px;background:var(--paper);border:0;border-left:7px solid var(--deep);box-shadow:0 4px 12px rgba(0,0,0,.45)}
+.rng::-moz-range-thumb{width:23px;height:42px;background:var(--paper);border:0;border-left:7px solid var(--deep);border-radius:0}
+.rng:disabled{opacity:.8}
+.lh{display:flex;justify-content:space-between;font-size:12px;opacity:.6;padding:6px 2px 0}
+.mark{position:absolute;top:0;left:calc(15px + (100% - 30px)*var(--m));width:0;height:60px;animation:fade .4s .15s both}
+.mark::before{content:"";position:absolute;left:-1.5px;top:22px;bottom:0;width:3px;background:var(--green)}
+.mark span{position:absolute;left:0;top:0;transform:translateX(-50%);white-space:nowrap;background:var(--green);color:#fff;font:italic 800 17px var(--display);padding:2px 8px}
+
 .fb{margin:0;font-size:17px;animation:up .4s both}
-.nextbar{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);margin-top:auto;padding-top:6px;animation:up .4s var(--snap) both}
+.nextbar{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);margin-top:auto;padding-top:6px;animation:up .35s ease-out both}
 .next{width:100%;background:var(--yellow);color:var(--deep);font:italic 800 25px var(--display);padding:15px;text-align:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)}
 .next:active{transform:scale(.98)}
 .err{background:var(--deep);padding:18px;font-size:16px;line-height:1.45;margin-top:16px}
@@ -114,7 +131,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-s
 /* финиш */
 .over{position:relative;text-align:center;padding-top:calc(env(safe-area-inset-top,0px) + 40px);display:flex;flex-direction:column;gap:12px}
 .over h2{font:italic 800 46px/1 var(--display);margin:0;color:var(--yellow);animation:up .5s both}
-.over .big{font:italic 800 132px/1 var(--display);animation:up .6s .1s both}
+.over .big{font:italic 800 132px/1 var(--display);animation:up .5s .1s both}
 .over p{margin:0;font-size:18px;opacity:.9;animation:up .5s .2s both}
 .ghost{background:rgba(255,255,255,.12);text-align:center;padding:14px;font-size:17px;font-weight:600}
 .cf{position:absolute;left:0;right:0;top:150px;height:0;pointer-events:none}
@@ -127,49 +144,99 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-s
 <div class="app" id="app"></div>
 <script>
 "use strict";
-/* b — марка, m — модель, w — статья Wikipedia для фото, pw — запасная статья только для дуэли, hp — л.с. версии v */
-const CARS=[
- {b:"Ferrari",m:"F40",w:"Ferrari F40",hp:478,v:"1987"},
- {b:"Ferrari",m:"Enzo",w:"Ferrari Enzo",hp:660,v:"2002"},
- {b:"Ferrari",m:"458 Italia",w:"Ferrari 458 Italia",hp:570,v:"2009"},
- {b:"Ferrari",m:"LaFerrari",w:"LaFerrari",hp:963,v:"2013"},
- {b:"Lamborghini",m:"Countach",w:"Lamborghini Countach",hp:455,v:"5000 QV, 1985"},
- {b:"Lamborghini",m:"Murciélago",w:"Lamborghini Murciélago",hp:580,v:"2001"},
- {b:"Lamborghini",m:"Aventador",w:"Lamborghini Aventador",hp:700,v:"2011"},
- {b:"Lamborghini",m:"Huracán",w:"Lamborghini Huracán",hp:610,v:"2014"},
- {b:"Porsche",m:"911",w:"Porsche 911",hp:420,v:"Carrera S, 2016"},
- {b:"Porsche",m:"918 Spyder",w:"Porsche 918 Spyder",hp:887,v:"2013"},
- {b:"Nissan",m:"GT-R",w:"Nissan GT-R",hp:570,v:"R35, 2017"},
- {b:"Nissan",m:"Skyline GT-R",w:"Nissan Skyline GT-R",hp:280,v:"R34, 1999"},
- {b:"Toyota",m:"Supra",w:"Toyota Supra",hp:340,v:"GR Supra, 2019"},
- {b:"Mazda",m:"RX-7",w:"Mazda RX-7",hp:255,v:"FD, 1992"},
- {b:"Honda",m:"NSX",w:"Honda NSX",hp:280,v:"1990"},
- {b:"Audi",m:"R8",w:"Audi R8",hp:420,v:"V8, 2007"},
- {b:"McLaren",m:"F1",w:"McLaren F1",hp:627,v:"1993"},
- {b:"McLaren",m:"P1",w:"McLaren P1",hp:916,v:"2013"},
- {b:"Bugatti",m:"Veyron",w:"Bugatti Veyron",hp:1001,v:"16.4, 2005"},
- {b:"Pagani",m:"Zonda",w:"Pagani Zonda",hp:602,v:"F, 2005"},
- {b:"Koenigsegg",m:"Agera",w:"Koenigsegg Agera",hp:1115,v:"R, 2011"},
- {b:"Ford",m:"Mustang",w:"Ford Mustang",hp:466,v:"GT, 2018"},
- {b:"Ford",m:"GT",w:"Ford GT",hp:656,v:"2017"},
- {b:"Chevrolet",m:"Camaro",w:"Chevrolet Camaro",hp:659,v:"ZL1, 2017"},
- {b:"Chevrolet",m:"Corvette",w:"Chevrolet Corvette",hp:502,v:"C8 Stingray, 2020"},
- {b:"Dodge",m:"Challenger",w:"Dodge Challenger",hp:717,v:"SRT Hellcat, 2015"},
- {b:"Dodge",m:"Viper",w:"Dodge Viper",hp:649,v:"SRT, 2013"},
- {b:"Aston Martin",m:"DB5",w:"Aston Martin DB5",hp:286,v:"1963"},
- {b:"Jaguar",m:"E-Type",w:"Jaguar E-Type",hp:269,v:"1961"},
- {b:"Mercedes-Benz",m:"300 SL",w:"Mercedes-Benz 300 SL",hp:215,v:"1954"},
- {b:"BMW",m:"M3",w:"BMW M3",hp:343,v:"E46, 2000"},
- {b:"BMW",m:"M5",w:"BMW M5",hp:600,v:"F90, 2018"},
- {b:"Mercedes-AMG",m:"E 63 S",w:null,pw:"Mercedes-Benz E-Class (W213)",hp:612,v:"W213, 2017"},
- {b:"Subaru",m:"Impreza WRX STI",w:"Subaru Impreza WRX STI",hp:304,v:"2018"},
- {b:"Mitsubishi",m:"Lancer Evolution",w:"Mitsubishi Lancer Evolution",hp:300,v:"X, 2008"},
- {b:"Lexus",m:"LFA",w:"Lexus LFA",hp:560,v:"2010"},
- {b:"Tesla",m:"Model S",w:"Tesla Model S",hp:1034,v:"Plaid, 2021"}
+/* [марка, модель, л.с., версия, ключевые слова в названии файла (через пробел, "|" — варианты), цена нового $ (0 — нет), исключить из названий файлов] */
+const RAW=[
+["Ferrari","F40",478,"1987","f40",400000,"lm|competizione"],
+["Ferrari","Enzo",660,"2002","enzo ferrari",650000,"19[4-9]\\d|portrait"],
+["Ferrari","458 Italia",570,"2009","458",230000,"speciale|spider|challenge|gt3"],
+["Ferrari","LaFerrari",963,"2013","laferrari",1400000,"aperta"],
+["Ferrari","488 GTB",670,"2015","488",250000,"pista|spider|gt3|challenge|gte"],
+["Ferrari","812 Superfast",800,"2017","812",340000,"gts|competizione"],
+["Ferrari","Testarossa",390,"1984","testarossa",90000,"512"],
+["Ferrari","F355",380,"1994","f355",110000,"challenge"],
+["Lamborghini","Countach",455,"5000 QV, 1985","countach qv",100000,"lpi|800"],
+["Lamborghini","Diablo",492,"1990","diablo",239000,"diablogt|diablosv|diablovt|roadster"],
+["Lamborghini","Murciélago",580,"2001","murcilago|murcielago",273000,"lp640|lp670"],
+["Lamborghini","Gallardo",560,"LP560-4, 2008","gallardo",200000,"superleggera|spyder|lp570"],
+["Lamborghini","Aventador",700,"LP700-4, 2011","aventador",400000,"svj|lp750|lp780|ultimae|lp740|aventadorsv"],
+["Lamborghini","Huracán",610,"LP610-4, 2014","huracn|huracan",240000,"performante|sterrato|tecnica|evo"],
+["Lamborghini","Urus",650,"2018","urus",200000,"performante"],
+["Porsche","911",400,"991 Carrera S, 2012","911 991",97000,"gt3|gt2|targa"],
+["Porsche","918 Spyder",887,"2013","918",845000,""],
+["Porsche","Carrera GT",612,"2003","carreragt",440000,""],
+["Porsche","Cayman GT4",385,"981, 2015","cayman gt4",85000,"clubsport|718"],
+["Porsche","Taycan",761,"Turbo S, 2019","taycan",185000,"crossturismo|sportturismo"],
+["Nissan","GT-R",570,"R35, 2017","gtr r35",110000,"nismo"],
+["Nissan","Skyline GT-R",280,"R34, 1999","skyline r34",0,""],
+["Nissan","370Z",328,"2009","370z",30000,"nismo"],
+["Nissan","Silvia",250,"S15, 1999","silvia s15|200sx",0,""],
+["Toyota","GR Supra",340,"A90, 2019","grsupra|supraa90",50000,""],
+["Toyota","Supra",320,"A80 Turbo, 1993","supra a80",40000,""],
+["Toyota","AE86",130,"Sprinter Trueno, 1983","ae86",0,""],
+["Lexus","LFA",560,"2010","lexus lfa",375000,""],
+["Mazda","RX-7",255,"FD, 1992","rx7 fd",36000,""],
+["Honda","NSX",280,"NA1, 1990","nsx",60000,"nc1|2016|2017|2018|2019|2020|2021|2022"],
+["Honda","Civic Type R",320,"FK8, 2017","civic fk8",35000,""],
+["Honda","S2000",240,"AP1, 1999","s2000",33000,""],
+["Audi","R8",420,"V8, 2007","audi r8",110000,"v10|gt3|gt4|lms|2016|2017|2018|2019|2020|2021|2022"],
+["Audi","RS 6",560,"C7, 2013","rs6 c7",108000,""],
+["McLaren","F1",627,"1993","mclaren f1",890000,"formula|mp4|lm|gtr"],
+["McLaren","P1",916,"2013","mclaren p1",1150000,"gtr|lm"],
+["McLaren","720S",720,"2017","720s",285000,""],
+["Bugatti","Veyron",1001,"16.4, 2005","veyron",1300000,"supersport|grandsport|vitesse"],
+["Bugatti","Chiron",1500,"2016","chiron",2900000,"supersport|divo|mistral|centodieci|pursport"],
+["Pagani","Zonda",602,"F, 2005","zonda",670000,""],
+["Pagani","Huayra",730,"2012","huayra",1300000,"huayrabc|roadster"],
+["Koenigsegg","Agera",1115,"R, 2011","agera",1600000,"agerars|one1"],
+["Ford","Mustang",466,"GT, 2018","mustang 2015|2016|2017|2018|2019|2020|s550",36000,"shelby|gt350|gt500|mache|boss|bullitt"],
+["Ford","GT",656,"2017","fordgt 2017|2018|2019|2020",450000,"gt40|gt500|gt350|gt3|gt4|gt90"],
+["Ford","Focus RS",350,"Mk3, 2016","focusrs",36000,""],
+["Chevrolet","Camaro ZL1",659,"2017","camaro zl1 2017|2018|2019|2020|2021|2022",63000,""],
+["Chevrolet","Corvette",502,"C8 Stingray, 2020","corvette c8",59000,"z06|eray|zr1"],
+["Dodge","Challenger",717,"SRT Hellcat, 2015","challenger hellcat",60000,""],
+["Dodge","Viper",649,"SRT, 2013","viper srt",100000,"acr"],
+["Dodge","Charger R/T",380,"1969","charger 1968|1969|1970",0,"daytona|20[0-2]\\d|srt|hellcat"],
+["Aston Martin","DB5",286,"1963","db5",0,""],
+["Aston Martin","DB11",608,"2016","db11",214000,""],
+["Jaguar","E-Type",269,"S1, 1961","etype",0,"lightweight"],
+["Jaguar","F-Type R",550,"2015","ftype",100000,"svr|project7"],
+["Mercedes-Benz","300 SL",215,"1954","300sl",0,""],
+["Mercedes-Benz","AMG GT S",510,"2015","amggt",130000,"gtr|gtc|gt3|gt4|gt63"],
+["Mercedes-Benz","AMG E 63 S",612,"W213, 2017","w213 e63",106000,"estate|wagon"],
+["Mercedes-Benz","AMG G 63",585,"W463, 2018","g63",148000,"6x6|brabus"],
+["BMW","M3",343,"E46, 2000","m3 e46",48000,"csl|gtr"],
+["BMW","M5",600,"F90, 2018","m5 f90",103000,""],
+["BMW","M2",370,"F87, 2016","m2 f87",52000,"m2cs|m2competition|m2gts"],
+["BMW","i8",362,"2014","i8",140000,"roadster"],
+["Subaru","Impreza WRX STI",304,"VA, 2015","wrx sti 2015|2016|2017|2018|2019",36000,"gc8|gdb|gda|gdf|gve|2005|2006|2007|2008|2009|2010|2011|2012|2013"],
+["Mitsubishi","Lancer Evolution",300,"X, 2008","evolutionx|evox|evo10",33000,""],
+["Tesla","Model S",1034,"Plaid, 2021","models plaid|2021|2022|2023",130000,""],
+["Volkswagen","Golf GTI",220,"Mk7, 2013","gti mk7|mkvii|golf7|golfvii",26000,""],
+["Alfa Romeo","4C",240,"2013","4c alfa",55000,"spider"],
+["Alfa Romeo","Giulia Quadrifoglio",510,"2016","giulia quadrifoglio",73000,""],
+["Maserati","MC20",630,"2020","mc20",215000,""]
 ];
-const PHOTO=CARS.filter(c=>c.w), BRANDS=[...new Set(PHOTO.map(c=>c.b))];
-const MODES={mix:{t:"Микс",d:"Все режимы вперемешку"},model:{t:"Угадай модель",d:"Фото и 4 варианта"},brand:{t:"Угадай марку",d:"Только марка, зато быстро"},power:{t:"Что мощнее",d:"Два авто, выбери мощнее"}};
-const nm=c=>c.b+" "+c.m;
+const CARS=RAW.map(([b,m,hp,v,k,p,x])=>({b,m,hp,v,p,k:k.split(" "),x:x?new RegExp(x):null,name:b+" "+m}));
+const BRANDS=[...new Set(CARS.map(c=>c.b))];
+const MODES={
+ mix:{t:"Микс",d:"Все режимы вперемешку"},
+ model:{t:"Угадай модель",d:"Фото и 4 варианта"},
+ brand:{t:"Угадай марку",d:"Только марка, зато быстро"},
+ power:{t:"Что мощнее",d:"Два авто, выбери мощнее"},
+ rich:{t:"Кто дороже",d:"Два авто, выбери дороже"},
+ gp:{t:"Угадай мощность",d:"Ползунок: сколько л.с."},
+ gc:{t:"Угадай цену",d:"Ползунок: сколько стоила новой"}
+};
+const MIXK=["model","model","brand","power","rich","gp","gc"];
+const G={
+ gp:{f:"hp",min:100,max:1600,log:0,tol:.1,fmt:v=>v+" л.с.",ask:"Сколько л.с. у этой машины?"},
+ gc:{f:"p",min:10000,max:3500000,log:1,tol:.2,fmt:v=>"$ "+grp(v),ask:"Сколько она стоила новой?"}
+};
+const grp=v=>String(v).replace(/\B(?=(\d{3})+(?!\d))/g,"\u202f");
+const snapP=p=>{const st=p<50000?1000:p<200000?5000:p<1e6?10000:50000;return Math.round(p/st)*st};
+const val=(g,t)=>{t=t/1000;return g.log?snapP(Math.exp(Math.log(g.min)+t*(Math.log(g.max)-Math.log(g.min)))):Math.round((g.min+t*(g.max-g.min))/5)*5};
+const pos=(g,v)=>(g.log?(Math.log(v)-Math.log(g.min))/(Math.log(g.max)-Math.log(g.min)):(v-g.min)/(g.max-g.min))*1000;
+const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cssu=u=>u.replace(/['"\\()]/g,c=>"%"+c.charCodeAt(0).toString(16));
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -177,87 +244,92 @@ const best=m=>store.get("best:"+m,0);
 const rnd=n=>Math.floor(Math.random()*n);
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
 const sample=(pool,n,ex)=>shuffle(pool.filter(x=>!ex.includes(x))).slice(0,n);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
-/* ---------- фото: заглавное + подходящие из статьи Wikipedia ---------- */
+/* ---------- фото: поиск на Wikimedia Commons по названию, поколению и году ---------- */
 const N=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");
-const BAD=/logo|badge|emblem|icon|interior|dashboard|cockpit|engine|wheel|seat|steering|gauge|speedo|diagram|drawing|blueprint|map|chassis|cutaway|schematic|light|detail|console|trunk|boot|crash|wreck|poster/i;
-const key=u=>u.replace(/\/\d+px-[^/]*$/,"");
-const sizes=u=>[...new Set([1280,960,500].map(w=>u.replace(/\/\d+px-/,"/"+w+"px-")))];
+const BAD=/logo|badge|emblem|icon|interior|dashboard|cockpit|engine|wheel|seat|steering|gauge|speedo|diagram|drawing|blueprint|map|chassis|cutaway|schematic|light|detail|console|trunk|boot|crash|wreck|poster|portrait|toy|lego|scale|miniature|screenshot|render|sketch/i;
+const API="https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=50&prop=imageinfo&iiprop=url|size|mime&iiurlwidth=1280&gsrsearch=";
 async function jget(u){
-  const c=new AbortController(),t=setTimeout(()=>c.abort(),8000);
-  try{const r=await fetch(u,{signal:c.signal});if(r.status===404)return null;if(!r.ok)throw 0;return await r.json()}
-  finally{clearTimeout(t)}
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),10000);
+  try{const r=await fetch(u,{signal:c.signal});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(t)}
 }
-async function getImgs(car){
-  if(car.imgs) return car.imgs;
-  const k=encodeURIComponent((car.w||car.pw).replace(/ /g,"_")),base="https://en.wikipedia.org/api/rest_v1/page/";
-  const [sum,ml]=await Promise.all([jget(base+"summary/"+k),jget(base+"media-list/"+k).catch(()=>null)]);
-  const imgs=[],seen=new Set();
-  const add=u=>{if(u&&!seen.has(key(u))&&imgs.length<8){seen.add(key(u));imgs.push(u)}};
-  add(sum&&sum.thumbnail&&sum.thumbnail.source);
-  car.page=(sum&&sum.content_urls&&sum.content_urls.desktop&&sum.content_urls.desktop.page)||"";
-  if(ml&&ml.items&&car.w){
-    const mn=N(car.m),bn=N(car.b);
-    for(const it of ml.items){
-      const raw=it.title||"";
-      if(it.type!=="image"||!it.srcset||!it.srcset.length||!/\.jpe?g$/i.test(raw)||BAD.test(raw)) continue;
-      const f=N(raw);
-      if(!f.includes(mn)||(mn.length<4&&!f.includes(bn))) continue;
-      let s=it.srcset[it.srcset.length-1].src; if(s.startsWith("//")) s="https:"+s;
-      add(s);
-    }
+async function getCands(car){
+  if(car.cands) return car.cands;
+  const ck="c3:"+car.name,c=store.get(ck,null);
+  if(c&&Date.now()-c.t<6048e5){car.cands=c.l;car.bad=!c.l.length;return c.l}
+  const first=t=>t.split("|")[0];
+  const q=car.name+" "+car.k.filter(t=>!N(car.name).includes(N(first(t)))).map(first).join(" ");
+  const j=await jget(API+encodeURIComponent(q));
+  const pages=j&&j.query&&j.query.pages?Object.values(j.query.pages):[];
+  pages.sort((a,b)=>a.index-b.index);
+  const l=[];
+  for(const p of pages){
+    const ii=p.imageinfo&&p.imageinfo[0];
+    if(!ii||ii.mime!=="image/jpeg"||ii.width<1000) continue;
+    const r=ii.width/ii.height; if(r<1.25||r>2.4) continue;
+    const t=p.title.replace(/^File:/,""),f=N(t);
+    if(BAD.test(t)||(car.x&&car.x.test(f))) continue;
+    if(!car.k.every(k=>k.split("|").some(a=>f.includes(a)))) continue;
+    l.push({u:ii.thumburl||ii.url,page:ii.descriptionurl||"https://commons.wikimedia.org/wiki/"+encodeURIComponent(p.title)});
+    if(l.length>=12) break;
   }
-  car.bad=!imgs.length; car.imgs=imgs; return imgs;
+  car.cands=l;car.bad=!l.length;store.set(ck,{t:Date.now(),l});
+  return l;
 }
-const loadImg=u=>new Promise(r=>{const i=new Image();let d=0;const f=v=>{if(!d){d=1;r(v)}};i.onload=()=>f({u,w:i.naturalWidth,h:i.naturalHeight});i.onerror=()=>f(null);setTimeout(()=>f(null),12000);i.src=u});
+const loadImg=u=>new Promise(r=>{const i=new Image();let d=0;const f=v=>{if(!d){d=1;r(v)}};i.decoding="async";i.onload=()=>f({u,w:i.naturalWidth,h:i.naturalHeight});i.onerror=()=>f(null);setTimeout(()=>f(null),12000);i.src=u});
 async function photoFor(s,car){
-  let imgs; try{imgs=await getImgs(car)}catch(e){return null}
-  const fresh=imgs.filter(u=>!s.used.has(key(u)));
-  for(const u of (fresh.length?shuffle(fresh):shuffle(imgs)).slice(0,3)){
-    for(const z of sizes(u)){
-      const r=await loadImg(z);
-      if(r){ if(r.w<640) break; if(s.used.size>60) s.used.clear(); s.used.add(key(u)); return {src:r.u,w:r.w,h:r.h,page:car.page}; }
+  let l; try{l=await getCands(car)}catch(e){return null}
+  const fresh=l.filter(c=>!s.used.has(c.u));
+  for(const c of (fresh.length?shuffle(fresh):shuffle(l)).slice(0,3)){
+    for(const u of [c.u,c.u.replace(/\/\d+px-/,"/960px-")]){
+      const r=await loadImg(u);
+      if(r&&r.w>=640){if(s.used.size>80)s.used.clear();s.used.add(c.u);return {src:r.u,w:r.w,h:r.h,page:c.page}}
     }
   }
   return null;
 }
 
 /* ---------- вопросы ---------- */
-function pick(s,pool,anyCar){
-  const rc=s.recent.slice(-8),ok=pool.filter(c=>anyCar||!c.bad),free=ok.filter(c=>!rc.includes(c));
-  const src=free.length?free:ok; return src[rnd(src.length)];
+function pick(s,pool,any){
+  const rc=s.recent.slice(-10),ok=pool.filter(c=>any||!c.bad),free=ok.filter(c=>!rc.includes(c));
+  const src=free.length?free:ok;return src[rnd(src.length)];
+}
+async function duel(s,kind){
+  const f=kind==="power"?"hp":"p",pool=f==="p"?CARS.filter(c=>c.p):CARS;
+  for(let i=0;i<40;i++){
+    const a=pick(s,pool,1),b=pick(s,pool,1);
+    if(a===b||Math.abs(a[f]-b[f])/Math.max(a[f],b[f])<.06) continue;
+    s.recent.push(a,b);
+    const ph=await Promise.all([photoFor(s,a),photoFor(s,b)]);
+    return {kind,f,items:[a,b],ph,ans:a[f]>b[f]?0:1};
+  }
+  return null;
 }
 async function makeQ(s){
-  const kind=s.mode==="mix"?["model","model","brand","power","power"][rnd(5)]:s.mode;
-  if(kind==="power"){
-    for(let i=0;i<30;i++){
-      const a=pick(s,CARS,1),b=pick(s,CARS,1);
-      if(a===b||Math.abs(a.hp-b.hp)/Math.max(a.hp,b.hp)<.06) continue;
-      s.recent.push(a,b);
-      const ph=await Promise.all([photoFor(s,a),photoFor(s,b)]);
-      return {kind,items:[a,b],ph,ans:a.hp>b.hp?0:1};
-    }
-    return null;
-  }
-  for(let i=0;i<7;i++){
-    const car=pick(s,PHOTO); if(!car) break;
+  const kind=s.mode==="mix"?MIXK[rnd(MIXK.length)]:s.mode;
+  if(kind==="power"||kind==="rich") return duel(s,kind);
+  const pool=kind==="gc"?CARS.filter(c=>c.p):CARS;
+  for(let i=0;i<8;i++){
+    const car=pick(s,pool); if(!car) break;
     const ph=await photoFor(s,car); if(!ph) continue;
     s.recent.push(car);
+    if(kind==="gp"||kind==="gc") return {kind,car,ph};
     let labels,ans;
     if(kind==="brand"){labels=shuffle([car.b,...sample(BRANDS,3,[car.b])]);ans=labels.indexOf(car.b)}
-    else{const o=shuffle([car,...sample(PHOTO,3,[car])]);labels=o.map(nm);ans=o.indexOf(car)}
+    else{const o=shuffle([car,...sample(CARS,3,[car])]);labels=o.map(c=>c.name);ans=o.indexOf(car)}
     return {kind,car,ph,labels,ans};
   }
   return null;
 }
 
 /* ---------- экраны ---------- */
-const app=document.getElementById("app");
+const app=$("app");
 let S=null,token=0;
 
 function menu(){
   token++;S=null;
-  const rows=["mix","model","brand","power"].map((k,i)=>`
+  const rows=Object.keys(MODES).map((k,i)=>`
     <button class="mode ${k}" data-mode="${k}" style="--i:${i}">
       <span><strong>${MODES[k].t}</strong><small>${MODES[k].d}</small></span>
       <span class="rec">${best(k)}<small>рекорд</small></span>
@@ -271,7 +343,7 @@ function menu(){
       <circle cx="100" cy="110" r="9" fill="#ffc400"/></svg>
     <h1 class="word">Тахо</h1><p class="sub">Автовикторина без рекламы · машин: ${CARS.length}</p></div>
   <div class="modes">${rows}</div>
-  <p class="note">Фото подгружаются из Wikipedia, нужен интернет. Мощность указана в л.с. для конкретной версии, значения округлены.</p>`;
+  <p class="note">Фото подгружаются с Wikimedia Commons, нужен интернет. Мощность в л.с. и цена в $ относятся к указанной версии и года выпуска. Цена — новой машины на старте продаж, значения приблизительные.</p>`;
 }
 function start(mode){
   token++;
@@ -286,6 +358,10 @@ const meterH=()=>{
   for(let i=0;i<10;i++) g+=`<i class="${i<lit?"on":""}${i>=8?" hot":""}${i===lit-1?" last":""}"></i>`;
   return `<b>${S.score}</b><div class="tach" aria-hidden="true">${g}</div>`;
 };
+async function go(){
+  if(!S) return;
+  app.classList.add("leave");await sleep(170);app.classList.remove("leave");next();
+}
 async function next(){
   const s=S,t=token;
   app.innerHTML=`<div class="shot sk"><div class="bar" id="bar">${barH()}</div><div class="meter" id="meter">${meterH()}</div></div>`;
@@ -299,56 +375,90 @@ async function next(){
   s.q=q;s.locked=false;renderQ();
   s.pre=makeQ(s);
 }
+const shotHTML=p=>{
+  const contain=p.w/p.h<1.35;
+  return `<div class="shot" id="shot">${contain?`<div class="bgb" style="background-image:url('${cssu(p.src)}')"></div>`:""}
+  <img class="${contain?"contain":""}" src="${esc(p.src)}" alt="Автомобиль, название скрыто"><i class="fx"></i><div id="cap"></div>
+  <div class="bar" id="bar">${barH()}</div><div class="meter" id="meter">${meterH()}</div></div>`;
+};
 function renderQ(){
   const s=S,q=s.q;
-  if(q.kind==="power"){
+  if(q.kind==="power"||q.kind==="rich"){
+    const pr=q.f==="p";
     app.innerHTML=`<div class="bar flow" id="bar">${barH()}</div><div class="meter flow" id="meter">${meterH()}</div>
-    <p class="q">Какой автомобиль мощнее?</p>
+    <p class="q">${pr?"Какой автомобиль дороже?":"Какой автомобиль мощнее?"}${pr?"<small>Цена новой машины на старте продаж</small>":""}</p>
     <div class="duel">${q.items.map((c,i)=>`<button class="dcard" data-i="${i}" style="--i:${i}">
-      ${q.ph[i]?`<img src="${esc(q.ph[i].src)}" alt="${esc(nm(c))}">`:""}<i class="edge"></i>
-      <span class="info"><span><span class="nm">${esc(nm(c))}</span><span class="vr">${esc(c.v)}</span></span><span class="hp"><b>?</b><small>л.с.</small></span></span>
+      ${q.ph[i]?`<img src="${esc(q.ph[i].src)}" alt="${esc(c.name)}">`:""}<i class="edge"></i>
+      <span class="info"><span><span class="nm">${esc(c.name)}</span><span class="vr">${esc(c.v)}</span></span><span class="hp">${pr?"$ ":""}<b>?</b>${pr?"":"<small>л.с.</small>"}</span></span>
       <i class="fill"></i></button>`).join("")}</div><div id="after"></div>`;
     return;
   }
-  const p=q.ph,contain=p.w/p.h<1.35;
-  app.innerHTML=`<div class="shot" id="shot">${contain?`<div class="bgb" style="background-image:url('${cssu(p.src)}')"></div>`:""}
-    <img class="${contain?"contain":""}" src="${esc(p.src)}" alt="Автомобиль, название скрыто"><i class="fx"></i><div id="cap"></div>
-    <div class="bar" id="bar">${barH()}</div><div class="meter" id="meter">${meterH()}</div></div>
-  <p class="q">${q.kind==="brand"?"Какая это марка?":"Что это за модель?"}</p>
+  if(q.kind==="gp"||q.kind==="gc"){
+    const g=G[q.kind],t0=q.kind==="gp"?450:500;
+    app.innerHTML=shotHTML(q.ph)+`<p class="q">${g.ask}<small>${esc(q.car.name)} · ${esc(q.car.v)}</small></p>
+    <div class="guess"><div class="read" id="read">${g.fmt(val(g,t0))}</div>
+    <div class="rw" id="rw"><input class="rng" id="rng" type="range" min="0" max="1000" step="1" value="${t0}" style="--p:${t0/10}%" aria-label="Твоя оценка"></div>
+    <div class="lh"><span>${g.fmt(g.min)}</span><span>${g.fmt(g.max)}</span></div></div>
+    <div id="after"><div class="nextbar"><button class="next" data-act="check">Проверить</button></div></div>`;
+    return;
+  }
+  app.innerHTML=shotHTML(q.ph)+`<p class="q">${q.kind==="brand"?"Какая это марка?":"Что это за модель?"}</p>
   <div class="opts">${q.labels.map((l,i)=>`<button class="opt" data-i="${i}" style="--i:${i}">${esc(l)}</button>`).join("")}</div><div id="after"></div>`;
 }
-function countUp(el,to){
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=to;return}
+function countUp(el,to,fmt){
+  fmt=fmt||(v=>v);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=fmt(to);return}
   const t0=performance.now();
-  (function f(t){const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0);
+  (function f(t){const p=Math.min(1,(t-t0)/900);el.textContent=fmt(Math.round(to*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)})(t0);
+}
+function settle(ok){
+  const s=S;
+  if(ok){s.score++;s.streak++;if(s.score>best(s.mode)){store.set("best:"+s.mode,s.score);s.newBest=true}}
+  else{s.lives--;s.streak=0}
+  $("bar").innerHTML=barH();$("meter").innerHTML=meterH();
+  if(ok) document.querySelector("#meter b").classList.add("pop");
+  return ok&&s.streak%5===0?"серия ×"+s.streak:"";
+}
+function reveal(ok,q,st,extra){
+  $("shot").classList.add(ok?"gl":"rd");
+  const credit=q.ph.page?`<a href="${esc(q.ph.page)}" target="_blank" rel="noopener">Фото: Wikimedia Commons</a>`:"";
+  $("cap").innerHTML=`${ok?"Верно!":"Не то."} ${esc(q.car.name)}<small>${[extra,st,credit].filter(Boolean).join(" · ")}</small>`;
+}
+function finish(fb){
+  $("after").innerHTML=fb+`<div class="nextbar"><button class="next" data-act="${S.lives>0?"next":"over"}">${S.lives>0?"Дальше":"Финиш"}</button></div>`;
 }
 function answer(i){
   const s=S;if(!s||s.locked||!s.q) return;
   s.locked=true;
   const q=s.q,ok=i===q.ans;
-  if(ok){s.score++;s.streak++;if(s.score>best(s.mode)){store.set("best:"+s.mode,s.score);s.newBest=true}}
-  else{s.lives--;s.streak=0;app.classList.add("shake");setTimeout(()=>app.classList.remove("shake"),450)}
   document.querySelectorAll("[data-i]").forEach(b=>{
     const k=+b.dataset.i;b.classList.add(k===q.ans?"ok":(k===i?"bad":"dim"));b.setAttribute("aria-disabled","true");
   });
-  document.getElementById("bar").innerHTML=barH();
-  document.getElementById("meter").innerHTML=meterH();
-  if(ok) document.querySelector("#meter b").classList.add("pop");
-  const streak=ok&&s.streak%5===0?`серия ×${s.streak}`:"";
-  let fb="";
-  if(q.kind==="power"){
-    const mx=Math.max(q.items[0].hp,q.items[1].hp);
+  const st=settle(ok);
+  if(q.items){
+    const mx=Math.max(q.items[0][q.f],q.items[1][q.f]);
     document.querySelectorAll(".dcard").forEach((b,k)=>{
-      countUp(b.querySelector(".hp b"),q.items[k].hp);
-      requestAnimationFrame(()=>{b.querySelector(".fill").style.width=(q.items[k].hp/mx*100)+"%"});
+      countUp(b.querySelector(".hp b"),q.items[k][q.f],q.f==="p"?grp:null);
+      requestAnimationFrame(()=>{b.querySelector(".fill").style.width=(q.items[k][q.f]/mx*100)+"%"});
     });
-    fb=`<p class="fb">${ok?"Верно":"Не угадал"}${streak?" · "+streak:""}</p>`;
+    finish(`<p class="fb">${ok?"Верно":"Не угадал"}${st?" · "+st:""}</p>`);
   }else{
-    document.getElementById("shot").classList.add(ok?"gl":"rd");
-    document.getElementById("cap").innerHTML=`${ok?"Верно!":"Не то."} ${esc(nm(q.car))}<small>${streak?streak+" · ":""}${q.ph.page?`<a href="${esc(q.ph.page)}" target="_blank" rel="noopener">Фото: Wikipedia</a>`:"Фото: Wikipedia"}</small>`;
+    reveal(ok,q,st,"");
+    finish("");
   }
-  document.getElementById("after").innerHTML=fb+`<div class="nextbar"><button class="next" data-act="${s.lives>0?"next":"over"}">${s.lives>0?"Дальше":"Финиш"}</button></div>`;
-  document.querySelector(".nextbar").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function check(){
+  const s=S;if(!s||s.locked||!s.q) return;
+  s.locked=true;
+  const q=s.q,g=G[q.kind],rng=$("rng"),guess=val(g,+rng.value),real=q.car[g.f];
+  const ok=Math.abs(guess-real)/real<=g.tol;
+  rng.disabled=true;
+  const rd=$("read");rd.classList.add(ok?"ok":"bad");
+  const st=settle(ok);
+  $("rw").insertAdjacentHTML("afterbegin",`<i class="mark" style="--m:${Math.min(1,Math.max(0,pos(g,real)/1000))}"><span>${g.fmt(real)}</span></i>`);
+  const d=Math.round((guess-real)/real*100);
+  reveal(ok,q,st,"");
+  finish(`<p class="fb">${ok?"Верно!":"Мимо."} Правильный ответ: <b>${g.fmt(real)}</b>${d===0?"":` (ты ${d>0?"завысил":"занизил"} на ${Math.abs(d)}%)`}. Засчитываю в пределах ±${Math.round(g.tol*100)}%.</p>`);
 }
 function over(){
   const s=S;token++;
@@ -357,14 +467,20 @@ function over(){
     <p>${s.newBest&&s.score>0?"Новый рекорд!":"Рекорд: "+best(s.mode)}</p>
     <div class="nextbar" style="position:static"><button class="next" data-act="again">Ещё раз</button></div>
     <button class="ghost" data-act="menu">В меню</button></div>`;
-  countUp(document.getElementById("big"),s.score);
+  countUp($("big"),s.score);
 }
+app.addEventListener("input",e=>{
+  if(e.target.id!=="rng"||!S||!S.q) return;
+  const g=G[S.q.kind],t=+e.target.value;
+  e.target.style.setProperty("--p",t/10+"%");
+  $("read").textContent=g.fmt(val(g,t));
+});
 app.addEventListener("click",e=>{
   const el=e.target.closest("[data-act],[data-mode],[data-i]");
   if(!el) return;
   if(el.dataset.act){
     const a=el.dataset.act;
-    if(a==="menu") menu();else if(a==="next"||a==="retry") next();else if(a==="over") over();else if(a==="again") start(S.mode);
+    if(a==="menu") menu();else if(a==="next") go();else if(a==="retry") next();else if(a==="check") check();else if(a==="over") over();else if(a==="again") start(S.mode);
   }else if(el.dataset.mode) start(el.dataset.mode);
   else if(el.dataset.i!==undefined) answer(+el.dataset.i);
 });
