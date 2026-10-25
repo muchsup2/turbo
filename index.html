@@ -7,24 +7,23 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Тахо">
-<meta name="theme-color" content="#0a0f2b">
+<meta name="theme-color" content="#090d24">
 <title>Тахо — Автовикторина</title>
 <style>
 :root{
-  --deep:#090d24;
-  --deep-trans:rgba(9,13,36,0.82);
-  --card-bg:#121a42;
+  --deep:#070a1e;
+  --card-bg:#10163a;
   --yellow:#ffb700;
-  --yellow-glow:rgba(255,183,0,0.4);
+  --yellow-glow:rgba(255,183,0,0.45);
   --cyan:#00e5ff;
-  --cyan-glow:rgba(0,229,255,0.35);
+  --cyan-glow:rgba(0,229,255,0.4);
   --paper:#f8f9fe;
   --green:#10b981;
-  --green-glow:rgba(16,185,129,0.45);
+  --green-glow:rgba(16,185,129,0.5);
   --red:#f43f5e;
-  --red-glow:rgba(244,63,94,0.45);
-  --display:"Avenir Next Condensed","Impact","Helvetica Neue","Arial Narrow",sans-serif;
-  --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --red-glow:rgba(244,63,94,0.5);
+  --display:"Avenir Next Condensed","Impact","Helvetica Neue",Arial,sans-serif;
+  --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
   --snap:cubic-bezier(0.18, 0.9, 0.22, 1.15);
   --smooth:cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -37,21 +36,20 @@ body{
   color:var(--paper);
   font-family:var(--text);
   touch-action:manipulation;
-  background:radial-gradient(130% 65% at 50% -10%, #1e2d78 0%, rgba(30,45,120,0) 75%),
-             repeating-linear-gradient(-25deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 24px),
-             linear-gradient(180deg, #101638 0%, #060919 100%);
+  background:radial-gradient(130% 65% at 50% -10%, #1e2a70 0%, rgba(30,42,112,0) 75%),
+             repeating-linear-gradient(-25deg, rgba(255,255,255,0.018) 0 2px, transparent 2px 24px),
+             linear-gradient(180deg, #0d1233 0%, #050716 100%);
   overflow-x:hidden;
   position:relative;
 }
 
-/* Фоновые неоновые частицы и линии */
 #bg-canvas, #fx-canvas{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:0;
 }
-#fx-canvas{z-index:100}
+#fx-canvas{z-index:999}
 
 button{
   font:inherit;
@@ -67,215 +65,248 @@ button{
 
 .app{
   position:relative;
-  z-index:1;
+  z-index:10;
   max-width:540px;
   margin:0 auto;
   min-height:100dvh;
-  padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 24px);
   display:flex;
   flex-direction:column;
   gap:12px;
 }
 
-/* Общие анимации */
-.app.leave{animation:appLeave 0.2s ease-in forwards}
+.app.leave{animation:appLeave 0.18s ease-in forwards}
 @keyframes appLeave{to{opacity:0;transform:scale(0.97) translateY(8px)}}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulseGlow{
-  0%,100%{filter:drop-shadow(0 0 8px var(--yellow-glow))}
-  50%{filter:drop-shadow(0 0 20px var(--yellow))}
-}
 @keyframes screenShake{
-  0%{transform:translate(0,0)}
-  15%{transform:translate(-8px, 4px) rotate(-1deg)}
-  35%{transform:translate(7px, -5px) rotate(1deg)}
-  55%{transform:translate(-5px, 3px)}
-  75%{transform:translate(4px, -2px)}
-  100%{transform:translate(0,0)}
+  0%,100%{transform:translate(0,0)}
+  20%{transform:translate(-7px, 3px) rotate(-1deg)}
+  40%{transform:translate(6px, -4px) rotate(1deg)}
+  60%{transform:translate(-5px, 2px)}
+  80%{transform:translate(4px, -1px)}
 }
-.shake{animation:screenShake 0.42s var(--smooth)}
+.shake{animation:screenShake 0.4s var(--smooth)}
 
-/* Хедер и меню */
-.hero{
-  text-align:center;
-  padding-top:calc(env(safe-area-inset-top, 0px) + 14px);
-  position:relative;
-}
-.hero-ctrls{
-  position:absolute;
-  top:calc(env(safe-area-inset-top, 0px) + 14px);
-  right:0;
+/* Верхняя панель профиля и опыта */
+.user-panel{
   display:flex;
-  gap:8px;
-  z-index:10;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:calc(env(safe-area-inset-top, 0px) + 10px) 2px 4px;
 }
-.ctrl-btn{
-  width:42px;
-  height:42px;
+.rank-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.14);
+  padding:6px 12px;
+  border-radius:20px;
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+}
+.rank-icon{font-size:16px}
+.rank-txt{font:italic 800 13px/1.1 var(--display);letter-spacing:0.5px}
+.rank-txt small{display:block;font:600 10.5px var(--text);color:var(--yellow);text-transform:uppercase}
+
+.user-actions{display:flex;align-items:center;gap:6px}
+.btn-icon{
+  width:38px;
+  height:38px;
   display:grid;
   place-items:center;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.15);
   border-radius:10px;
-  font-size:20px;
+  font-size:17px;
   backdrop-filter:blur(8px);
 }
-.ctrl-btn:active{transform:scale(0.92)}
+.btn-icon:active{transform:scale(0.9)}
 
-.gauge-wrap{
-  position:relative;
-  width:240px;
+/* Хедер главного меню */
+.hero{text-align:center;padding:8px 0 4px;position:relative}
+.gauge-box{
+  width:230px;
   margin:0 auto;
+  position:relative;
   cursor:pointer;
 }
-.gauge{
-  width:100%;
-  display:block;
-  filter:drop-shadow(0 4px 20px rgba(0,0,0,0.6));
-}
-.needle{
-  transform-origin:100px 110px;
-  transform:rotate(-92deg);
-  transition:transform 0.4s var(--snap);
-}
+.gauge-box svg{width:100%;display:block;filter:drop-shadow(0 6px 20px rgba(0,0,0,0.5))}
 .gauge-tap-tip{
   position:absolute;
-  bottom:6px;
+  bottom:4px;
   left:50%;
   transform:translateX(-50%);
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
   letter-spacing:1px;
-  font-weight:700;
+  font-weight:800;
   color:var(--yellow);
-  opacity:0.8;
+  opacity:0.85;
   pointer-events:none;
 }
 .word{
-  font:italic 900 84px/0.92 var(--display);
+  font:italic 900 82px/0.9 var(--display);
   letter-spacing:-1px;
   color:var(--yellow);
   margin:4px 0 0;
-  text-shadow:0 8px 24px rgba(255,183,0,0.35), 0 4px 0 rgba(0,0,0,0.4);
+  text-shadow:0 6px 24px rgba(255,183,0,0.4), 0 3px 0 rgba(0,0,0,0.5);
   animation:up 0.5s 0.08s both;
 }
 .sub{
-  margin:8px 0 0;
-  font-size:15px;
+  margin:6px 0 0;
+  font-size:14.5px;
   font-weight:500;
   color:rgba(255,255,255,0.85);
-  letter-spacing:0.3px;
-  animation:up 0.5s 0.16s both;
+  animation:up 0.5s 0.15s both;
 }
-.badge-count{
-  display:inline-block;
-  background:rgba(255,183,0,0.18);
-  color:var(--yellow);
-  padding:2px 8px;
-  border-radius:6px;
+
+/* Фильтры и тематические паки */
+.pack-strip{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:4px 0 8px;
+  scrollbar-width:none;
+}
+.pack-strip::-webkit-scrollbar{display:none}
+.pack-chip{
+  flex-shrink:0;
+  padding:8px 14px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  font-size:13px;
   font-weight:700;
-  margin-left:4px;
+  color:rgba(255,255,255,0.8);
+  white-space:nowrap;
+  transition:all 0.2s;
+}
+.pack-chip.active{
+  background:linear-gradient(135deg, var(--yellow), #ff9100);
+  color:var(--deep);
+  border-color:transparent;
+  box-shadow:0 0 14px var(--yellow-glow);
+}
+
+/* Кнопка ежедневного заезда */
+.daily-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  background:linear-gradient(135deg, #1b2866, #0e153d);
+  border:1.5px solid rgba(0,229,255,0.4);
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,229,255,0.15);
+  cursor:pointer;
+  animation:up 0.4s both;
+}
+.daily-card:active{transform:scale(0.985)}
+.daily-card .d-tit{
+  font:italic 900 21px/1.1 var(--display);
+  color:var(--cyan);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.daily-card .d-sub{
+  font-size:12.5px;
+  color:rgba(255,255,255,0.75);
+  margin-top:2px;
+}
+.daily-pill{
+  background:var(--cyan);
+  color:var(--deep);
+  font:italic 900 13px/1 var(--display);
+  padding:6px 12px;
+  border-radius:14px;
 }
 
 /* Список режимов игры */
 .modes{
   display:flex;
   flex-direction:column;
-  gap:10px;
-  margin-top:12px;
+  gap:9px;
+  margin-top:2px;
 }
 .mode{
   position:relative;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:14px;
+  gap:12px;
   text-align:left;
-  background:linear-gradient(135deg, rgba(255,255,255,0.96) 0%, #e8ecf8 100%);
+  background:linear-gradient(135deg, rgba(255,255,255,0.96) 0%, #e3e8f8 100%);
   color:var(--deep);
-  padding:14px 20px;
+  padding:13px 18px;
   border-left:8px solid var(--yellow);
-  border-radius:2px 14px 14px 2px;
   clip-path:polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-  box-shadow:0 6px 18px rgba(0,0,0,0.35);
-  animation:up 0.45s var(--snap) both;
-  animation-delay:calc(0.18s + var(--i)*0.05s);
-  overflow:hidden;
+  box-shadow:0 6px 16px rgba(0,0,0,0.3);
+  animation:up 0.4s var(--snap) both;
+  animation-delay:calc(0.12s + var(--i)*0.04s);
+  border-radius:2px 12px 12px 2px;
 }
-.mode::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-  transform:translateX(-100%);
-  transition:transform 0.5s ease;
+.mode:active{transform:scale(0.98)}
+.mode.drag{
+  background:linear-gradient(135deg, #ff2d55 0%, #ff5e3a 100%);
+  color:#fff;
+  border-left-color:#fff;
+  box-shadow:0 8px 24px rgba(255,45,85,0.4);
 }
-.mode:hover::before{transform:translateX(100%)}
-.mode:active{transform:scale(0.975)}
-
+.mode.drag strong{color:#fff}
+.mode.drag small{color:rgba(255,255,255,0.85)}
 .mode.mix{
   background:linear-gradient(135deg, #ffc814 0%, #ff9e00 100%);
   border-left-color:var(--deep);
-  padding:20px 20px;
-  box-shadow:0 8px 26px rgba(255,160,0,0.45);
+  padding:18px 18px;
+  box-shadow:0 8px 24px rgba(255,160,0,0.4);
 }
 .mode strong{display:block;font:italic 800 24px/1.05 var(--display);letter-spacing:0.3px}
-.mode.mix strong{font-size:32px}
-.mode small{display:block;font-size:13.5px;color:rgba(10,15,45,0.78);margin-top:2px;font-weight:500}
-.rec{font:italic 800 22px/1 var(--display);text-align:right;white-space:nowrap}
-.rec small{font:600 11px var(--text);color:rgba(10,15,45,0.65);display:block;text-transform:uppercase;margin-top:3px}
-.note{font-size:12px;line-height:1.5;color:rgba(255,255,255,0.6);margin:8px 4px 0;text-align:center}
+.mode.mix strong{font-size:31px}
+.mode small{display:block;font-size:13px;color:rgba(10,15,45,0.75);margin-top:2px;font-weight:500}
+.rec{font:italic 800 21px/1 var(--display);text-align:right;white-space:nowrap}
+.rec small{font:600 11px var(--text);color:rgba(10,15,45,0.65);display:block;text-transform:uppercase;margin-top:2px}
+.mode.drag .rec small{color:rgba(255,255,255,0.8)}
 
-/* Верхняя панель во время раунда */
+/* Верхняя панель во время игры */
 .bar{
   position:absolute;
   top:0;left:0;right:0;
-  z-index:10;
+  z-index:15;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
   padding:calc(env(safe-area-inset-top, 0px) + 10px) 16px 0;
 }
-.bar.flow{position:static;padding-left:0;padding-right:0;margin-bottom:8px}
-
+.bar.flow{position:static;padding-left:0;padding-right:0;margin-bottom:6px}
 .back{
-  width:42px;
-  height:42px;
+  width:40px;
+  height:40px;
   font-size:26px;
   display:grid;
   place-items:center;
-  background:rgba(9,13,36,0.7);
-  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(7,10,30,0.75);
+  border:1px solid rgba(255,255,255,0.2);
   border-radius:10px;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(8px);
 }
 .back:active{transform:scale(0.9)}
+.mt{flex:1;font:italic 800 21px/1 var(--display);text-shadow:0 2px 10px rgba(0,0,0,0.8)}
+.mt small{display:block;font:600 11px var(--text);color:rgba(255,255,255,0.8);margin-top:2px}
 
-.mt{
-  flex:1;
-  font:italic 800 22px/1 var(--display);
-  text-shadow:0 2px 10px rgba(0,0,0,0.7);
-  letter-spacing:0.5px;
-}
-.mt small{
-  display:block;
-  font:600 11.5px var(--text);
-  color:rgba(255,255,255,0.8);
-  letter-spacing:0;
-  margin-top:2px;
-}
-
-.lives{display:flex;gap:7px}
+.lives{display:flex;gap:6px}
 .lives i{
   display:inline-block;
-  width:16px;
-  height:16px;
+  width:15px;
+  height:15px;
   background:var(--yellow);
   transform:skewX(-20deg);
   border-radius:2px;
   box-shadow:0 0 10px var(--yellow-glow);
-  transition:transform 0.4s var(--snap), background 0.4s, opacity 0.4s;
+  transition:transform 0.35s var(--snap), background 0.35s;
 }
 .lives i.lost{
   background:rgba(255,255,255,0.2);
@@ -283,18 +314,18 @@ button{
   box-shadow:none;
 }
 
-/* Шкала оборотов и комбо */
+/* Счёт и тахометр/комбо */
 .meter{
   position:absolute;
-  left:16px;right:64px;bottom:34px;
-  z-index:10;
+  left:16px;right:64px;bottom:32px;
+  z-index:15;
   display:flex;
   align-items:flex-end;
-  gap:14px;
+  gap:12px;
 }
 .meter.flow{position:static;margin:0 0 6px;padding:0}
 .meter b{
-  font:italic 900 68px/0.85 var(--display);
+  font:italic 900 66px/0.85 var(--display);
   text-shadow:0 4px 16px rgba(0,0,0,0.8);
   letter-spacing:-1px;
 }
@@ -302,7 +333,6 @@ button{
 @keyframes scorePop{
   40%{transform:scale(1.35) rotate(-3deg);color:var(--yellow);text-shadow:0 0 25px var(--yellow)}
 }
-
 .tach{flex:1;display:flex;gap:4px;padding-bottom:6px}
 .tach i{
   flex:1;
@@ -323,15 +353,15 @@ button{
 .combo-badge{
   position:absolute;
   right:16px;
-  top:calc(env(safe-area-inset-top,0px) + 64px);
+  top:calc(env(safe-area-inset-top,0px) + 60px);
   z-index:20;
   background:linear-gradient(135deg, #ff416c, #ff4b2b);
   color:#fff;
-  font:italic 900 16px/1 var(--display);
-  padding:6px 12px;
+  font:italic 900 15px/1 var(--display);
+  padding:5px 12px;
   border-radius:20px;
   box-shadow:0 4px 16px rgba(255,75,43,0.5);
-  animation:up 0.3s var(--snap) both, flame 0.5s infinite alternate;
+  animation:up 0.3s var(--snap) both;
   pointer-events:none;
 }
 
@@ -339,18 +369,17 @@ button{
 .shot{
   position:relative;
   margin:0 -16px;
-  height:calc(env(safe-area-inset-top, 0px) + min(68vw, 360px));
+  height:calc(env(safe-area-inset-top, 0px) + min(68vw, 350px));
   background:#090d24;
   overflow:hidden;
   clip-path:polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 46px) 100%, 0 100%);
-  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+  box-shadow:0 10px 28px rgba(0,0,0,0.6);
 }
 .shot.sk{
   background:linear-gradient(100deg, #090d24 25%, #223282 50%, #090d24 75%) 0 0/250% 100%;
   animation:shimmer 1.2s linear infinite;
 }
 @keyframes shimmer{to{background-position:-250% 0}}
-
 .shot img, .dcard img{
   position:absolute;
   inset:0;
@@ -358,7 +387,7 @@ button{
   height:100%;
   object-fit:cover;
   object-position:50% 55%;
-  animation:imgFade 0.65s ease-out both;
+  animation:imgFade 0.6s ease-out both;
 }
 @keyframes imgFade{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:scale(1)}}
 .shot img.contain{object-fit:contain}
@@ -374,16 +403,10 @@ button{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:linear-gradient(rgba(9,13,36,0.65) 0%, transparent 28%, transparent 55%, rgba(9,13,36,0.92) 100%);
+  background:linear-gradient(rgba(7,10,30,0.65) 0%, transparent 28%, transparent 55%, rgba(7,10,30,0.92) 100%);
 }
 
-.fx-flash{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  opacity:0;
-  pointer-events:none;
-}
+.fx-flash{position:absolute;inset:0;z-index:3;opacity:0;pointer-events:none}
 .shot.win .fx-flash{background:radial-gradient(circle, var(--green-glow) 0%, transparent 70%);animation:flash 0.6s ease-out}
 .shot.lose .fx-flash{background:radial-gradient(circle, var(--red-glow) 0%, transparent 70%);animation:flash 0.6s ease-out}
 @keyframes flash{0%{opacity:0.9}100%{opacity:0}}
@@ -391,8 +414,8 @@ button{
 .cap{
   position:absolute;
   left:16px;right:16px;bottom:94px;
-  z-index:10;
-  font:italic 800 28px/1.05 var(--display);
+  z-index:15;
+  font:italic 800 27px/1.05 var(--display);
   text-shadow:0 2px 14px rgba(0,0,0,0.85);
   animation:up 0.38s ease-out both;
 }
@@ -402,7 +425,7 @@ button{
   color:rgba(255,255,255,0.88);
   margin-top:4px;
 }
-.cap a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.cap a{color:inherit;text-decoration:underline}
 
 .q{
   font:italic 900 27px/1.12 var(--display);
@@ -414,8 +437,30 @@ button{
   display:block;
   font:500 13.5px var(--text);
   color:rgba(255,255,255,0.7);
-  margin-top:4px;
+  margin-top:3px;
   letter-spacing:0;
+}
+
+/* Карточка факта («Знал ли ты?») */
+.fact-card{
+  background:linear-gradient(135deg, rgba(255,183,0,0.12), rgba(255,183,0,0.03));
+  border:1px solid rgba(255,183,0,0.3);
+  border-left:5px solid var(--yellow);
+  padding:12px 16px;
+  border-radius:10px;
+  font-size:13.5px;
+  line-height:1.45;
+  color:rgba(255,255,255,0.92);
+  margin:10px 0 4px;
+  animation:up 0.4s both;
+}
+.fact-card b{
+  color:var(--yellow);
+  display:block;
+  font:italic 800 14.5px var(--display);
+  margin-bottom:3px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
 }
 
 /* Варианты ответов */
@@ -434,7 +479,7 @@ button{
   animation:up 0.38s ease-out both;
   animation-delay:calc(0.08s + var(--i)*0.05s);
   box-shadow:0 4px 14px rgba(0,0,0,0.25);
-  transition:transform 0.12s, opacity 0.25s, background 0.25s, border-color 0.25s;
+  transition:transform 0.12s, opacity 0.25s, background 0.25s;
 }
 .opt:hover{transform:translateX(4px)}
 .opt:active{transform:scale(0.98)}
@@ -443,22 +488,14 @@ button{
   color:#fff;
   border-left-color:#fff;
   box-shadow:0 0 22px var(--green-glow);
-  animation:popWin 0.4s var(--snap);
 }
 .opt.bad{
   background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
   color:#fff;
   border-left-color:#fff;
   box-shadow:0 0 22px var(--red-glow);
-  animation:screenShake 0.35s ease-out;
 }
 .opt.dim{opacity:0.42;transform:none}
-
-@keyframes popWin{
-  0%{transform:scale(1)}
-  40%{transform:scale(1.035)}
-  100%{transform:scale(1)}
-}
 
 /* Дуэль (Что мощнее / Кто дороже) */
 .duel-wrap{
@@ -473,29 +510,23 @@ button{
   top:50%;
   transform:translate(-50%, -50%);
   z-index:15;
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   background:linear-gradient(135deg, #ffb700, #ff5100);
   color:#fff;
   display:grid;
   place-items:center;
-  font:italic 900 17px/1 var(--display);
+  font:italic 900 16px/1 var(--display);
   box-shadow:0 0 16px rgba(255,183,0,0.7), 0 4px 10px rgba(0,0,0,0.5);
   border:3px solid var(--deep);
   pointer-events:none;
-  animation:vsPulse 1.4s ease-in-out infinite alternate;
 }
-@keyframes vsPulse{
-  from{transform:translate(-50%, -50%) scale(1)}
-  to{transform:translate(-50%, -50%) scale(1.12)}
-}
-
 .dcard{
   position:relative;
   display:block;
   width:100%;
-  height:clamp(150px, 25dvh, 215px);
+  height:clamp(145px, 24dvh, 205px);
   overflow:hidden;
   background:linear-gradient(125deg, #1b266d 0%, #0d1238 100%);
   border-radius:4px 16px 16px 4px;
@@ -510,7 +541,7 @@ button{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(rgba(9,13,36,0.15) 20%, rgba(9,13,36,0.92) 90%);
+  background:linear-gradient(rgba(7,10,30,0.15) 20%, rgba(7,10,30,0.92) 90%);
 }
 .dcard .edge{
   position:absolute;
@@ -518,12 +549,11 @@ button{
   width:9px;
   background:var(--yellow);
   z-index:5;
-  transition:background 0.3s, box-shadow 0.3s;
+  transition:background 0.3s;
 }
 .dcard.ok .edge{background:var(--green);box-shadow:0 0 16px var(--green-glow)}
 .dcard.bad .edge{background:var(--red);box-shadow:0 0 16px var(--red-glow)}
-.dcard.dim{opacity:0.52}
-.dcard.bad{animation:screenShake 0.4s ease-out}
+.dcard.dim{opacity:0.5}
 
 .dcard .info{
   position:absolute;
@@ -535,8 +565,7 @@ button{
   gap:12px;
 }
 .dcard .nm{
-  font:italic 900 25px/1.02 var(--display);
-  letter-spacing:0.3px;
+  font:italic 900 24px/1.02 var(--display);
   text-shadow:0 2px 12px rgba(0,0,0,0.8);
 }
 .dcard .vr{
@@ -546,7 +575,7 @@ button{
   margin-top:3px;
 }
 .dcard .hp{
-  font:italic 900 34px/1 var(--display);
+  font:italic 900 32px/1 var(--display);
   white-space:nowrap;
   color:var(--yellow);
 }
@@ -565,12 +594,101 @@ button{
   background:var(--yellow);
   z-index:7;
   transition:width 1s cubic-bezier(0.18, 0.9, 0.25, 1);
-  box-shadow:0 0 10px var(--yellow-glow);
 }
 .dcard.ok .fill{background:var(--green);box-shadow:0 0 12px var(--green-glow)}
 .dcard.bad .fill{background:var(--red);box-shadow:0 0 12px var(--red-glow)}
 
-/* Ползунок (угадай мощность / цену) */
+/* ==========================================================================
+   ИНТЕРАКТИВНЫЙ РЕЖИМ «ДРАГ-РЕЙСИНГ 0-100 КМ/Ч»
+   ========================================================================== */
+.drag-arena{
+  position:relative;
+  background:#090d22;
+  border-radius:14px;
+  padding:14px;
+  border:1.5px solid rgba(255,255,255,0.12);
+  margin-top:8px;
+  overflow:hidden;
+}
+.drag-tree{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  padding:8px 0 14px;
+  background:rgba(0,0,0,0.35);
+  border-radius:10px;
+  margin-bottom:12px;
+}
+.tree-light{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#1a1d33;
+  border:2px solid rgba(255,255,255,0.25);
+  transition:background 0.15s, box-shadow 0.15s;
+}
+.tree-light.stage.on{background:#00e5ff;box-shadow:0 0 16px var(--cyan)}
+.tree-light.yellow.on{background:#ffb700;box-shadow:0 0 16px var(--yellow)}
+.tree-light.green.on{background:#10b981;box-shadow:0 0 20px #10b981}
+
+.drag-strip{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  position:relative;
+  background:#12162b;
+  padding:16px 12px;
+  border-radius:10px;
+  border:1px dashed rgba(255,255,255,0.2);
+}
+.drag-lane{
+  position:relative;
+  height:56px;
+  background:repeating-linear-gradient(90deg, #1b203d 0 20px, #161a33 20px 40px);
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  padding:0 8px;
+  overflow:hidden;
+}
+.finish-line{
+  position:absolute;
+  right:16px;
+  top:0;bottom:0;
+  width:8px;
+  background:repeating-linear-gradient(0deg, #fff 0 8px, #000 8px 16px);
+  z-index:2;
+}
+.drag-car-sprite{
+  position:absolute;
+  left:10px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.95);
+  color:var(--deep);
+  padding:4px 10px;
+  border-radius:6px;
+  font:italic 800 13px/1 var(--display);
+  box-shadow:0 2px 10px rgba(0,0,0,0.5);
+  z-index:5;
+  transition:transform 0.1s linear;
+  white-space:nowrap;
+}
+.drag-car-sprite.c1{border-left:4px solid var(--yellow)}
+.drag-car-sprite.c2{border-left:4px solid var(--cyan)}
+
+.winner-banner{
+  text-align:center;
+  margin-top:12px;
+  font:italic 900 24px/1.1 var(--display);
+  color:var(--yellow);
+  animation:up 0.4s both;
+}
+
+/* Ползунок */
 .guess{
   display:flex;
   flex-direction:column;
@@ -582,16 +700,14 @@ button{
   border:1px solid rgba(255,255,255,0.08);
 }
 .read{
-  font:italic 900 58px/1 var(--display);
+  font:italic 900 56px/1 var(--display);
   color:var(--yellow);
   text-align:center;
   text-shadow:0 0 20px var(--yellow-glow);
-  letter-spacing:0.5px;
-  transition:color 0.3s, text-shadow 0.3s;
+  transition:color 0.3s;
 }
-.read.ok{color:#4ade80;text-shadow:0 0 22px var(--green-glow)}
-.read.bad{color:#fb7185;text-shadow:0 0 22px var(--red-glow)}
-
+.read.ok{color:#4ade80}
+.read.bad{color:#fb7185}
 .rw{position:relative;padding:36px 4px 10px}
 .rng{
   -webkit-appearance:none;
@@ -614,9 +730,7 @@ button{
   border-left:8px solid var(--deep);
   box-shadow:0 4px 16px rgba(0,0,0,0.6);
   border-radius:2px;
-  cursor:grab;
 }
-.rng::-webkit-slider-thumb:active{cursor:grabbing}
 .rng::-moz-range-thumb{
   width:26px;
   height:44px;
@@ -624,54 +738,15 @@ button{
   border:0;
   border-left:8px solid var(--deep);
   box-shadow:0 4px 16px rgba(0,0,0,0.6);
-  border-radius:2px;
 }
-.rng:disabled{opacity:0.85;cursor:default}
-
-.lh{
-  display:flex;
-  justify-content:space-between;
-  font-size:12.5px;
-  font-weight:600;
-  color:rgba(255,255,255,0.6);
-  padding:6px 2px 0;
-}
-.mark{
-  position:absolute;
-  top:2px;
-  left:calc(16px + (100% - 32px)*var(--m));
-  width:0;
-  height:60px;
-  animation:fadeIn 0.35s 0.1s both;
-  z-index:8;
-}
-.mark::before{
-  content:"";
-  position:absolute;
-  left:-2px;
-  top:20px;
-  bottom:0;
-  width:4px;
-  background:var(--green);
-  box-shadow:0 0 10px var(--green-glow);
-}
-.mark span{
-  position:absolute;
-  left:0;
-  top:0;
-  transform:translateX(-50%);
-  white-space:nowrap;
-  background:var(--green);
-  color:#fff;
-  font:italic 800 16px/1 var(--display);
-  padding:3px 9px;
-  border-radius:4px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.4);
-}
+.lh{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);padding:6px 2px 0}
+.mark{position:absolute;top:2px;left:calc(16px + (100% - 32px)*var(--m));width:0;height:60px;animation:fadeIn 0.35s both;z-index:8}
+.mark::before{content:"";position:absolute;left:-2px;top:20px;bottom:0;width:4px;background:var(--green)}
+.mark span{position:absolute;left:0;top:0;transform:translateX(-50%);white-space:nowrap;background:var(--green);color:#fff;font:italic 800 16px/1 var(--display);padding:3px 9px;border-radius:4px}
 
 .fb{
   margin:10px 0 0;
-  font-size:16px;
+  font-size:15.5px;
   line-height:1.45;
   background:rgba(255,255,255,0.06);
   padding:12px 16px;
@@ -691,7 +766,7 @@ button{
   width:100%;
   background:linear-gradient(135deg, #ffc400 0%, #ff9e00 100%);
   color:var(--deep);
-  font:italic 900 26px var(--display);
+  font:italic 900 25px var(--display);
   padding:16px;
   text-align:center;
   border-radius:2px 12px 12px 2px;
@@ -700,14 +775,177 @@ button{
 }
 .next:active{transform:scale(0.98)}
 
-.err{
-  background:rgba(244,63,94,0.15);
-  border:1px solid rgba(244,63,94,0.35);
-  padding:18px;
+/* ==========================================================================
+   МОДАЛЬНЫЕ ОКНА (ГАРАЖ, ДОСТИЖЕНИЯ, НАСТРОЙКИ)
+   ========================================================================== */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,7,22,0.85);
+  backdrop-filter:blur(10px);
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  animation:fadeIn 0.25s both;
+}
+.modal-window{
+  background:linear-gradient(180deg, #141b44 0%, #0a0e28 100%);
+  width:100%;
+  max-width:540px;
+  max-height:88dvh;
+  border-radius:24px 24px 0 0;
+  border-top:1.5px solid rgba(255,255,255,0.2);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  animation:up 0.35s var(--snap) both;
+}
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 20px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.modal-head h3{
+  font:italic 900 26px/1 var(--display);
+  color:var(--yellow);
+}
+.modal-close{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  display:grid;
+  place-items:center;
+  font-size:18px;
+}
+.modal-body{
+  padding:16px 20px 30px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* Сетка Гаража */
+.garage-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+}
+.car-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
   border-radius:12px;
-  font-size:16px;
-  line-height:1.45;
-  margin-top:16px;
+  padding:10px;
+  text-align:left;
+  cursor:pointer;
+  transition:all 0.2s;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.car-card.locked{
+  opacity:0.4;
+  cursor:default;
+  background:rgba(0,0,0,0.3);
+}
+.car-card .c-img-thumb{
+  width:100%;
+  height:76px;
+  border-radius:8px;
+  background:#070a1a;
+  object-fit:cover;
+}
+.car-card .c-name{
+  font:italic 800 15px/1.1 var(--display);
+  color:#fff;
+}
+.car-card .c-meta{
+  font-size:11.5px;
+  color:var(--yellow);
+  font-weight:600;
+}
+
+/* Карточка деталей машины в гараже */
+.inspect-hero{
+  width:100%;
+  height:180px;
+  border-radius:14px;
+  object-fit:cover;
+  background:#000;
+}
+.specs-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:6px;
+  font-size:13.5px;
+}
+.specs-table td{
+  padding:8px 6px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.specs-table td:first-child{color:rgba(255,255,255,0.6)}
+.specs-table td:last-child{text-align:right;font-weight:700;color:var(--yellow)}
+
+/* Список достижений */
+.achieve-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:12px 14px;
+  border-radius:12px;
+}
+.achieve-item.done{
+  border-color:rgba(255,183,0,0.4);
+  background:linear-gradient(135deg, rgba(255,183,0,0.1), rgba(255,183,0,0.02));
+}
+.achieve-icon{
+  font-size:28px;
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+.achieve-info strong{
+  font:italic 800 18px/1.1 var(--display);
+  display:block;
+  color:#fff;
+}
+.achieve-item.done strong{color:var(--yellow)}
+.achieve-info small{font-size:12.5px;color:rgba(255,255,255,0.7);display:block;margin-top:2px}
+
+/* Всплывающий тост достижения / уровня */
+.toast-notice{
+  position:fixed;
+  top:calc(env(safe-area-inset-top, 0px) + 16px);
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg, #ffc814, #ff8400);
+  color:var(--deep);
+  padding:10px 20px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font:italic 900 16px var(--display);
+  box-shadow:0 6px 25px rgba(255,183,0,0.6);
+  z-index:1000;
+  animation:toastPop 3.2s ease forwards;
+  pointer-events:none;
+}
+@keyframes toastPop{
+  0%{opacity:0;transform:translate(-50%, -20px) scale(0.9)}
+  15%,80%{opacity:1;transform:translate(-50%, 0) scale(1)}
+  100%{opacity:0;transform:translate(-50%, -20px) scale(0.9)}
 }
 
 /* Экран завершения игры */
@@ -735,30 +973,10 @@ button{
   border-radius:20px;
   font:italic 800 18px/1.2 var(--display);
   color:var(--cyan);
-  letter-spacing:0.5px;
   animation:up 0.45s 0.08s both;
 }
-.over .big{
-  font:italic 900 136px/0.9 var(--display);
-  letter-spacing:-2px;
-  animation:up 0.5s 0.12s both;
-}
-.over p{
-  margin:0;
-  font-size:18px;
-  color:rgba(255,255,255,0.85);
-  animation:up 0.5s 0.18s both;
-}
-.new-record-tag{
-  display:inline-block;
-  background:linear-gradient(135deg, #10b981, #059669);
-  color:#fff;
-  font:italic 900 15px var(--display);
-  padding:4px 12px;
-  border-radius:12px;
-  margin-top:6px;
-  animation:pulseGlow 1.5s infinite;
-}
+.over .big{font:italic 900 130px/0.9 var(--display);animation:up 0.5s 0.12s both}
+.over p{margin:0;font-size:18px;color:rgba(255,255,255,0.85);animation:up 0.5s 0.18s both}
 .ghost{
   background:rgba(255,255,255,0.1);
   text-align:center;
@@ -769,6 +987,16 @@ button{
   border:1px solid rgba(255,255,255,0.15);
 }
 .ghost:active{transform:scale(0.98)}
+
+/* Копирование для Ежедневного заезда */
+.copy-share-btn{
+  background:linear-gradient(135deg, var(--cyan), #00a2ff);
+  color:var(--deep);
+  font:italic 900 18px var(--display);
+  padding:14px;
+  border-radius:10px;
+  margin-top:6px;
+}
 
 @media (prefers-reduced-motion: reduce){
   *,::before,::after{
@@ -788,207 +1016,118 @@ button{
 "use strict";
 
 /* ==========================================================================
-   БАЗА АВТОМОБИЛЕЙ (135+ легендарных моделей)
-   [марка, модель, л.с., версия/год, ключевые слова Википедии, цена новой $ (0=неизв), исключить regex]
+   БАЗА АВТОМОБИЛЕЙ С ТТХ, ТЭГАМИ КАТЕГОРИЙ И ФАКТАМИ
+   [0:Марка, 1:Модель, 2:л.с., 3:версия, 4:вики-поиск, 5:цена $, 6:regex_искл,
+    7:разгон 0-100 с, 8:привод, 9:двигатель, 10:тэги, 11:факт]
    ========================================================================== */
 const RAW = [
-  /* Ferrari */
-  ["Ferrari","F40",478,"1987","f40",400000,"lm|competizione"],
-  ["Ferrari","Enzo",660,"2002","enzo ferrari",650000,"19[4-9]\\d|portrait"],
-  ["Ferrari","458 Italia",570,"2009","458",230000,"speciale|spider|challenge|gt3"],
-  ["Ferrari","LaFerrari",963,"2013","laferrari",1400000,"aperta"],
-  ["Ferrari","488 GTB",670,"2015","488",250000,"pista|spider|gt3|challenge|gte"],
-  ["Ferrari","812 Superfast",800,"2017","812",340000,"gts|competizione"],
-  ["Ferrari","Testarossa",390,"1984","testarossa",90000,"512"],
-  ["Ferrari","F355",380,"1994","f355",110000,"challenge"],
-  ["Ferrari","F50",520,"1995","ferrari f50",475000,"gt"],
-  ["Ferrari","SF90 Stradale",1000,"2020","sf90 stradale",510000,"xx"],
-  ["Ferrari","Roma",620,"2020","ferrari roma",220000,"spider"],
-  ["Ferrari","599 GTB",620,"Fiorano, 2006","599 gtb",270000,"gto|xx"],
-  ["Ferrari","250 GTO",300,"1962","250 gto",18000,"replica"],
+  /* JDM & Япония */
+  ["Nissan","Skyline GT-R",280,"R34, 1999","skyline r34",0,"",4.8,"Полный (AWD)","2.6L Twin-Turbo RB26DETT I6",["jdm","retro"],"По джентльменскому соглашению в паспорте стояло 280 л.с., но реальная мощность с завода превышала 330 л.с."],
+  ["Nissan","Skyline GT-R",280,"R32, 1989","skyline r32",0,"",5.4,"Полный (AWD)","2.6L Twin-Turbo RB26DETT I6",["jdm","retro"],"Получил прозвище «Годзилла» в Австралии после разгромных побед над австралийскими V8 на треке Батерст."],
+  ["Toyota","Supra",320,"A80 Turbo, 1993","supra a80",40000,"",4.6,"Задний (RWD)","3.0L Twin-Turbo 2JZ-GTE I6",["jdm","retro"],"Чугунный блок цилиндров 2JZ-GTE настолько прочен, что тюнеры выжимают из него более 1000 л.с. без замены поршневой."],
+  ["Toyota","GR Supra",340,"A90, 2019","grsupra|supraa90",50000,"",4.3,"Задний (RWD)","3.0L Turbo B58 I6",["jdm"],"Разработана в сотрудничестве с BMW и делит одну платформу и мотор с родстером BMW Z4 M40i."],
+  ["Toyota","AE86",130,"Sprinter Trueno, 1983","ae86",0,"",8.9,"Задний (RWD)","1.6L 4A-GE DOHC I4",["jdm","retro"],"Стала культовой иконой дрифта благодаря аниме Initial D и легендарному «Королю дрифта» Кэиити Цутии."],
+  ["Mazda","RX-7",255,"FD, 1992","rx7 fd",36000,"",5.1,"Задний (RWD)","1.3L Ротор 13B-REW Twin-Turbo",["jdm","retro"],"Первый в истории серийный автомобиль с последовательным твин-турбонаддувом на роторном двигателе."],
+  ["Honda","NSX",280,"NA1, 1990","nsx",60000,"nc1|2016|2017|2018|2019|2020|2021|2022",5.7,"Задний (RWD)","3.0L V6 VTEC",["jdm","retro"],"В доводке управляемости и шасси принимал непосредственное участие трехкратный чемпион Формулы-1 Айртон Сенна."],
+  ["Subaru","Impreza 22B STI",280,"1998","22b sti|impreza 22b",45000,"",4.7,"Полный (AWD)","2.2L Turbo EJ22 Boxer-4",["jdm","retro"],"Спецверсия с расширенным кузовом WRC, выпущенная тиражом всего 424 штуки в честь 40-летия бренда и 3 титулов в ралли."],
+  ["Mitsubishi","Lancer Evolution",280,"IX, 2005","evolution ix|evo ix|evo 9",31000,"",4.8,"Полный (AWD)","2.0L Turbo 4G63 I4",["jdm"],"Оснащалась активным задним дифференциалом Super AYC, ввинчивающим седан в любые крутые повороты."],
+  ["Nissan","Silvia",250,"S15 Spec-R, 1999","silvia s15|200sx",0,"",5.6,"Задний (RWD)","2.0L Turbo SR20DET I4",["jdm","retro"],"Финальное и самое совершенное поколение семейства Silvia, ставшее синонимом мирового соревновательного дрифта."],
+  ["Lexus","LFA",560,"2010","lexus lfa",375000,"",3.7,"Задний (RWD)","4.8L Атмо V10 1LR-GUE",["jdm","hyper"],"Мотор V10 раскручивался до 9000 об/мин так быстро (за 0.6 с), что аналоговые стрелки не успевали, и Lexus поставил цифровой ЖК-экран."],
 
-  /* Lamborghini */
-  ["Lamborghini","Countach",455,"5000 QV, 1985","countach qv",100000,"lpi|800"],
-  ["Lamborghini","Diablo",492,"1990","diablo",239000,"diablogt|diablosv|diablovt|roadster"],
-  ["Lamborghini","Murciélago",580,"2001","murcilago|murcielago",273000,"lp640|lp670"],
-  ["Lamborghini","Gallardo",560,"LP560-4, 2008","gallardo",200000,"superleggera|spyder|lp570"],
-  ["Lamborghini","Aventador",700,"LP700-4, 2011","aventador",400000,"svj|lp750|lp780|ultimae|lp740|aventadorsv"],
-  ["Lamborghini","Huracán",610,"LP610-4, 2014","huracn|huracan",240000,"performante|sterrato|tecnica|evo"],
-  ["Lamborghini","Urus",650,"2018","urus",200000,"performante"],
-  ["Lamborghini","Miura",350,"P400, 1966","miura p400|miura",20000,"sv"],
-  ["Lamborghini","Sesto Elemento",570,"2010","sesto elemento",2200000,""],
-  ["Lamborghini","Revuelto",1015,"2023","lamborghini revuelto",600000,""],
+  /* American Muscle & V8 */
+  ["Ford","Mustang",466,"GT, 2018","mustang 2015|2016|2017|2018|2019|2020|s550",36000,"shelby|gt350|gt500|mache|boss|bullitt",4.3,"Задний (RWD)","5.0L Атмо Coyote V8",["muscle"],"В приборной панели зашита штатная функция Line-Lock, автоматически блокирующая передние тормоза для прогрева задних шин."],
+  ["Ford","Shelby GT500",760,"2020","gt500 2020",73000,"",3.5,"Задний (RWD)","5.2L Supercharged Predator V8",["muscle"],"Самый мощный дорожный серийный автомобиль за всю вековую историю марки Ford."],
+  ["Ford","GT40",385,"Mk I, 1966","ford gt40",16000,"replica",4.2,"Задний (RWD)","7.0L V8",["muscle","retro"],"Индекс «40» в названии указывает на общую высоту машины: ровно 40 дюймов (101.6 см) от асфальта до крыши."],
+  ["Dodge","Challenger",717,"SRT Hellcat, 2015","challenger hellcat",60000,"",3.6,"Задний (RWD)","6.2L Supercharged HEMI V8",["muscle"],"Шел с завода с двумя ключами: черный ограничивал табун до 500 л.с., а красный отпирал все 717 л.с."],
+  ["Dodge","Challenger Demon",840,"SRT Demon, 2018","challenger demon",85000,"",2.3,"Задний (RWD)","6.2L Supercharged HEMI V8",["muscle","hyper"],"Первый в истории серийный автомобиль, способный при старте на драг-стрипе оторвать передние колеса от асфальта!"],
+  ["Dodge","Viper",649,"GTS SRT, 2013","viper srt",100000,"acr",3.4,"Задний (RWD)","8.4L Атмо V10",["muscle"],"Обладал одним из самых кубатурных моторов в легковом автопроме: чудовищные 8.4 литра объема без всяких турбин."],
+  ["Chevrolet","Corvette",502,"C8 Stingray, 2020","corvette c8",59000,"z06|eray|zr1",2.9,"Задний (RWD)","6.2L Атмо LT2 V8",["muscle"],"В восьмом поколении инженеры впервые за 67 лет истории Corvette перенесли двигатель в базу за сиденья водителя."],
+  ["Chevrolet","Camaro ZL1",659,"2017","camaro zl1 2017|2018|2019|2020|2021|2022",63000,"",3.5,"Задний (RWD)","6.2L Supercharged LT4 V8",["muscle"],"Оснащен умной подвеской Magnetic Ride Control, считывающей дорожное полотно до 1000 раз в секунду."],
 
-  /* Porsche */
-  ["Porsche","911",400,"991 Carrera S, 2012","911 991",97000,"gt3|gt2|targa"],
-  ["Porsche","911 GT3 RS",520,"991.2, 2018","991 gt3 rs",188000,"cup|r"],
-  ["Porsche","911 Turbo S",650,"992, 2020","992 turbo s",205000,"cabriolet"],
-  ["Porsche","918 Spyder",887,"2013","918",845000,""],
-  ["Porsche","Carrera GT",612,"2003","carreragt",440000,""],
-  ["Porsche","Cayman GT4",385,"981, 2015","cayman gt4",85000,"clubsport|718"],
-  ["Porsche","Taycan",761,"Turbo S, 2019","taycan",185000,"crossturismo|sportturismo"],
-  ["Porsche","959",450,"1986","porsche 959",225000,"dakar"],
-  ["Porsche","911 GT2 RS",700,"991, 2017","gt2 rs",293000,"clubsport"],
-  ["Porsche","Panamera Turbo",550,"971, 2016","panamera turbo",147000,"sport turismo"],
+  /* Немецкая мощь (BMW, Mercedes, Audi, Porsche) */
+  ["BMW","M3",343,"E46, 2000","m3 e46",48000,"csl|gtr",5.2,"Задний (RWD)","3.2L Атмо S54 I6",["german","retro"],"Атмосферный рядный мотор S54 выдавал свыше 107 л.с. с одного литра объема без какого-либо наддува."],
+  ["BMW","M5",600,"F90, 2018","m5 f90",103000,"",3.4,"Полный (M xDrive)","4.4L Twin-Turbo S63 V8",["german"],"Первая M5 с полным приводом, при этом одним нажатием кнопки в меню система может отключить переднюю ось для дрифта."],
+  ["BMW","M5",507,"E60 V10, 2005","m5 e60",82000,"touring",4.7,"Задний (RWD)","5.0L Атмо S85 V10",["german","retro"],"Единственный серийный седан BMW с формульным высокооборотистым мотором V10, крутившимся до 8250 об/мин."],
+  ["Mercedes-Benz","300 SL",215,"Gullwing, 1954","300sl",0,"",8.8,"Задний (RWD)","3.0L M198 I6",["german","retro"],"Легендарные двери «крыло чайки» были сделаны не ради дизайна, а из-за высокой трубчатой рамы-каркаса."],
+  ["Mercedes-Benz","SLS AMG",571,"C197, 2010","sls amg",185000,"roadster|gt3|black",3.8,"Задний (RWD)","6.2L Атмо M159 V8",["german"],"В петли дверей «крыло чайки» встроены пиропатроны: при опрокидывании на крышу двери отстреливаются для эвакуации."],
+  ["Mercedes-Benz","AMG E 63 S",612,"W213, 2017","w213 e63",106000,"estate|wagon",3.4,"Полный (4MATIC+)","4.0L Twin-Turbo M177 V8",["german"],"Бизнес-седан, ускоряющийся до 100 км/ч быстрее большинства суперкаров своего поколения."],
+  ["Audi","R8",420,"V8, 2007","audi r8",110000,"v10|gt3|gt4|lms|2016|2017|2018|2019|2020|2021|2022",4.6,"Полный (quattro)","4.2L Атмо FSI V8",["german"],"Первый в мире серийный суперкар с полностью светодиодными ходовыми огнями."],
+  ["Audi","RS 6 Avant",600,"C8, 2020","rs6 c8",116000,"",3.6,"Полный (quattro)","4.0L Twin-Turbo V8 Mild-Hybrid",["german"],"Кузов RS6 настолько шире стандартного универсала A6, что от него остались только передние двери, крыша и багажник."],
+  ["Porsche","911 GT3 RS",520,"991.2, 2018","991 gt3 rs",188000,"cup|r",3.2,"Задний (RWD)","4.0L Оппозитный Атмо B6",["german"],"Атмосферный гоночный оппозит крутится до ошеломляющих 9000 об/мин прямо с заводской гарантией."],
+  ["Porsche","918 Spyder",887,"2013","918",845000,"",2.6,"Полный (AWD)","4.6L V8 + 2 Электромотора",["german","hyper"],"Первый в истории серийный дорожный автомобиль, преодолевший круг Северной петли Нюрбургринга быстрее 7 минут."],
 
-  /* McLaren & Hypercars */
-  ["McLaren","F1",627,"1993","mclaren f1",890000,"formula|mp4|lm|gtr"],
-  ["McLaren","P1",916,"2013","mclaren p1",1150000,"gtr|lm"],
-  ["McLaren","720S",720,"2017","720s",285000,""],
-  ["McLaren","Senna",800,"2018","mclaren senna",960000,"gtr"],
-  ["McLaren","675LT",675,"2015","675lt",350000,"spider"],
-  ["McLaren","Speedtail",1070,"2020","speedtail",2250000,""],
-  ["Bugatti","EB110",560,"GT, 1991","eb110",380000,"ss"],
-  ["Bugatti","Veyron",1001,"16.4, 2005","veyron",1300000,"supersport|grandsport|vitesse"],
-  ["Bugatti","Chiron",1500,"2016","chiron",2900000,"supersport|divo|mistral|centodieci|pursport"],
-  ["Bugatti","Divo",1500,"2018","bugatti divo",5800000,""],
-  ["Pagani","Zonda",602,"F, 2005","zonda",670000,""],
-  ["Pagani","Huayra",730,"2012","huayra",1300000,"huayrabc|roadster"],
-  ["Pagani","Utopia",864,"2022","pagani utopia",2500000,""],
-  ["Koenigsegg","CCX",806,"2006","koenigsegg ccx",700000,"edition"],
-  ["Koenigsegg","Agera",1115,"R, 2011","agera",1600000,"agerars|one1"],
-  ["Koenigsegg","Jesko",1600,"2019","jesko",3000000,""],
-  ["Rimac","Nevera",1914,"2021","rimac nevera",2400000,""],
+  /* Гиперкары и экзотика */
+  ["Bugatti","Chiron",1500,"2016","chiron",2900000,"supersport|divo|mistral|centodieci|pursport",2.4,"Полный (AWD)","8.0L Quad-Turbo W16",["hyper"],"На максимальной скорости 420 км/ч его 100-литровый топливный бак полностью пустеет всего за 9 минут."],
+  ["Bugatti","Veyron",1001,"16.4, 2005","veyron",1300000,"supersport|grandsport|vitesse",2.5,"Полный (AWD)","8.0L Quad-Turbo W16",["hyper","retro"],"Для охлаждения мотора и трансмиссии инженеры разместили в Veyron сразу 10 отдельных радиаторов."],
+  ["Koenigsegg","Agera",1115,"R, 2011","agera",1600000,"agerars|one1",2.8,"Задний (RWD)","5.0L Twin-Turbo V8",["hyper"],"Колесные диски Agera изготавливаются вручную из цельного полотна углеволокна на фабрике в Швеции."],
+  ["Pagani","Zonda",602,"F, 2005","zonda",670000,"",3.6,"Задний (RWD)","7.3L Атмо AMG V12",["hyper"],"Горацио Пагани заказывал атмосферные моторы V12 ручной сборки напрямую в спортивном подразделении AMG."],
+  ["McLaren","F1",627,"1993","mclaren f1",890000,"formula|mp4|lm|gtr",3.2,"Задний (RWD)","6.1L Атмо BMW S70/2 V12",["hyper","retro"],"Моторный отсек McLaren F1 покрыт тончайшим слоем настоящего 24-каратного золота для защиты от перегрева."],
+  ["McLaren","P1",916,"2013","mclaren p1",1150000,"gtr|lm",2.8,"Задний (RWD)","3.8L Twin-Turbo V8 Hybrid",["hyper"],"Гибридная установка мгновенно заполняет турбояму тягой электромотора при каждом нажатии на педаль."],
+  ["Ferrari","LaFerrari",963,"2013","laferrari",1400000,"aperta",2.9,"Задний (RWD)","6.3L V12 + КЕРС Гибрид",["hyper"],"Первый гибрид из Маранелло, использующий систему рекуперации кинетической энергии KERS из Формулы-1."],
+  ["Ferrari","F40",478,"1987","f40",400000,"lm|competizione",3.8,"Задний (RWD)","2.9L Twin-Turbo Tipo F120 V8",["hyper","retro"],"Последняя модель, созданная при жизни Энцо Феррари: для снижения веса салон был лишен дверных ручек и шумоизоляции."],
+  ["Ferrari","Enzo",660,"2002","enzo ferrari",650000,"19[4-9]\\d|portrait",3.3,"Задний (RWD)","6.0L Атмо Tipo F140B V12",["hyper"],"Назван в честь основателя компании и вобрал в себя углепластиковый монокок и аэродинамику Формулы-1."],
+  ["Rimac","Nevera",1914,"2021","rimac nevera",2400000,"",1.81,"Полный (AWD)","4 Электромотора (по одному на колесо)",["hyper"],"Абсолютный мировой рекордсмен в разгоне: 4 электромотора выдают немыслимый крутящий момент 2360 Нм."],
+  ["Tesla","Model S",1034,"Plaid, 2021","models plaid|2021|2022|2023",130000,"",2.1,"Полный (AWD)","3 Электромотора Tri-Motor",["hyper"],"Роторы моторов Plaid обмотаны углеродным волокном, чтобы не разрушаться от центробежных сил на 20 000 об/мин."],
 
-  /* Nissan & Infiniti */
-  ["Nissan","GT-R",570,"R35, 2017","gtr r35",110000,"nismo"],
-  ["Nissan","Skyline GT-R",280,"R34, 1999","skyline r34",0,""],
-  ["Nissan","Skyline GT-R",280,"R32, 1989","skyline r32",0,""],
-  ["Nissan","Skyline GT-R",280,"R33, 1995","skyline r33",0,""],
-  ["Nissan","370Z",328,"2009","370z",30000,"nismo"],
-  ["Nissan","350Z",287,"Z33, 2003","350z",26000,"nismo"],
-  ["Nissan","Silvia",250,"S15, 1999","silvia s15|200sx",0,""],
-  ["Nissan","Silvia",220,"S14, 1994","silvia s14|240sx",0,""],
-  ["Nissan","Fairlady 240Z",151,"S30, 1970","datsun 240z|fairlady 240z",3500,""],
-
-  /* Toyota & Lexus */
-  ["Toyota","GR Supra",340,"A90, 2019","grsupra|supraa90",50000,""],
-  ["Toyota","Supra",320,"A80 Turbo, 1993","supra a80",40000,""],
-  ["Toyota","AE86",130,"Sprinter Trueno, 1983","ae86",0,""],
-  ["Toyota","GR Yaris",261,"2020","gr yaris",39000,""],
-  ["Toyota","MR2",200,"SW20 Turbo, 1990","mr2 sw20",22000,""],
-  ["Toyota","Chaser",280,"Tourer V JZX100, 1996","chaser jzx100",0,""],
-  ["Toyota","2000GT",150,"1967","toyota 2000gt",6800,""],
-  ["Lexus","LFA",560,"2010","lexus lfa",375000,""],
-  ["Lexus","LC 500",477,"2017","lexus lc500",92000,"convertible"],
-  ["Lexus","IS F",423,"2007","lexus is f|isf",56000,""],
-
-  /* Mazda */
-  ["Mazda","RX-7",255,"FD, 1992","rx7 fd",36000,""],
-  ["Mazda","RX-7",200,"FC Turbo II, 1986","rx7 fc",20000,"convertible"],
-  ["Mazda","RX-8",232,"2003","mazda rx8",26000,""],
-  ["Mazda","MX-5 Miata",116,"NA, 1989","mx5 na|miata na",14000,""],
-  ["Mazda","MX-5 Miata",184,"ND, 2018","mx5 nd|miata nd",28000,"rf"],
-
-  /* Honda & Acura */
-  ["Honda","NSX",280,"NA1, 1990","nsx",60000,"nc1|2016|2017|2018|2019|2020|2021|2022"],
-  ["Honda","NSX",581,"NC1 Hybrid, 2016","nsx nc1|2016 nsx",157000,"na1|na2"],
-  ["Honda","Civic Type R",320,"FK8, 2017","civic fk8",35000,""],
-  ["Honda","Civic Type R",185,"EK9, 1997","civic ek9",0,""],
-  ["Honda","S2000",240,"AP1, 1999","s2000",33000,""],
-  ["Honda","Integra Type R",200,"DC2, 1995","integra dc2|integra type r",24000,""],
-
-  /* Subaru & Mitsubishi */
-  ["Subaru","Impreza WRX STI",304,"VA, 2015","wrx sti 2015|2016|2017|2018|2019",36000,"gc8|gdb|gda|gdf|gve|2005|2006|2007|2008|2009|2010|2011|2012|2013"],
-  ["Subaru","Impreza 22B STI",280,"1998","22b sti|impreza 22b",45000,""],
-  ["Subaru","BRZ",200,"ZC6, 2012","subaru brz",26000,"zd8"],
-  ["Mitsubishi","Lancer Evolution",300,"X, 2008","evolutionx|evox|evo10",33000,""],
-  ["Mitsubishi","Lancer Evolution",280,"IX, 2005","evolution ix|evo ix|evo 9",31000,""],
-  ["Mitsubishi","3000GT VR-4",320,"1994","3000gt vr4|gto vr4",42000,"spyder"],
-
-  /* BMW */
-  ["BMW","M3",343,"E46, 2000","m3 e46",48000,"csl|gtr"],
-  ["BMW","M3",200,"E30, 1986","m3 e30",34000,"sport evolution"],
-  ["BMW","M3",420,"E92 V8, 2007","m3 e92",58000,"gts"],
-  ["BMW","M5",600,"F90, 2018","m5 f90",103000,""],
-  ["BMW","M5",400,"E39, 1998","m5 e39",72000,""],
-  ["BMW","M5",507,"E60 V10, 2005","m5 e60",82000,"touring"],
-  ["BMW","M2",370,"F87, 2016","m2 f87",52000,"m2cs|m2competition|m2gts"],
-  ["BMW","i8",362,"2014","i8",140000,"roadster"],
-  ["BMW","M1",277,"E26, 1978","bmw m1",60000,"procar"],
-  ["BMW","M8",625,"Competition, 2019","bmw m8",146000,"gran coupe|cabriolet"],
-
-  /* Mercedes-Benz */
-  ["Mercedes-Benz","300 SL",215,"1954","300sl",0,""],
-  ["Mercedes-Benz","SLS AMG",571,"C197, 2010","sls amg",185000,"roadster|gt3|black"],
-  ["Mercedes-Benz","AMG GT S",510,"2015","amggt",130000,"gtr|gtc|gt3|gt4|gt63"],
-  ["Mercedes-Benz","AMG GT Black Series",730,"2020","amg gt black series",325000,""],
-  ["Mercedes-Benz","AMG E 63 S",612,"W213, 2017","w213 e63",106000,"estate|wagon"],
-  ["Mercedes-Benz","AMG G 63",585,"W463, 2018","g63",148000,"6x6|brabus"],
-  ["Mercedes-Benz","C 63 AMG",457,"W204 V8, 2008","w204 c63",58000,"black series"],
-  ["Mercedes-Benz","SLR McLaren",626,"2003","slr mclaren",450000,"722|stirling"],
-  ["Mercedes-Benz","190E 2.5-16",235,"Evolution II, 1990","190e evo ii|190e 2.5-16",80000,""],
-
-  /* Audi */
-  ["Audi","R8",420,"V8, 2007","audi r8",110000,"v10|gt3|gt4|lms|2016|2017|2018|2019|2020|2021|2022"],
-  ["Audi","R8 V10 Plus",610,"2015","r8 v10 plus|r8 4s",190000,"spyder|gt3|gt4"],
-  ["Audi","RS 6",560,"C7, 2013","rs6 c7",108000,""],
-  ["Audi","RS 6 Avant",600,"C8, 2020","rs6 c8",116000,""],
-  ["Audi","Quattro",200,"Ur-Quattro, 1980","audi ur quattro|audi quattro 198",35000,"s1|sport quattro"],
-  ["Audi","Sport Quattro",306,"1984","audi sport quattro",100000,"pikes peak"],
-  ["Audi","RS 3",400,"8V, 2017","audi rs3 8v",55000,"sedan"],
-
-  /* Ford & American Muscle */
-  ["Ford","Mustang",466,"GT, 2018","mustang 2015|2016|2017|2018|2019|2020|s550",36000,"shelby|gt350|gt500|mache|boss|bullitt"],
-  ["Ford","Shelby GT500",760,"2020","gt500 2020",73000,""],
-  ["Ford","GT",656,"2017","fordgt 2017|2018|2019|2020",450000,"gt40|gt500|gt350|gt3|gt4|gt90"],
-  ["Ford","GT",550,"2005","ford gt 2005|2006",150000,"gt40|2017|2018"],
-  ["Ford","GT40",385,"Mk I, 1966","ford gt40",16000,"replica"],
-  ["Ford","Focus RS",350,"Mk3, 2016","focusrs",36000,""],
-  ["Chevrolet","Camaro ZL1",659,"2017","camaro zl1 2017|2018|2019|2020|2021|2022",63000,""],
-  ["Chevrolet","Corvette",502,"C8 Stingray, 2020","corvette c8",59000,"z06|eray|zr1"],
-  ["Chevrolet","Corvette ZR1",647,"C6, 2009","corvette c6 zr1",104000,""],
-  ["Chevrolet","Corvette Z06",659,"C7, 2015","corvette c7 z06",79000,""],
-  ["Chevrolet","Camaro SS",375,"1969","1969 camaro",3500,""],
-  ["Dodge","Challenger",717,"SRT Hellcat, 2015","challenger hellcat",60000,""],
-  ["Dodge","Challenger Demon",840,"SRT Demon, 2018","challenger demon",85000,""],
-  ["Dodge","Viper",649,"SRT, 2013","viper srt",100000,"acr"],
-  ["Dodge","Viper GTS",450,"1996","viper gts 1996|1997|1998",66000,""],
-  ["Dodge","Charger R/T",380,"1969","charger 1968|1969|1970",0,"daytona|20[0-2]\\d|srt|hellcat"],
-  ["Plymouth","Hemi 'Cuda",425,"1970","hemi cuda|plymouth cuda 1970",4000,"convertible"],
-
-  /* British & Other Exotics */
-  ["Aston Martin","DB5",286,"1963","db5",0,""],
-  ["Aston Martin","DB11",608,"2016","db11",214000,""],
-  ["Aston Martin","Vantage",510,"V8, 2018","aston martin vantage 2018|2019",150000,"gt3|gt4"],
-  ["Aston Martin","One-77",760,"2009","one 77",1800000,""],
-  ["Aston Martin","Valkyrie",1155,"2021","valkyrie amr|aston valkyrie",3200000,""],
-  ["Jaguar","E-Type",269,"S1, 1961","etype",0,"lightweight"],
-  ["Jaguar","F-Type R",550,"2015","ftype",100000,"svr|project7"],
-  ["Jaguar","XJ220",542,"1992","xj220",580000,""],
-  ["Lotus","Elise",120,"Series 1, 1996","lotus elise s1|lotus elise",28000,""],
-  ["Lotus","Exige S",350,"V6, 2012","exige v6|lotus exige s",75000,"cup"],
-  ["Tesla","Model S",1034,"Plaid, 2021","models plaid|2021|2022|2023",130000,""],
-  ["Volkswagen","Golf GTI",220,"Mk7, 2013","gti mk7|mkvii|golf7|golfvii",26000,""],
-  ["Volkswagen","Golf R",300,"Mk7, 2014","golf r mk7|golf r mkvii",37000,""],
-  ["Alfa Romeo","4C",240,"2013","4c alfa",55000,"spider"],
-  ["Alfa Romeo","Giulia Quadrifoglio",510,"2016","giulia quadrifoglio",73000,""],
-  ["Alfa Romeo","8C Competizione",450,"2007","8c competizione",250000,"spider"],
-  ["Maserati","MC20",630,"2020","mc20",215000,""],
-  ["Maserati","MC12",630,"2004","maserati mc12",800000,"gt1|corsa"],
-  ["Lancia","Stratos",190,"HF, 1973","lancia stratos",20000,"rally"],
-  ["Lancia","Delta HF Integrale",215,"Evoluzione, 1991","delta integrale",38000,"rally"],
-  ["Alpine","A110",252,"2017","alpine a110",60000,"cup|gt4"]
+  /* Ретро 80-90-х */
+  ["Lamborghini","Countach",455,"5000 QV, 1985","countach qv",100000,"lpi|800",4.8,"Задний (RWD)","5.2L Атмо V12",["retro","hyper"],"Из-за практически нулевого обзора назад водителям приходилось открывать дверь вверх и садиться на порог при парковке."],
+  ["Lamborghini","Diablo",492,"1990","diablo",239000,"diablogt|diablosv|diablovt|roadster",4.1,"Задний (RWD)","5.7L Атмо V12",["retro","hyper"],"Первый в истории суперкар Lamborghini, сумевший преодолеть барьер максимальной скорости в 325 км/ч."],
+  ["Ferrari","Testarossa",390,"1984","testarossa",90000,"512",5.3,"Задний (RWD)","4.9L Оппозитный 12-цил.",["retro"],"Знаменитые боковые ребра-«сыротерки» были спроектированы для подачи воздуха в боковые радиаторы."],
+  ["Jaguar","XJ220",542,"1992","xj220",580000,"",3.6,"Задний (RWD)","3.5L Twin-Turbo V6",["retro","hyper"],"Обладал титулом быстрейшего серийного автомобиля в мире до выхода McLaren F1 в 1993 году."]
 ];
 
-const CARS = RAW.map(([b,m,hp,v,k,p,x]) => ({
-  b, m, hp, v, p,
+const CARS = RAW.map(([b,m,hp,v,k,p,x,acc,drive,eng,tags,fact], id) => ({
+  id, b, m, hp, v, p, acc, drive, eng, tags, fact,
   k: k.split(" "),
   x: x ? new RegExp(x, "i") : null,
   name: b + " " + m
 }));
+
 const BRANDS = [...new Set(CARS.map(c => c.b))];
 
+const PACKS = {
+  all:    {t:"Все авто", icon:"🌟"},
+  jdm:    {t:"JDM & Япония", icon:"🇯🇵"},
+  muscle: {t:"Muscle & V8", icon:"🇺🇸"},
+  german: {t:"Немецкая мощь", icon:"🇩🇪"},
+  hyper:  {t:"Гиперкары", icon:"👑"},
+  retro:  {t:"Ретро 80-90", icon:"📼"}
+};
+
 const MODES = {
-  mix:   {t:"Микс", d:"Все режимы вперемешку"},
+  mix:   {t:"Микс", d:"Все форматы вперемешку"},
+  drag:  {t:"Драг 0–100", d:"Светофор, разгон и финиш!"},
   model: {t:"Угадай модель", d:"Фото и 4 варианта"},
   brand: {t:"Угадай марку", d:"Быстрый спринт по брендам"},
   power: {t:"Что мощнее", d:"Два зверя, выбери сильнейшего"},
   rich:  {t:"Кто дороже", d:"Сравнение цен новых авто"},
   gp:    {t:"Угадай мощность", d:"Выстави точные л.с."},
-  gc:    {t:"Угадай цену", d:"Интерактивный ползунок ценника"}
+  gc:    {t:"Угадай цену", d:"Интерактивный ползунок цены"}
 };
-const MIXK = ["model","model","brand","power","rich","gp","gc"];
+
+const RANKS = [
+  {xp:0,    title:"Пешеход", icon:"🚶"},
+  {xp:100,  title:"Ученик автошколы", icon:"🔰"},
+  {xp:300,  title:"Гаражный механик", icon:"🔧"},
+  {xp:700,  title:"Стритрейсер", icon:"🏎️"},
+  {xp:1400, title:"Тест-пилот", icon:"⚡"},
+  {xp:2500, title:"Мастер Нюрбургринга", icon:"🏆"},
+  {xp:4200, title:"Легенда Ле-Мана", icon:"👑"}
+];
+
+const ACHIEVEMENTS = {
+  first_win:   {t:"Первая искра", d:"Угадай свой первый автомобиль", icon:"⚡"},
+  drag_king:   {t:"Король Драга", d:"Одержи 5 побед на 402 метрах", icon:"🏁"},
+  jdm_fan:     {t:"Дух Самурая", d:"Открой 5 автомобилей JDM", icon:"🇯🇵"},
+  muscle_fan:  {t:"Детройтский мускул", d:"Открой 5 V8 маслкаров", icon:"🇺🇸"},
+  hyper_fan:   {t:"Шейх гиперкаров", d:"Угадай 5 экзотических гиперкаров", icon:"👑"},
+  streak_5:    {t:"Красная зона x5", d:"Набери серию из 5 правильных ответов", icon:"🔥"},
+  streak_10:   {t:"Неудержимый x10", d:"Безошибочная серия из 10 побед", icon:"💥"},
+  garage_10:   {t:"Свой автопарк", d:"Собери 10 машин в гараже", icon:"🚗"},
+  daily_done:  {t:"Гонщик дня", d:"Заверши ежедневный заезд", icon:"📅"}
+};
+
+const MIXK = ["drag","model","drag","brand","power","rich","gp","gc"];
 const G = {
   gp: {f:"hp", min:100, max:1950, log:0, tol:.10, fmt:v => v + " л.с.", ask:"Сколько л.с. у этой машины?"},
   gc: {f:"p",  min:10000, max:4000000, log:1, tol:.22, fmt:v => "$ " + grp(v), ask:"Сколько она стоила новой?"}
@@ -1016,8 +1155,8 @@ const store = {
   get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
-const best = m => store.get("best_v2:" + m, 0);
-const setBest = (m, val) => store.set("best_v2:" + m, val);
+const best = m => store.get("tacho_best:" + m, 0);
+const setBest = (m, val) => store.set("tacho_best:" + m, val);
 const rnd = n => Math.floor(Math.random() * n);
 function shuffle(a){
   a = a.slice();
@@ -1030,8 +1169,15 @@ function shuffle(a){
 const sample = (pool, n, ex) => shuffle(pool.filter(x => !ex.includes(x))).slice(0, n);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+/* Тактильная отдача */
+function vibrate(pat){
+  if("vibrate" in navigator){
+    try{ navigator.vibrate(pat); }catch(e){}
+  }
+}
+
 /* ==========================================================================
-   СИНТЕЗАТОР ЗВУКОВ (Web Audio API)
+   СИНТЕЗАТОР ЗВУКА НА ЧИСТОМ WEB AUDIO API
    ========================================================================== */
 const Sound = (() => {
   let ctx = null;
@@ -1075,20 +1221,60 @@ const Sound = (() => {
       const g = c.createGain();
       osc.type = "sawtooth";
       osc.frequency.setValueAtTime(80, t);
-      osc.frequency.exponentialRampToValueAtTime(280, t + 0.35);
-      osc.frequency.exponentialRampToValueAtTime(130, t + 0.7);
+      osc.frequency.exponentialRampToValueAtTime(320, t + 0.35);
+      osc.frequency.exponentialRampToValueAtTime(120, t + 0.7);
 
       flt.type = "lowpass";
-      flt.frequency.setValueAtTime(320, t);
-      flt.frequency.exponentialRampToValueAtTime(1300, t + 0.35);
+      flt.frequency.setValueAtTime(350, t);
+      flt.frequency.exponentialRampToValueAtTime(1400, t + 0.35);
       flt.frequency.exponentialRampToValueAtTime(450, t + 0.7);
 
       g.gain.setValueAtTime(0.001, t);
-      g.gain.linearRampToValueAtTime(0.14, t + 0.08);
+      g.gain.linearRampToValueAtTime(0.15, t + 0.08);
       g.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
 
       osc.connect(flt); flt.connect(g); g.connect(c.destination);
       osc.start(); osc.stop(t + 0.78);
+    },
+    beepYellow: () => {
+      if(muted) return;
+      const c = getCtx(); if(!c) return;
+      const osc = c.createOscillator();
+      const g = c.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(650, c.currentTime);
+      g.gain.setValueAtTime(0.12, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.15);
+      osc.connect(g); g.connect(c.destination);
+      osc.start(); osc.stop(c.currentTime + 0.16);
+    },
+    beepGreen: () => {
+      if(muted) return;
+      const c = getCtx(); if(!c) return;
+      const osc = c.createOscillator();
+      const g = c.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(1200, c.currentTime);
+      g.gain.setValueAtTime(0.2, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.4);
+      osc.connect(g); g.connect(c.destination);
+      osc.start(); osc.stop(c.currentTime + 0.42);
+    },
+    screech: () => {
+      if(muted) return;
+      const c = getCtx(); if(!c) return;
+      const t = c.currentTime;
+      // Визг шин (модулированный шум)
+      const osc = c.createOscillator();
+      const g = c.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(800, t);
+      osc.frequency.linearRampToValueAtTime(1400, t + 0.2);
+      osc.frequency.exponentialRampToValueAtTime(400, t + 0.5);
+      g.gain.setValueAtTime(0.12, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+      osc.connect(g); g.connect(c.destination);
+      osc.start(t); osc.stop(t + 0.56);
     },
     correct: () => {
       if(muted) return;
@@ -1098,13 +1284,12 @@ const Sound = (() => {
         const osc = c.createOscillator();
         const g = c.createGain();
         osc.type = "triangle";
-        osc.frequency.setValueAtTime(f, t + i * 0.055);
-        g.gain.setValueAtTime(0.001, t + i * 0.055);
-        g.gain.linearRampToValueAtTime(0.12, t + i * 0.055 + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.055 + 0.28);
+        osc.frequency.setValueAtTime(f, t + i * 0.05);
+        g.gain.setValueAtTime(0.001, t + i * 0.05);
+        g.gain.linearRampToValueAtTime(0.13, t + i * 0.05 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.05 + 0.28);
         osc.connect(g); g.connect(c.destination);
-        osc.start(t + i * 0.055);
-        osc.stop(t + i * 0.055 + 0.3);
+        osc.start(t + i * 0.05); osc.stop(t + i * 0.05 + 0.3);
       });
     },
     wrong: () => {
@@ -1115,48 +1300,32 @@ const Sound = (() => {
       const g = c.createGain();
       osc.type = "sawtooth";
       osc.frequency.setValueAtTime(170, t);
-      osc.frequency.exponentialRampToValueAtTime(65, t + 0.32);
+      osc.frequency.exponentialRampToValueAtTime(65, t + 0.35);
       g.gain.setValueAtTime(0.16, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.36);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.38);
       osc.connect(g); g.connect(c.destination);
-      osc.start(t); osc.stop(t + 0.38);
+      osc.start(t); osc.stop(t + 0.4);
     },
-    combo: () => {
+    fanfare: () => {
       if(muted) return;
       const c = getCtx(); if(!c) return;
       const t = c.currentTime;
-      [440, 554.37, 659.25, 880].forEach(f => {
-        const osc = c.createOscillator();
-        const g = c.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(f, t);
-        g.gain.setValueAtTime(0.09, t);
-        g.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
-        osc.connect(g); g.connect(c.destination);
-        osc.start(t); osc.stop(t + 0.6);
-      });
-    },
-    over: () => {
-      if(muted) return;
-      const c = getCtx(); if(!c) return;
-      const t = c.currentTime;
-      [349.23, 440, 523.25, 698.46].forEach((f, i) => {
+      [523, 659, 784, 1046, 1318].forEach((f, i) => {
         const osc = c.createOscillator();
         const g = c.createGain();
         osc.type = "triangle";
-        osc.frequency.setValueAtTime(f, t + i * 0.1);
-        g.gain.setValueAtTime(0.11, t + i * 0.1);
-        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.1 + 0.45);
+        osc.frequency.setValueAtTime(f, t + i * 0.08);
+        g.gain.setValueAtTime(0.14, t + i * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.08 + 0.5);
         osc.connect(g); g.connect(c.destination);
-        osc.start(t + i * 0.1);
-        osc.stop(t + i * 0.1 + 0.5);
+        osc.start(t + i * 0.08); osc.stop(t + i * 0.08 + 0.55);
       });
     }
   };
 })();
 
 /* ==========================================================================
-   НЕОНОВЫЙ ФОН И ЧАСТИЦЫ (Canvas анимация)
+   НЕОНОВЫЙ ФОН И СИСТЕМА ЧАСТИЦ
    ========================================================================== */
 const bgCanvas = $("bg-canvas");
 const bgCtx = bgCanvas.getContext("2d");
@@ -1167,13 +1336,13 @@ function resizeBg(){
   bgW = bgCanvas.width = window.innerWidth;
   bgH = bgCanvas.height = window.innerHeight;
   stars.length = 0;
-  for(let i = 0; i < 40; i++){
+  for(let i = 0; i < 35; i++){
     stars.push({
       x: Math.random() * bgW,
       y: Math.random() * bgH,
-      len: 20 + Math.random() * 45,
-      speed: 1.5 + Math.random() * 3.5,
-      op: 0.1 + Math.random() * 0.35
+      len: 20 + Math.random() * 40,
+      speed: 1.5 + Math.random() * 3,
+      op: 0.1 + Math.random() * 0.3
     });
   }
 }
@@ -1199,7 +1368,6 @@ function renderBg(){
 }
 requestAnimationFrame(renderBg);
 
-/* Эффекты взрыва частиц (искры / победный салют) */
 const fxCanvas = $("fx-canvas");
 const fxCtx = fxCanvas.getContext("2d");
 let fxW, fxH;
@@ -1211,16 +1379,16 @@ window.addEventListener("resize", resizeFx);
 resizeFx();
 
 const particles = [];
-function addSparks(cx, cy, count = 28, colors = ["#ffb700", "#10b981", "#00e5ff", "#ffffff"]){
+function addSparks(cx, cy, count = 26, colors = ["#ffb700", "#10b981", "#00e5ff", "#ffffff"]){
   for(let i = 0; i < count; i++){
     const angle = Math.random() * Math.PI * 2;
-    const spd = 2 + Math.random() * 7;
+    const spd = 2 + Math.random() * 6.5;
     particles.push({
       x: cx,
       y: cy,
       vx: Math.cos(angle) * spd,
       vy: Math.sin(angle) * spd - 1.5,
-      sz: 3 + Math.random() * 4,
+      sz: 3 + Math.random() * 3.5,
       col: colors[rnd(colors.length)],
       life: 1,
       decay: 0.02 + Math.random() * 0.025
@@ -1234,7 +1402,7 @@ function renderFx(){
     const p = particles[i];
     p.x += p.vx;
     p.y += p.vy;
-    p.vy += 0.14; // gravity
+    p.vy += 0.14;
     p.life -= p.decay;
     if(p.life <= 0){
       particles.splice(i, 1);
@@ -1252,7 +1420,7 @@ function renderFx(){
 requestAnimationFrame(renderFx);
 
 /* ==========================================================================
-   ЗАГРУЗКА И КЭШИРОВАНИЕ ФОТО С WIKIMEDIA COMMONS
+   ПОИСК И ПРЕДЗАГРУЗКА ФОТО С WIKIMEDIA
    ========================================================================== */
 const N = s => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 const BAD = /logo|badge|emblem|icon|interior|dashboard|cockpit|engine|wheel|seat|steering|gauge|speedo|diagram|drawing|blueprint|map|chassis|cutaway|schematic|light|detail|console|trunk|boot|crash|wreck|poster|portrait|toy|lego|scale|miniature|screenshot|render|sketch/i;
@@ -1271,7 +1439,7 @@ async function jget(u){
 
 async function getCands(car){
   if(car.cands) return car.cands;
-  const ck = "c4:" + car.name, c = store.get(ck, null);
+  const ck = "c5:" + car.name, c = store.get(ck, null);
   if(c && Date.now() - c.t < 6048e5){
     car.cands = c.l;
     car.bad = !c.l.length;
@@ -1295,7 +1463,7 @@ async function getCands(car){
       u: ii.thumburl || ii.url,
       page: ii.descriptionurl || "https://commons.wikimedia.org/wiki/" + encodeURIComponent(p.title)
     });
-    if(l.length >= 12) break;
+    if(l.length >= 10) break;
   }
   car.cands = l;
   car.bad = !l.length;
@@ -1310,7 +1478,7 @@ const loadImg = u => new Promise(r => {
   i.decoding = "async";
   i.onload = () => f({u, w: i.naturalWidth, h: i.naturalHeight});
   i.onerror = () => f(null);
-  setTimeout(() => f(null), 10000);
+  setTimeout(() => f(null), 9500);
   i.src = u;
 });
 
@@ -1332,33 +1500,177 @@ async function photoFor(s, car){
 }
 
 /* ==========================================================================
+   УПРАВЛЕНИЕ МЕТА-ПРОГРЕССОМ (XP, ГАРАЖ, ДОСТИЖЕНИЯ)
+   ========================================================================== */
+const Meta = {
+  getXP: () => store.get("tacho_xp", 0),
+  addXP: (val) => {
+    let cur = Meta.getXP();
+    let oldRank = Meta.getRank(cur);
+    cur += val;
+    store.set("tacho_xp", cur);
+    let newRank = Meta.getRank(cur);
+    if(newRank.title !== oldRank.title){
+      Meta.toast(`НОВЫЙ РАНГ: ${newRank.icon} ${newRank.title}!`);
+      Sound.fanfare();
+      vibrate([100, 50, 200]);
+      addSparks(window.innerWidth/2, 120, 40);
+    }
+  },
+  getRank: (xp) => {
+    for(let i = RANKS.length - 1; i >= 0; i--){
+      if(xp >= RANKS[i].xp) return RANKS[i];
+    }
+    return RANKS[0];
+  },
+  getGarage: () => new Set(store.get("tacho_garage", [])),
+  unlockCar: (carId) => {
+    const g = Meta.getGarage();
+    if(!g.has(carId)){
+      g.add(carId);
+      store.set("tacho_garage", [...g]);
+      Meta.checkAchieve("garage_10", g.size >= 10);
+      const c = CARS[carId];
+      if(c.tags.includes("jdm")) Meta.checkCountAchieve("jdm_fan", "jdm", 5);
+      if(c.tags.includes("muscle")) Meta.checkCountAchieve("muscle_fan", "muscle", 5);
+      if(c.tags.includes("hyper")) Meta.checkCountAchieve("hyper_fan", "hyper", 5);
+    }
+  },
+  checkCountAchieve: (achId, tag, req) => {
+    const g = Meta.getGarage();
+    let count = 0;
+    g.forEach(id => { if(CARS[id] && CARS[id].tags.includes(tag)) count++; });
+    if(count >= req) Meta.checkAchieve(achId, true);
+  },
+  getAchieves: () => new Set(store.get("tacho_achieves", [])),
+  checkAchieve: (id, condition) => {
+    if(!condition) return;
+    const a = Meta.getAchieves();
+    if(!a.has(id)){
+      a.add(id);
+      store.set("tacho_achieves", [...a]);
+      const item = ACHIEVEMENTS[id];
+      if(item){
+        Meta.toast(`ТРОФЕЙ: ${item.icon} ${item.t}!`);
+        Sound.fanfare();
+        vibrate([80, 40, 80, 40, 150]);
+        addSparks(window.innerWidth/2, 120, 35);
+      }
+    }
+  },
+  toast: (txt) => {
+    const old = document.querySelector(".toast-notice");
+    if(old) old.remove();
+    const t = document.createElement("div");
+    t.className = "toast-notice";
+    t.textContent = txt;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3300);
+  }
+};
+
+/* ==========================================================================
+   СКИНОПОСТРОИТЕЛЬ ТАХОМЕТРА
+   ========================================================================== */
+let activeSkin = store.get("tacho_skin", "classic"); // classic | lcd80 | motec
+
+function renderTachometer(skin){
+  if(skin === "lcd80"){
+    return `
+      <svg class="gauge" viewBox="0 0 200 115" role="img" aria-label="Тахометр LCD 80s">
+        <text x="100" y="32" fill="#00e5ff" font-size="14" font-weight="900" font-family="monospace" text-anchor="middle" letter-spacing="2">DIGITAL LCD CLUSTER</text>
+        <rect x="25" y="44" width="150" height="26" fill="#03161c" stroke="#00e5ff" stroke-width="1.5" rx="4"/>
+        <g id="lcd-segments" fill="#00e5ff">
+          ${Array.from({length:12}, (_,i)=>`<rect x="${30 + i*12}" y="49" width="8" height="16" fill="${i<8?"#00e5ff":"#ff0055"}" opacity="${i<5?1:0.2}"/>`).join("")}
+        </g>
+        <text id="lcd-rpm" x="100" y="98" fill="#00e5ff" font-size="22" font-weight="900" font-family="monospace" text-anchor="middle">5 800 RPM</text>
+      </svg>
+    `;
+  }
+  if(skin === "motec"){
+    return `
+      <svg class="gauge" viewBox="0 0 200 115" role="img" aria-label="MoTeC Racing">
+        <rect x="15" y="15" width="170" height="90" fill="#111" stroke="#444" stroke-width="2" rx="8"/>
+        <!-- Shift Lights -->
+        <g id="motec-leds">
+          <circle cx="45" cy="34" r="6" fill="#00e5ff"/>
+          <circle cx="65" cy="34" r="6" fill="#00e5ff"/>
+          <circle cx="85" cy="34" r="6" fill="#10b981"/>
+          <circle cx="105" cy="34" r="6" fill="#10b981"/>
+          <circle cx="125" cy="34" r="6" fill="#ffb700"/>
+          <circle cx="145" cy="34" r="6" fill="#f43f5e"/>
+        </g>
+        <text x="100" y="68" fill="#fff" font-size="28" font-weight="900" font-family="sans-serif" text-anchor="middle">GEAR 4</text>
+        <text x="100" y="92" fill="#ffb700" font-size="14" font-weight="800" font-family="sans-serif" text-anchor="middle">8 450 RPM</text>
+      </svg>
+    `;
+  }
+  // Classic
+  return `
+    <svg class="gauge" viewBox="0 0 200 124" role="img" aria-label="Классический тахометр">
+      <defs>
+        <linearGradient id="arcGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00e5ff" />
+          <stop offset="68%" stop-color="#ffb700" />
+          <stop offset="100%" stop-color="#f43f5e" />
+        </linearGradient>
+      </defs>
+      <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="13" stroke-linecap="round"/>
+      <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="url(#arcGlow)" stroke-width="13" stroke-dasharray="74 100" stroke-linecap="round"/>
+      <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="#f43f5e" stroke-width="13" stroke-dasharray="0 78 22 100" stroke-linecap="round"/>
+      <circle cx="100" cy="110" r="16" fill="#070a1e" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+      <line id="hero-needle" class="needle" x1="100" y1="110" x2="100" y2="40" stroke="#f8f9fe" stroke-width="5" stroke-linecap="round" style="transform-origin:100px 110px;transform:rotate(-92deg);transition:transform 0.4s var(--snap)"/>
+      <circle cx="100" cy="110" r="8" fill="#ffb700"/>
+    </svg>
+  `;
+}
+
+/* ==========================================================================
    ГЕНЕРАТОР ВОПРОСОВ
    ========================================================================== */
+let activePack = store.get("tacho_pack", "all");
+
+function getFilteredPool(){
+  if(activePack === "all") return CARS;
+  return CARS.filter(c => c.tags.includes(activePack));
+}
+
 function pick(s, pool, any){
-  const rc = s.recent.slice(-12), ok = pool.filter(c => any || !c.bad), free = ok.filter(c => !rc.includes(c));
+  const rc = s.recent.slice(-10), ok = pool.filter(c => any || !c.bad), free = ok.filter(c => !rc.includes(c));
   const src = free.length ? free : ok;
   return src[rnd(src.length)];
 }
 
 async function duel(s, kind){
-  const f = kind === "power" ? "hp" : "p";
-  const pool = f === "p" ? CARS.filter(c => c.p) : CARS;
-  for(let i = 0; i < 45; i++){
+  const f = kind === "power" ? "hp" : (kind === "drag" ? "acc" : "p");
+  const basePool = getFilteredPool();
+  const pool = f === "p" ? basePool.filter(c => c.p) : basePool;
+  if(pool.length < 2) return null;
+
+  for(let i = 0; i < 40; i++){
     const a = pick(s, pool, 1), b = pick(s, pool, 1);
-    if(a === b || Math.abs(a[f] - b[f]) / Math.max(a[f], b[f]) < 0.05) continue;
+    if(a === b) continue;
+    if(kind !== "drag" && Math.abs(a[f] - b[f]) / Math.max(a[f], b[f]) < 0.05) continue;
+    if(kind === "drag" && Math.abs(a.acc - b.acc) < 0.15) continue;
+
     s.recent.push(a, b);
     const ph = await Promise.all([photoFor(s, a), photoFor(s, b)]);
     if(!ph[0] || !ph[1]) continue;
-    return {kind, f, items: [a, b], ph, ans: a[f] > b[f] ? 0 : 1};
+
+    // В драге побеждает тот, у кого разгон МЕНЬШЕ секунд
+    const ans = kind === "drag" ? (a.acc < b.acc ? 0 : 1) : (a[f] > b[f] ? 0 : 1);
+    return {kind, f, items: [a, b], ph, ans};
   }
   return null;
 }
 
 async function makeQ(s){
-  const kind = s.mode === "mix" ? MIXK[rnd(MIXK.length)] : s.mode;
-  if(kind === "power" || kind === "rich") return duel(s, kind);
-  const pool = kind === "gc" ? CARS.filter(c => c.p) : CARS;
-  for(let i = 0; i < 9; i++){
+  let kind = s.mode === "mix" ? MIXK[rnd(MIXK.length)] : s.mode;
+  if(kind === "power" || kind === "rich" || kind === "drag") return duel(s, kind);
+
+  const basePool = getFilteredPool();
+  const pool = kind === "gc" ? basePool.filter(c => c.p) : basePool;
+  for(let i = 0; i < 8; i++){
     const car = pick(s, pool);
     if(!car) break;
     const ph = await photoFor(s, car);
@@ -1370,7 +1682,7 @@ async function makeQ(s){
       labels = shuffle([car.b, ...sample(BRANDS, 3, [car.b])]);
       ans = labels.indexOf(car.b);
     } else {
-      const o = shuffle([car, ...sample(CARS, 3, [car])]);
+      const o = shuffle([car, ...sample(basePool.length >= 4 ? basePool : CARS, 3, [car])]);
       labels = o.map(c => c.name);
       ans = o.indexOf(car);
     }
@@ -1380,16 +1692,54 @@ async function makeQ(s){
 }
 
 /* ==========================================================================
-   ИНТЕРФЕЙС И СОСТОЯНИЕ ИГРЫ
+   ЕЖЕДНЕВНЫЙ ЧЕЛЛЕНДЖ (АВТОМОБИЛЬ ДНЯ)
+   ========================================================================== */
+function getTodayDateStr(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getDailySeed(){
+  const s = getTodayDateStr();
+  let h = 0;
+  for(let i = 0; i < s.length; i++) h = ((h << 5) - h) + s.charCodeAt(i) | 0;
+  return Math.abs(h);
+}
+
+function getDailyCars(){
+  let seed = getDailySeed();
+  const pool = CARS.slice();
+  const res = [];
+  for(let i = 0; i < 5; i++){
+    seed = (seed * 9301 + 49297) % 233280;
+    const idx = Math.floor((seed / 233280) * pool.length);
+    res.push(pool.splice(idx, 1)[0]);
+  }
+  return res;
+}
+
+/* ==========================================================================
+   ИНТЕРФЕЙС И СОСТОЯНИЕ
    ========================================================================== */
 const app = $("app");
 let S = null, token = 0;
 
 function menu(){
-  token++;
-  S = null;
+  token++; S = null;
   const isMuted = Sound.isMuted();
-  const rows = Object.keys(MODES).map((k, i) => `
+  const xp = Meta.getXP();
+  const rank = Meta.getRank(xp);
+  const garage = Meta.getGarage();
+  const todayStr = getTodayDateStr();
+  const dailyDone = store.get("tacho_daily_done:" + todayStr, false);
+
+  const packChips = Object.keys(PACKS).map(k => `
+    <button class="pack-chip ${k === activePack ? "active" : ""}" data-pack="${k}">
+      ${PACKS[k].icon} ${PACKS[k].t}
+    </button>
+  `).join("");
+
+  const modeRows = Object.keys(MODES).map((k, i) => `
     <button class="mode ${k}" data-mode="${k}" style="--i:${i}">
       <span>
         <strong>${MODES[k].t}</strong>
@@ -1399,58 +1749,59 @@ function menu(){
     </button>`).join("");
 
   app.innerHTML = `
-    <div class="hero">
-      <div class="hero-ctrls">
-        <button class="ctrl-btn" data-act="toggle-sound" aria-label="Звук">
-          ${isMuted ? "🔇" : "🔊"}
-        </button>
+    <div class="user-panel">
+      <div class="rank-badge" data-modal="rank">
+        <span class="rank-icon">${rank.icon}</span>
+        <span class="rank-txt">${rank.title}<small>${xp} XP</small></span>
       </div>
-      <div class="gauge-wrap" id="hero-gauge" title="Нажми для перегазовки!">
-        <svg class="gauge" viewBox="0 0 200 124" role="img" aria-label="Тахометр">
-          <defs>
-            <linearGradient id="arcGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#00e5ff" />
-              <stop offset="68%" stop-color="#ffb700" />
-              <stop offset="100%" stop-color="#f43f5e" />
-            </linearGradient>
-          </defs>
-          <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="13" stroke-linecap="round"/>
-          <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="url(#arcGlow)" stroke-width="13" stroke-dasharray="74 100" stroke-linecap="round"/>
-          <path d="M20 110 A80 80 0 0 1 180 110" pathLength="100" fill="none" stroke="#f43f5e" stroke-width="13" stroke-dasharray="0 78 22 100" stroke-linecap="round"/>
-          <circle cx="100" cy="110" r="16" fill="#090d24" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-          <line id="hero-needle" class="needle" x1="100" y1="110" x2="100" y2="40" stroke="#f8f9fe" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="100" cy="110" r="8" fill="#ffb700"/>
-        </svg>
+      <div class="user-actions">
+        <button class="btn-icon" data-modal="garage" title="Гараж">${garage.size > 0 ? "🏎️" : "🚗"}</button>
+        <button class="btn-icon" data-modal="achieve" title="Достижения">🏆</button>
+        <button class="btn-icon" data-modal="settings" title="Скин / Звук">⚙️</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="gauge-box" id="hero-gauge" title="Газануть!">
+        ${renderTachometer(activeSkin)}
         <span class="gauge-tap-tip">газануть</span>
       </div>
       <h1 class="word">Тахо</h1>
-      <p class="sub">Автовикторина для ценителей · машин: <span class="badge-count">${CARS.length}</span></p>
+      <p class="sub">Коллекция: <b>${garage.size}</b> / ${CARS.length} авто · Паки и Драг</p>
     </div>
-    <div class="modes">${rows}</div>
-    <p class="note">Фотографии высокого качества из Wikimedia Commons. Мощность и цена указаны на момент выхода конкретной модификации.</p>
+
+    <!-- Автомобиль Дня -->
+    <div class="daily-card" data-act="start-daily">
+      <div>
+        <div class="d-tit">📅 Автомобиль Дня ${dailyDone ? "✓" : ""}</div>
+        <div class="d-sub">${dailyDone ? "Челлендж дня завершен! Смотри результат" : "5 уникальных вопросов сегодня для всех"}</div>
+      </div>
+      <span class="daily-pill">${dailyDone ? "Счет" : "Старт"}</span>
+    </div>
+
+    <!-- Полоса фильтров -->
+    <div class="pack-strip">${packChips}</div>
+
+    <div class="modes">${modeRows}</div>
   `;
 
-  // Интерактивная перегазовка по клику на тахометр
+  // Интерактивная перегазовка
   const hg = $("hero-gauge"), nd = $("hero-needle");
-  let revTimeout = null;
-  function triggerRev(){
-    Sound.rev();
-    nd.style.transform = `rotate(${25 + rnd(40)}deg)`;
-    clearTimeout(revTimeout);
-    revTimeout = setTimeout(() => {
-      nd.style.transform = "rotate(-92deg)";
-    }, 450);
+  if(hg){
+    hg.addEventListener("click", () => {
+      Sound.rev();
+      vibrate([40, 20, 60]);
+      if(nd){
+        nd.style.transform = `rotate(${25 + rnd(40)}deg)`;
+        setTimeout(() => { nd.style.transform = "rotate(-92deg)"; }, 450);
+      }
+    });
   }
-  if(hg) hg.addEventListener("click", triggerRev);
-  // Стартовое приветственное отклонение стрелки
-  setTimeout(() => {
-    if(nd) nd.style.transform = "rotate(20deg)";
-    setTimeout(() => { if(nd) nd.style.transform = "rotate(-40deg)"; }, 450);
-  }, 100);
 }
 
 function start(mode){
   Sound.click();
+  vibrate(30);
   token++;
   S = {
     mode,
@@ -1462,22 +1813,54 @@ function start(mode){
     recent: [],
     used: new Set(),
     locked: false,
-    newBest: false
+    dragRunning: false,
+    isDaily: false,
+    dailyStep: 0,
+    dailyAnswers: []
   };
   next();
+}
+
+function startDaily(){
+  Sound.click();
+  vibrate(30);
+  token++;
+  const todayStr = getTodayDateStr();
+  const saved = store.get("tacho_daily_res:" + todayStr, null);
+  if(saved){
+    showDailyResult(saved.score, saved.ans);
+    return;
+  }
+  const dCars = getDailyCars();
+  S = {
+    mode: "daily",
+    score: 0,
+    streak: 0,
+    lives: 5,
+    q: null,
+    pre: null,
+    recent: [],
+    used: new Set(),
+    locked: false,
+    isDaily: true,
+    dailyStep: 0,
+    dailyCars: dCars,
+    dailyAnswers: []
+  };
+  nextDaily();
 }
 
 const barH = () => `
   <button class="back" data-act="menu" aria-label="В меню">‹</button>
   <div class="mt">
-    ${MODES[S.mode].t}
-    <small>рекорд ${Math.max(best(S.mode), S.score)}</small>
+    ${S.isDaily ? `Автомобиль дня (${S.dailyStep+1}/5)` : MODES[S.mode].t}
+    <small>${S.isDaily ? "5 раундов" : `рекорд ${Math.max(best(S.mode), S.score)}`}</small>
   </div>
-  <button class="back" data-act="toggle-sound" style="font-size:18px" aria-label="Звук">
+  <button class="back" data-act="toggle-sound" style="font-size:18px">
     ${Sound.isMuted() ? "🔇" : "🔊"}
   </button>
   <div class="lives" role="img" aria-label="Жизней: ${S.lives}">
-    ${[0, 1, 2].map(i => `<i class="${i < S.lives ? "" : "lost"}"></i>`).join("")}
+    ${Array.from({length: S.isDaily ? 5 : 3}, (_, i) => `<i class="${i < S.lives ? "" : "lost"}"></i>`).join("")}
   </div>
 `;
 
@@ -1495,7 +1878,8 @@ async function go(){
   app.classList.add("leave");
   await sleep(180);
   app.classList.remove("leave");
-  next();
+  if(S.isDaily) nextDaily();
+  else next();
 }
 
 async function next(){
@@ -1514,8 +1898,8 @@ async function next(){
   if(!q){
     app.innerHTML = `
       <div class="bar flow" id="bar">${barH()}</div>
-      <div class="err">Не удалось загрузить изображение. Проверьте интернет-соединение.</div>
-      <div class="nextbar"><button class="next" data-act="retry">Повторить попытку</button></div>
+      <div class="err">Не удалось загрузить авто. Попробуйте еще раз.</div>
+      <div class="nextbar"><button class="next" data-act="retry">Повторить</button></div>
     `;
     return;
   }
@@ -1523,15 +1907,34 @@ async function next(){
   s.q = q;
   s.locked = false;
   renderQ();
-  s.pre = makeQ(s); // фоновый предзагруз следующего вопроса
+  s.pre = makeQ(s);
+}
+
+async function nextDaily(){
+  const s = S;
+  if(s.dailyStep >= 5){
+    finishDaily();
+    return;
+  }
+  const car = s.dailyCars[s.dailyStep];
+  app.innerHTML = `
+    <div class="shot sk">
+      <div class="bar" id="bar">${barH()}</div>
+      <div class="meter" id="meter">${meterH()}</div>
+    </div>`;
+  const ph = await photoFor(s, car);
+  const o = shuffle([car, ...sample(CARS, 3, [car])]);
+  s.q = {kind:"model", car, ph, labels:o.map(c=>c.name), ans:o.indexOf(car)};
+  s.locked = false;
+  renderQ();
 }
 
 const shotHTML = p => {
-  const contain = p.w / p.h < 1.35;
+  const contain = p && p.w / p.h < 1.35;
   return `
     <div class="shot" id="shot">
       ${contain ? `<div class="bgb" style="background-image:url('${cssu(p.src)}')"></div>` : ""}
-      <img class="${contain ? "contain" : ""}" src="${esc(p.src)}" alt="Автомобиль">
+      ${p ? `<img class="${contain ? "contain" : ""}" src="${esc(p.src)}" alt="Автомобиль">` : ""}
       <div class="fx-flash"></div>
       <div id="cap"></div>
       <div class="bar" id="bar">${barH()}</div>
@@ -1544,6 +1947,55 @@ function renderQ(){
   const s = S, q = s.q;
   const comboHTML = s.streak >= 3 ? `<div class="combo-badge">🔥 СЕРИЯ ×${s.streak}</div>` : "";
 
+  // 1. РЕЖИМ «ДРАГ-РЕЙСИНГ 0-100 КМ/Ч»
+  if(q.kind === "drag"){
+    app.innerHTML = `
+      <div class="bar flow" id="bar">${barH()}</div>
+      <div class="meter flow" id="meter">${meterH()}</div>
+      ${comboHTML}
+      <p class="q">Кто быстрее до 100 км/ч?
+        <small>Выбери победителя на 402 метрах</small>
+      </p>
+      <div class="drag-arena">
+        <div class="drag-tree">
+          <div class="tree-light stage on"></div>
+          <div class="tree-light yellow" id="dl-y1"></div>
+          <div class="tree-light yellow" id="dl-y2"></div>
+          <div class="tree-light green" id="dl-gr"></div>
+        </div>
+        <div class="drag-strip">
+          <div class="finish-line"></div>
+          <div class="drag-lane">
+            <div class="drag-car-sprite c1" id="dcar-0">🏎️ ${esc(q.items[0].name)}</div>
+          </div>
+          <div class="drag-lane">
+            <div class="drag-car-sprite c2" id="dcar-1">🏎️ ${esc(q.items[1].name)}</div>
+          </div>
+        </div>
+        <div id="drag-win-banner"></div>
+      </div>
+      <div class="duel-wrap" style="margin-top:10px">
+        ${q.items.map((c, i) => `
+          <button class="dcard" data-drag-i="${i}" style="--i:${i}">
+            ${q.ph[i] ? `<img src="${esc(q.ph[i].src)}" alt="${esc(c.name)}">` : ""}
+            <i class="edge"></i>
+            <span class="info">
+              <span>
+                <span class="nm">${esc(c.name)}</span>
+                <span class="vr">${esc(c.v)} · ${esc(c.drive)}</span>
+              </span>
+              <span class="hp"><b id="d-acc-${i}">?</b><small>сек</small></span>
+            </span>
+            <i class="fill"></i>
+          </button>
+        `).join("")}
+      </div>
+      <div id="after"></div>
+    `;
+    return;
+  }
+
+  // 2. ДУЭЛЬ (МОЩНОСТЬ / ЦЕНА)
   if(q.kind === "power" || q.kind === "rich"){
     const pr = q.f === "p";
     app.innerHTML = `
@@ -1551,7 +2003,7 @@ function renderQ(){
       <div class="meter flow" id="meter">${meterH()}</div>
       ${comboHTML}
       <p class="q">${pr ? "Какой автомобиль дороже?" : "Какой автомобиль мощнее?"}
-        <small>${pr ? "Ориентировочная цена на старте продаж" : "Мощность заводской модификации"}</small>
+        <small>${pr ? "Цена новой машины на старте продаж" : "Заводская мощность"}</small>
       </p>
       <div class="duel-wrap">
         <div class="vs-divider">VS</div>
@@ -1575,6 +2027,7 @@ function renderQ(){
     return;
   }
 
+  // 3. ПОЛЗУНОК (МОЩНОСТЬ / ЦЕНА)
   if(q.kind === "gp" || q.kind === "gc"){
     const g = G[q.kind], t0 = q.kind === "gp" ? 450 : 500;
     app.innerHTML = shotHTML(q.ph) + comboHTML + `
@@ -1582,20 +2035,16 @@ function renderQ(){
       <div class="guess">
         <div class="read" id="read">${g.fmt(val(g, t0))}</div>
         <div class="rw" id="rw">
-          <input class="rng" id="rng" type="range" min="0" max="1000" step="1" value="${t0}" style="--p:${t0/10}%" aria-label="Твоя оценка">
+          <input class="rng" id="rng" type="range" min="0" max="1000" step="1" value="${t0}" style="--p:${t0/10}%" aria-label="Оценка">
         </div>
-        <div class="lh">
-          <span>${g.fmt(g.min)}</span>
-          <span>${g.fmt(g.max)}</span>
-        </div>
+        <div class="lh"><span>${g.fmt(g.min)}</span><span>${g.fmt(g.max)}</span></div>
       </div>
-      <div id="after">
-        <div class="nextbar"><button class="next" data-act="check">Проверить</button></div>
-      </div>
+      <div id="after"><div class="nextbar"><button class="next" data-act="check">Проверить</button></div></div>
     `;
     return;
   }
 
+  // 4. ТЕКСТОВЫЕ ВАРИАНТЫ (МОДЕЛЬ / МАРКА)
   app.innerHTML = shotHTML(q.ph) + comboHTML + `
     <p class="q">${q.kind === "brand" ? "Какая это марка авто?" : "Что это за модель?"}</p>
     <div class="opts">
@@ -1607,10 +2056,7 @@ function renderQ(){
 
 function countUp(el, to, fmt){
   fmt = fmt || (v => v);
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches){
-    el.textContent = fmt(to);
-    return;
-  }
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ el.textContent = fmt(to); return; }
   const t0 = performance.now();
   (function f(t){
     const p = Math.min(1, (t - t0) / 950);
@@ -1624,13 +2070,16 @@ function settle(ok, evtPos){
   if(ok){
     s.score++;
     s.streak++;
-    if(s.score > best(s.mode)){
-      setBest(s.mode, s.score);
-      s.newBest = true;
-    }
-    if(s.streak > 1 && s.streak % 4 === 0) Sound.combo();
-    else Sound.correct();
+    Meta.addXP(s.isDaily ? 25 : 15);
+    Meta.checkAchieve("first_win", true);
+    if(s.streak >= 5) Meta.checkAchieve("streak_5", true);
+    if(s.streak >= 10) Meta.checkAchieve("streak_10", true);
 
+    if(!s.isDaily && s.score > best(s.mode)){
+      setBest(s.mode, s.score);
+    }
+    Sound.correct();
+    vibrate([40, 30, 40]);
     const cx = evtPos ? evtPos.x : window.innerWidth / 2;
     const cy = evtPos ? evtPos.y : window.innerHeight / 2;
     addSparks(cx, cy, 26);
@@ -1638,8 +2087,16 @@ function settle(ok, evtPos){
     s.lives--;
     s.streak = 0;
     Sound.wrong();
+    vibrate([120, 60, 100]);
     app.classList.add("shake");
-    setTimeout(() => app.classList.remove("shake"), 450);
+    setTimeout(() => app.classList.remove("shake"), 400);
+  }
+
+  // Разблокировка в гараже
+  if(s.q && s.q.car) Meta.unlockCar(s.q.car.id);
+  if(s.q && s.q.items) {
+    Meta.unlockCar(s.q.items[0].id);
+    Meta.unlockCar(s.q.items[1].id);
   }
 
   const bEl = $("bar"), mEl = $("meter");
@@ -1647,37 +2104,109 @@ function settle(ok, evtPos){
   if(mEl){
     mEl.innerHTML = meterH();
     if(ok) {
-      const scoreTag = mEl.querySelector("b");
-      if(scoreTag) scoreTag.classList.add("pop");
+      const bTag = mEl.querySelector("b");
+      if(bTag) bTag.classList.add("pop");
     }
   }
   return ok && s.streak >= 3 ? `серия ×${s.streak} 🔥` : "";
 }
 
-function reveal(ok, q, st, extra){
-  const shot = $("shot");
-  if(shot) shot.classList.add(ok ? "win" : "lose");
-  const credit = q.ph && q.ph.page ? `<a href="${esc(q.ph.page)}" target="_blank" rel="noopener">Wikimedia Commons</a>` : "";
-  const cap = $("cap");
-  if(cap){
-    cap.innerHTML = `
-      ${ok ? "Верно!" : "Мимо."} ${esc(q.car.name)}
-      <small>${[extra, st, credit].filter(Boolean).join(" · ")}</small>
+function finish(fb, factCar){
+  const after = $("after");
+  const factHTML = factCar && factCar.fact ? `
+    <div class="fact-card">
+      <b>💡 Знал ли ты? (${esc(factCar.name)})</b>
+      ${esc(factCar.fact)}
+    </div>` : "";
+
+  if(after){
+    const nextBtnText = S.isDaily ? (S.dailyStep < 4 ? "Следующий вопрос" : "Результаты дня") : (S.lives > 0 ? "Дальше" : "Завершить заезд");
+    const nextAct = S.isDaily ? "next-daily" : (S.lives > 0 ? "next" : "over");
+    after.innerHTML = fb + factHTML + `
+      <div class="nextbar">
+        <button class="next" data-act="${nextAct}">${nextBtnText}</button>
+      </div>
     `;
   }
 }
 
-function finish(fb){
-  const after = $("after");
-  if(after){
-    after.innerHTML = fb + `
-      <div class="nextbar">
-        <button class="next" data-act="${S.lives > 0 ? "next" : "over"}">
-          ${S.lives > 0 ? "Дальше" : "Завершить заезд"}
-        </button>
-      </div>
-    `;
+/* ОБРАБОТКА ДРАГ-РЕЙСИНГА */
+async function startDragRace(chosenIdx){
+  const s = S;
+  if(!s || s.locked || !s.q) return;
+  s.locked = true;
+  const q = s.q;
+  const c0 = q.items[0], c1 = q.items[1];
+  const ok = chosenIdx === q.ans;
+  const curToken = token;
+
+  document.querySelectorAll("[data-drag-i]").forEach(b => {
+    b.setAttribute("aria-disabled", "true");
+    if(+b.dataset.dragI !== chosenIdx) b.classList.add("dim");
+  });
+
+  // 1. Анимация светофора драг-ёлки
+  await sleep(400);
+  if(curToken !== token) return;
+  Sound.beepYellow(); $("dl-y1")?.classList.add("on"); vibrate(30);
+  await sleep(450);
+  if(curToken !== token) return;
+  Sound.beepYellow(); $("dl-y2")?.classList.add("on"); vibrate(30);
+  await sleep(450);
+  if(curToken !== token) return;
+  Sound.beepGreen(); $("dl-gr")?.classList.add("on");
+  Sound.screech();
+  vibrate([80, 40, 100]);
+
+  // 2. Разгон машинок по полосам
+  const car0El = $("dcar-0"), car1El = $("dcar-1");
+  if(!car0El || !car1El) return;
+  const winner = q.ans; // 0 или 1
+  const tWinner = Math.min(c0.acc, c1.acc);
+  const tLoser = Math.max(c0.acc, c1.acc);
+  const stripWidth = car0El.parentElement.clientWidth - 95;
+
+  const startTime = performance.now();
+  const raceDuration = 1800; // длительность анимации победителя в мс
+
+  function animateRace(now){
+    if(curToken !== token) return;
+    const elapsed = now - startTime;
+    const pWin = Math.min(1, elapsed / raceDuration);
+    // Проигравший движется пропорционально разнице времен разгона
+    const pLose = Math.min(1, (elapsed / raceDuration) * (tWinner / tLoser));
+
+    const p0 = winner === 0 ? pWin : pLose;
+    const p1 = winner === 1 ? pWin : pLose;
+
+    car0El.style.transform = `translateX(${p0 * stripWidth}px)`;
+    car1El.style.transform = `translateX(${p1 * stripWidth}px)`;
+
+    if(elapsed < raceDuration * (tLoser / tWinner)){
+      requestAnimationFrame(animateRace);
+    } else {
+      // Гонка завершена
+      const acc0 = $("d-acc-0"), acc1 = $("d-acc-1");
+      if(acc0) acc0.textContent = c0.acc.toFixed(1);
+      if(acc1) acc1.textContent = c1.acc.toFixed(1);
+      document.querySelectorAll("[data-drag-i]").forEach((b, k) => {
+        b.classList.remove("dim");
+        b.classList.add(k === winner ? "ok" : "bad");
+      });
+      const winCar = q.items[winner];
+      const winBanner = $("drag-win-banner");
+      if(winBanner){
+        winBanner.innerHTML = `
+          <div class="winner-banner">🏁 Победил: ${esc(winCar.name)} (${winCar.acc}с)!</div>
+        `;
+      }
+      addSparks(window.innerWidth/2, 220, 35);
+      if(ok) Meta.checkAchieve("drag_king", true);
+      const st = settle(ok);
+      finish(`<p class="fb">${ok ? "Блестящая интуиция!" : "Соперник оказался быстрее!"}${st ? " · " + st : ""}</p>`, winCar);
+    }
   }
+  requestAnimationFrame(animateRace);
 }
 
 function answer(i, evt){
@@ -1687,6 +2216,8 @@ function answer(i, evt){
   const q = s.q, ok = i === q.ans;
   const rect = evt && evt.target ? evt.target.getBoundingClientRect() : null;
   const clickPos = rect ? {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2} : null;
+
+  if(s.isDaily) s.dailyAnswers.push(ok);
 
   document.querySelectorAll("[data-i]").forEach(b => {
     const k = +b.dataset.i;
@@ -1703,10 +2234,12 @@ function answer(i, evt){
         b.querySelector(".fill").style.width = (q.items[k][q.f] / mx * 100) + "%";
       });
     });
-    finish(`<p class="fb">${ok ? "Верно! Отличный выбор." : "Не угадал."}${st ? " · " + st : ""}</p>`);
+    finish(`<p class="fb">${ok ? "Верно!" : "Мимо."}${st ? " · " + st : ""}</p>`, q.items[q.ans]);
   } else {
-    reveal(ok, q, st, "");
-    finish("");
+    const shot = $("shot");
+    if(shot) shot.classList.add(ok ? "win" : "lose");
+    $("cap").innerHTML = `${ok ? "Верно!" : "Не то."} ${esc(q.car.name)}`;
+    finish("", q.car);
   }
 }
 
@@ -1721,68 +2254,64 @@ function check(evt){
   const rect = evt && evt.target ? evt.target.getBoundingClientRect() : null;
   const clickPos = rect ? {x: rect.left + rect.width / 2, y: rect.top} : null;
 
-  const rd = $("read");
-  if(rd) rd.classList.add(ok ? "ok" : "bad");
+  $("read").classList.add(ok ? "ok" : "bad");
   const st = settle(ok, clickPos);
 
-  const rw = $("rw");
-  if(rw){
-    rw.insertAdjacentHTML("afterbegin", `
-      <i class="mark" style="--m:${Math.min(1, Math.max(0, pos(g, real) / 1000))}">
-        <span>${g.fmt(real)}</span>
-      </i>
-    `);
-  }
-
-  const d = Math.round((guess - real) / real * 100);
-  reveal(ok, q, st, "");
+  $("rw").insertAdjacentHTML("afterbegin", `
+    <i class="mark" style="--m:${Math.min(1, Math.max(0, pos(g, real) / 1000))}">
+      <span>${g.fmt(real)}</span>
+    </i>
+  `);
+  const shot = $("shot");
+  if(shot) shot.classList.add(ok ? "win" : "lose");
+  $("cap").innerHTML = `${ok ? "Верно!" : "Мимо."} ${esc(q.car.name)}`;
   finish(`
     <p class="fb">
-      ${ok ? "Точно в цель!" : "Неточно."} Точный показатель: <b>${g.fmt(real)}</b>
-      ${d === 0 ? " (идеальное попадание!)" : ` (отклонение ${d > 0 ? "+" : ""}${d}%)`}.
+      ${ok ? "Точно!" : "Неточно."} Точный показатель: <b>${g.fmt(real)}</b>.
       Допуск викторины: ±${Math.round(g.tol * 100)}%.
     </p>
-  `);
+  `, q.car);
 }
 
-function getRankTitle(score){
-  if(score >= 22) return "👑 Легенда гоночного трека";
-  if(score >= 14) return "⚡ Профессиональный пилот";
-  if(score >= 8)  return "🏎️ Стритрейсер";
-  if(score >= 4)  return "🚗 Опытный автолюбитель";
-  return "🔰 Начинающий водитель";
+function finishDaily(){
+  const s = S;
+  const todayStr = getTodayDateStr();
+  store.set("tacho_daily_done:" + todayStr, true);
+  store.set("tacho_daily_res:" + todayStr, {score: s.score, ans: s.dailyAnswers});
+  Meta.checkAchieve("daily_done", true);
+  Meta.addXP(50);
+  showDailyResult(s.score, s.dailyAnswers);
+}
+
+function showDailyResult(score, ans){
+  const grid = (ans || []).map(ok => ok ? "🟩" : "🟥").join("");
+  const shareText = `Тахо 🏎️ День #${getDailySeed() % 999}\nСчет: ${score}/5\n${grid}\nАвтовикторина "Тахо"!`;
+  app.innerHTML = `
+    <div class="over">
+      <h2>Автомобиль Дня</h2>
+      <div class="over-rank">Результаты заезда</div>
+      <div class="big">${score}/5</div>
+      <p style="font-size:24px;letter-spacing:4px">${grid}</p>
+      <button class="copy-share-btn" data-copy="${esc(shareText)}">📋 Скопировать результат</button>
+      <div class="nextbar" style="position:static">
+        <button class="next" data-act="menu">В главное меню</button>
+      </div>
+    </div>
+  `;
 }
 
 function over(){
   const s = S;
   token++;
-  Sound.over();
+  Sound.fanfare();
+  addSparks(window.innerWidth/2, 160, 45);
 
-  // Запуск праздничного салюта
-  if(s.score > 0){
-    for(let i = 0; i < 5; i++){
-      setTimeout(() => {
-        addSparks(
-          Math.random() * window.innerWidth,
-          100 + Math.random() * 250,
-          35,
-          ["#ffb700", "#ff416c", "#00e5ff", "#ffffff", "#10b981"]
-        );
-      }, i * 220);
-    }
-  }
-
-  const curBest = best(s.mode);
   app.innerHTML = `
     <div class="over">
-      <h2>Заезд окончен</h2>
-      <div class="over-rank">${getRankTitle(s.score)}</div>
+      <h2>Гонка завершена</h2>
+      <div class="over-rank">${Meta.getRank(Meta.getXP()).title}</div>
       <div class="big" id="big">0</div>
-      <p>
-        ${s.newBest && s.score > 0
-          ? `<span class="new-record-tag">НОВЫЙ РЕКОРД!</span>`
-          : `Лучший результат: <b>${curBest}</b>`}
-      </p>
+      <p>Лучший результат: <b>${best(s.mode)}</b></p>
       <div class="nextbar" style="position:static">
         <button class="next" data-act="again">Ещё один заезд</button>
       </div>
@@ -1793,41 +2322,212 @@ function over(){
 }
 
 /* ==========================================================================
-   СЛУШАТЕЛИ СОБЫТИЙ
+   МОДАЛЬНЫЕ ОКНА (ГАРАЖ, ДОСТИЖЕНИЯ, РАНГ, НАСТРОЙКИ)
+   ========================================================================== */
+function openModal(type, data){
+  Sound.click();
+  const wrap = document.createElement("div");
+  wrap.className = "modal-overlay";
+  wrap.id = "active-modal";
+
+  let bodyHTML = "";
+  let title = "";
+
+  if(type === "garage"){
+    title = "Гараж мечты";
+    const g = Meta.getGarage();
+    const cards = CARS.map(c => {
+      const unlocked = g.has(c.id);
+      return `
+        <div class="car-card ${unlocked ? "" : "locked"}" ${unlocked ? `data-inspect="${c.id}"` : ""}>
+          <div class="c-name">${unlocked ? esc(c.name) : "???"}</div>
+          <div class="c-meta">${unlocked ? `${c.hp} л.с. · ${c.acc}с` : "Заблокировано"}</div>
+        </div>
+      `;
+    }).join("");
+    bodyHTML = `
+      <p style="font-size:13.5px;color:rgba(255,255,255,0.7);margin-bottom:6px">
+        Открыто авто: <b>${g.size}</b> из ${CARS.length}. Кликай на открытые машины для ТТХ и фактов.
+      </p>
+      <div class="garage-grid">${cards}</div>
+    `;
+  } else if(type === "inspect"){
+    const c = CARS[data];
+    title = c.name;
+    bodyHTML = `
+      <table class="specs-table">
+        <tr><td>Модификация / Год</td><td>${esc(c.v)}</td></tr>
+        <tr><td>Мощность</td><td>${c.hp} л.с.</td></tr>
+        <tr><td>Разгон 0–100 км/ч</td><td>${c.acc} сек</td></tr>
+        <tr><td>Тип привода</td><td>${esc(c.drive)}</td></tr>
+        <tr><td>Двигатель</td><td>${esc(c.eng)}</td></tr>
+        <tr><td>Ориент. цена</td><td>${c.p ? "$ " + grp(c.p) : "Коллекционная"}</td></tr>
+      </table>
+      <div class="fact-card" style="margin-top:14px">
+        <b>💡 Интересный факт</b>
+        ${esc(c.fact)}
+      </div>
+    `;
+  } else if(type === "achieve"){
+    title = "Достижения";
+    const a = Meta.getAchieves();
+    const list = Object.keys(ACHIEVEMENTS).map(k => {
+      const item = ACHIEVEMENTS[k];
+      const done = a.has(k);
+      return `
+        <div class="achieve-item ${done ? "done" : ""}">
+          <div class="achieve-icon">${item.icon}</div>
+          <div class="achieve-info">
+            <strong>${item.t} ${done ? "✓" : ""}</strong>
+            <small>${item.d}</small>
+          </div>
+        </div>
+      `;
+    }).join("");
+    bodyHTML = list;
+  } else if(type === "rank"){
+    title = "Ранги и Опыт";
+    const xp = Meta.getXP();
+    const cur = Meta.getRank(xp);
+    const list = RANKS.map(r => `
+      <div class="achieve-item ${xp >= r.xp ? "done" : ""}">
+        <div class="achieve-icon">${r.icon}</div>
+        <div class="achieve-info">
+          <strong>${r.title}</strong>
+          <small>${r.xp} XP ${xp >= r.xp ? "(Открыто)" : ""}</small>
+        </div>
+      </div>
+    `).join("");
+    bodyHTML = `
+      <p style="font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:8px">Твой опыт: <b>${xp} XP</b> · Текущий ранг: <b>${cur.title}</b></p>
+      ${list}
+    `;
+  } else if(type === "settings"){
+    title = "Настройки";
+    bodyHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="display:block;font:italic 800 18px var(--display);color:var(--yellow);margin-bottom:8px">Стиль приборной панели</label>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="opt ${activeSkin==="classic"?"ok":""}" data-set-skin="classic">🏎️ Классический стрелочный</button>
+            <button class="opt ${activeSkin==="lcd80"?"ok":""}" data-set-skin="lcd80">📟 Ретро LCD 80-х (зеленый дисплей)</button>
+            <button class="opt ${activeSkin==="motec"?"ok":""}" data-set-skin="motec">🏁 MoTeC Racing (Shift-Lights)</button>
+          </div>
+        </div>
+        <div>
+          <button class="opt" data-act="toggle-sound">${Sound.isMuted() ? "🔇 Включить звук" : "🔊 Выключить звук"}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  wrap.innerHTML = `
+    <div class="modal-window">
+      <div class="modal-head">
+        <h3>${title}</h3>
+        <button class="modal-close" data-close-modal="1">✕</button>
+      </div>
+      <div class="modal-body">${bodyHTML}</div>
+    </div>
+  `;
+  document.body.appendChild(wrap);
+}
+
+/* ==========================================================================
+   ОБРАБОТЧИКИ СОБЫТИЙ
    ========================================================================== */
 app.addEventListener("input", e => {
   if(e.target.id !== "rng" || !S || !S.q) return;
   const g = G[S.q.kind], t = +e.target.value;
   e.target.style.setProperty("--p", t / 10 + "%");
-  const readEl = $("read");
-  if(readEl) readEl.textContent = g.fmt(val(g, t));
+  $("read").textContent = g.fmt(val(g, t));
   if(t % 40 === 0) Sound.click();
 });
 
-app.addEventListener("click", e => {
-  const el = e.target.closest("[data-act],[data-mode],[data-i]");
+document.body.addEventListener("click", e => {
+  // Закрытие модального окна
+  if(e.target.closest("[data-close-modal]") || e.target.classList.contains("modal-overlay")){
+    const m = $("active-modal");
+    if(m) m.remove();
+    return;
+  }
+
+  const el = e.target.closest("[data-act],[data-mode],[data-i],[data-drag-i],[data-modal],[data-pack],[data-inspect],[data-set-skin],[data-copy]");
   if(!el) return;
+
+  if(el.dataset.copy){
+    const text = el.dataset.copy;
+    const inp = document.createElement("textarea");
+    inp.value = text;
+    document.body.appendChild(inp);
+    inp.select();
+    try {
+      document.execCommand('copy');
+      Meta.toast("Результат скопирован в буфер!");
+      vibrate(50);
+    } catch(err){}
+    inp.remove();
+    return;
+  }
+
+  if(el.dataset.modal){
+    openModal(el.dataset.modal);
+    return;
+  }
+
+  if(el.dataset.inspect){
+    const curM = $("active-modal");
+    if(curM) curM.remove();
+    openModal("inspect", +el.dataset.inspect);
+    return;
+  }
+
+  if(el.dataset.setSkin){
+    activeSkin = el.dataset.setSkin;
+    store.set("tacho_skin", activeSkin);
+    const curM = $("active-modal");
+    if(curM) curM.remove();
+    menu();
+    return;
+  }
+
+  if(el.dataset.pack){
+    activePack = el.dataset.pack;
+    store.set("tacho_pack", activePack);
+    Sound.click();
+    vibrate(25);
+    menu();
+    return;
+  }
 
   if(el.dataset.act){
     const a = el.dataset.act;
-    if(a === "menu") { Sound.click(); menu(); }
-    else if(a === "next") { Sound.click(); go(); }
-    else if(a === "retry") { Sound.click(); next(); }
-    else if(a === "check") { check(e); }
-    else if(a === "over") { over(); }
-    else if(a === "again") { start(S.mode); }
-    else if(a === "toggle-sound") {
+    if(a === "menu"){ Sound.click(); menu(); }
+    else if(a === "next"){ Sound.click(); go(); }
+    else if(a === "next-daily"){
+      Sound.click();
+      S.dailyStep++;
+      go();
+    }
+    else if(a === "retry"){ Sound.click(); next(); }
+    else if(a === "check"){ check(e); }
+    else if(a === "over"){ over(); }
+    else if(a === "again"){ start(S.mode); }
+    else if(a === "start-daily"){ startDaily(); }
+    else if(a === "toggle-sound"){
       const isMuted = Sound.toggle();
       el.textContent = isMuted ? "🔇" : "🔊";
     }
   } else if(el.dataset.mode){
     start(el.dataset.mode);
+  } else if(el.dataset.dragI !== undefined){
+    startDragRace(+el.dataset.dragI);
   } else if(el.dataset.i !== undefined){
     answer(+el.dataset.i, e);
   }
 });
 
-// Запуск меню
+// Запуск
 menu();
 </script>
 </body>
